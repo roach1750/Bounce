@@ -30,6 +30,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Bounce" id="g4o-mE-pLO"/>
+                    <connections>
+                        <outlet property="mapView" destination="5oW-Xg-fee" id="Ygs-3T-cG5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

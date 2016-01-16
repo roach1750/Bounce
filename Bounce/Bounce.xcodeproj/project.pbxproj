@@ -17,6 +17,7 @@
 		21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED561C4884EE006F294F /* LocationFetcher.swift */; };
 		21FFED5B1C488617006F294F /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED5A1C488617006F294F /* MapVC.swift */; };
 		21FFED5D1C488689006F294F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21FFED5C1C488689006F294F /* MapKit.framework */; };
+		21FFED601C4AA325006F294F /* Proposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED5F1C4AA325006F294F /* Proposer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		21FFED561C4884EE006F294F /* LocationFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationFetcher.swift; path = Model/LocationFetcher.swift; sourceTree = "<group>"; };
 		21FFED5A1C488617006F294F /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapVC.swift; path = "View Controllers/MapVC.swift"; sourceTree = "<group>"; };
 		21FFED5C1C488689006F294F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		21FFED5F1C4AA325006F294F /* Proposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proposer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,11 +86,11 @@
 		21FFED191C487CEE006F294F = {
 			isa = PBXGroup;
 			children = (
-				21FFED5C1C488689006F294F /* MapKit.framework */,
 				21FFED241C487CEE006F294F /* Bounce */,
 				21FFED391C487CEE006F294F /* BounceTests */,
 				21FFED441C487CEE006F294F /* BounceUITests */,
 				21FFED231C487CEE006F294F /* Products */,
+				21FFED5E1C4888B7006F294F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,8 +141,17 @@
 			children = (
 				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
 				21FFED531C487F5F006F294F /* ParseFetcher.swift */,
+				21FFED5F1C4AA325006F294F /* Proposer.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		21FFED5E1C4888B7006F294F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				21FFED5C1C488689006F294F /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21FFED541C487F5F006F294F /* ParseFetcher.swift in Sources */,
+				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
 				21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */,
 				21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */,
