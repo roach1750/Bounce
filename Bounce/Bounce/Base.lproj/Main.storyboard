@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Bounce-->
@@ -29,14 +30,91 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5oW-Xg-fee" secondAttribute="bottom" id="LCg-xh-Lvz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Bounce" id="g4o-mE-pLO"/>
+                    <navigationItem key="navigationItem" title="Bounce" id="g4o-mE-pLO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="2C3-ai-Fpl">
+                            <connections>
+                                <action selector="composeButtonTapped:" destination="BYZ-38-t0r" id="sYk-pZ-uX7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="5oW-Xg-fee" id="Ygs-3T-cG5"/>
+                        <segue destination="DZd-tu-Inh" kind="presentation" identifier="createPostSegue" id="e9q-qm-p92"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1117" y="369"/>
+        </scene>
+        <!--New Post-->
+        <scene sceneID="333-aD-g6o">
+            <objects>
+                <viewController id="Mfj-V1-hDX" customClass="PostVC" customModule="Bounce" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lPg-bG-f47"/>
+                        <viewControllerLayoutGuide type="bottom" id="T8e-Ns-9PI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pAW-Jw-NF5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" keyboardDismissMode="onDrag" text="Enter capition for post" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gcQ-uc-G5z">
+                                <rect key="frame" x="0.0" y="372" width="600" height="120"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pAP-5F-NWL">
+                                <rect key="frame" x="0.0" y="570" width="600" height="30"/>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Current Location Button">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCy-el-dWO">
+                                <rect key="frame" x="0.0" y="64" width="600" height="300"/>
+                                <color key="backgroundColor" red="0.015686274510000001" green="0.87058823529999996" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pAP-5F-NWL" firstAttribute="leading" secondItem="pAW-Jw-NF5" secondAttribute="leading" id="2yz-Cd-mt6"/>
+                            <constraint firstItem="jCy-el-dWO" firstAttribute="height" secondItem="pAW-Jw-NF5" secondAttribute="height" multiplier="0.5" id="ADM-V3-brL"/>
+                            <constraint firstItem="pAP-5F-NWL" firstAttribute="centerX" secondItem="pAW-Jw-NF5" secondAttribute="centerX" id="N4p-P0-dNh"/>
+                            <constraint firstItem="gcQ-uc-G5z" firstAttribute="leading" secondItem="pAW-Jw-NF5" secondAttribute="leading" id="PPB-PZ-Pp5"/>
+                            <constraint firstItem="jCy-el-dWO" firstAttribute="centerX" secondItem="pAW-Jw-NF5" secondAttribute="centerX" id="Qvu-fV-kTC"/>
+                            <constraint firstItem="jCy-el-dWO" firstAttribute="leading" secondItem="pAW-Jw-NF5" secondAttribute="leading" id="UYJ-x7-Vkn"/>
+                            <constraint firstItem="gcQ-uc-G5z" firstAttribute="height" secondItem="jCy-el-dWO" secondAttribute="height" multiplier="0.4" id="WFa-Nr-Iri"/>
+                            <constraint firstAttribute="trailing" secondItem="gcQ-uc-G5z" secondAttribute="trailing" id="XSo-WM-QN1"/>
+                            <constraint firstItem="gcQ-uc-G5z" firstAttribute="centerX" secondItem="pAW-Jw-NF5" secondAttribute="centerX" id="Xkn-gB-bPn"/>
+                            <constraint firstItem="jCy-el-dWO" firstAttribute="top" secondItem="lPg-bG-f47" secondAttribute="bottom" id="ZQs-zT-Cms"/>
+                            <constraint firstItem="gcQ-uc-G5z" firstAttribute="top" secondItem="jCy-el-dWO" secondAttribute="bottom" constant="8" id="dm8-Wv-U8O"/>
+                            <constraint firstItem="T8e-Ns-9PI" firstAttribute="top" secondItem="pAP-5F-NWL" secondAttribute="bottom" id="epC-MZ-Eaj"/>
+                            <constraint firstAttribute="trailing" secondItem="jCy-el-dWO" secondAttribute="trailing" id="hJp-64-iBO"/>
+                            <constraint firstAttribute="trailing" secondItem="pAP-5F-NWL" secondAttribute="trailing" id="kID-SM-3qh"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Post" id="LO9-Oo-pqx">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Hse-bb-GQv">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="Mfj-V1-hDX" id="COB-wC-YR8"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="eO5-dA-TvO">
+                            <connections>
+                                <action selector="postButtonTapped:" destination="Mfj-V1-hDX" id="vRm-wG-d4U"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="locationButton" destination="pAP-5F-NWL" id="eSp-vl-qUw"/>
+                        <outlet property="postImageView" destination="jCy-el-dWO" id="GRY-fO-JGE"/>
+                        <outlet property="postTextView" destination="gcQ-uc-G5z" id="WRv-cH-DpM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DzY-k7-jBd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3036" y="-53"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Uwm-og-Jyk">
@@ -55,6 +133,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fQf-5l-C2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="305" y="1029"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fjN-qk-4YF">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DZd-tu-Inh" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Z1s-kh-6VK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Mfj-V1-hDX" kind="relationship" relationship="rootViewController" id="lAW-Bp-hGp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zse-tG-kXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2224" y="-53"/>
         </scene>
     </scenes>
 </document>

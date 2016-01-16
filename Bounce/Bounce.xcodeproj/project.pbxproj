@@ -18,6 +18,8 @@
 		21FFED5B1C488617006F294F /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED5A1C488617006F294F /* MapVC.swift */; };
 		21FFED5D1C488689006F294F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21FFED5C1C488689006F294F /* MapKit.framework */; };
 		21FFED601C4AA325006F294F /* Proposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED5F1C4AA325006F294F /* Proposer.swift */; };
+		21FFED621C4AAAC4006F294F /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED611C4AAAC4006F294F /* PostVC.swift */; };
+		21FFED641C4AAB78006F294F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED631C4AAB78006F294F /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		21FFED5A1C488617006F294F /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapVC.swift; path = "View Controllers/MapVC.swift"; sourceTree = "<group>"; };
 		21FFED5C1C488689006F294F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		21FFED5F1C4AA325006F294F /* Proposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proposer.swift; sourceTree = "<group>"; };
+		21FFED611C4AAAC4006F294F /* PostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostVC.swift; path = "View Controllers/PostVC.swift"; sourceTree = "<group>"; };
+		21FFED631C4AAB78006F294F /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Model/Post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 			children = (
 				21FFED291C487CEE006F294F /* Main.storyboard */,
 				21FFED5A1C488617006F294F /* MapVC.swift */,
+				21FFED611C4AAAC4006F294F /* PostVC.swift */,
 				21FFED551C487F62006F294F /* Model */,
 				21FFED2C1C487CEE006F294F /* Assets.xcassets */,
 				21FFED2E1C487CEE006F294F /* LaunchScreen.storyboard */,
@@ -139,6 +144,7 @@
 		21FFED551C487F62006F294F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				21FFED631C4AAB78006F294F /* Post.swift */,
 				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
 				21FFED531C487F5F006F294F /* ParseFetcher.swift */,
 				21FFED5F1C4AA325006F294F /* Proposer.swift */,
@@ -290,10 +296,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21FFED621C4AAAC4006F294F /* PostVC.swift in Sources */,
 				21FFED541C487F5F006F294F /* ParseFetcher.swift in Sources */,
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
 				21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */,
+				21FFED641C4AAB78006F294F /* Post.swift in Sources */,
 				21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

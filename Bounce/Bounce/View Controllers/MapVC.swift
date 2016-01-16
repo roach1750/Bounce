@@ -20,16 +20,33 @@ class MapVC: UIViewController, CLLocationManagerDelegate {
     //Constants
     let locationManager = CLLocationManager()
     
+    ///////////////////////////////////////
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         requestLocationData()
     }
     
+    @IBAction func composeButtonTapped(sender: UIBarButtonItem) {
+        performSegueWithIdentifier("createPostSegue", sender: self)
+    }
+
+
+    
+    //MARK: - MapView Delegate Methods 
+    
+    
+    func configureMapView(){
+        mapView.showsUserLocation = true
+    }
+    
+    //MARK: - Location Manager
+    
     func requestLocationData() {
         let location: PrivateResource = .Location(.WhenInUse)
         
         proposeToAccess(location, agreed: {
-            print("I can access Location. :]\n")
+            print("I can access Location.\n")
             self.locationManager.delegate = self
             self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
             self.locationManager.startUpdatingLocation()
@@ -39,19 +56,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate {
         })
     }
     
-    //MARK: - MapView Delegate Methods 
-    
-    func configureMapView(){
-        mapView.showsUserLocation = true
-    }
-    
-    
-    //MARK: - Location Manager
-    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(1, 1))
+            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.1, 0.1))
             mapView.setRegion(region, animated: true)
             locationManager.stopUpdatingLocation()
         }
