@@ -46,7 +46,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate {
         let location: PrivateResource = .Location(.WhenInUse)
         
         proposeToAccess(location, agreed: {
-            print("I can access Location.\n")
+//            print("I can access Location.\n")
             self.locationManager.delegate = self
             self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
             self.locationManager.startUpdatingLocation()

@@ -10,4 +10,8 @@ import UIKit
 
 class Post: NSObject {
 
+    var postMessage: String?
+    var postImage: UIImage?
+    
+    
 }
