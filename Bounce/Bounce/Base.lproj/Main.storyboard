@@ -66,12 +66,16 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCy-el-dWO">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCy-el-dWO">
                                 <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.015686274510000001" green="0.22023126911314986" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="jCy-el-dWO" secondAttribute="height" multiplier="1:1" id="nKg-5E-ddf"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Y50-X3-hII" appends="YES" id="uID-mZ-qRw"/>
+                                </connections>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" text="Enter capition for post" translatesAutoresizingMaskIntoConstraints="NO" id="gcQ-uc-G5z">
                                 <rect key="frame" x="0.0" y="664" width="600" height="236"/>
@@ -123,11 +127,97 @@
                         <outlet property="locationButton" destination="pAP-5F-NWL" id="eSp-vl-qUw"/>
                         <outlet property="postImageView" destination="jCy-el-dWO" id="GRY-fO-JGE"/>
                         <outlet property="postTextView" destination="gcQ-uc-G5z" id="WRv-cH-DpM"/>
+                        <segue destination="aRa-WI-oz7" kind="presentation" identifier="showCamera" id="mC5-Uw-hGL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DzY-k7-jBd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Y50-X3-hII">
+                    <connections>
+                        <action selector="goToCameraView:" destination="Mfj-V1-hDX" id="wIB-rh-9xE"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3036" y="-53"/>
+        </scene>
+        <!--CameraVC-->
+        <scene sceneID="AhF-vM-dhX">
+            <objects>
+                <viewController id="aRa-WI-oz7" customClass="CameraVC" customModule="Bounce" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Omu-su-v3u"/>
+                        <viewControllerLayoutGuide type="bottom" id="gp0-A6-44m"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mh0-je-LsV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="767"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfM-gC-BUC">
+                                <rect key="frame" x="8" y="10" width="59" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="aRa-WI-oz7" eventType="touchUpInside" id="igc-1Y-YDX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5a0-2U-j8X" userLabel="Take Picture">
+                                <rect key="frame" x="255" y="669" width="90" height="90"/>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5a0-2U-j8X" secondAttribute="height" multiplier="1:1" id="1ba-LD-SOE"/>
+                                    <constraint firstAttribute="width" constant="90" id="SLy-VM-n54"/>
+                                </constraints>
+                                <state key="normal">
+                                    <color key="titleShadowColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Khr-gG-Kap">
+                                <rect key="frame" x="0.0" y="58" width="600" height="600"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Khr-gG-Kap" secondAttribute="height" multiplier="1:1" id="uoc-7b-wli"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qsJ-k4-ILX">
+                                <rect key="frame" x="533" y="10" width="59" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="aRa-WI-oz7" eventType="touchUpInside" id="maI-E3-KKN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lfM-gC-BUC" firstAttribute="leading" secondItem="mh0-je-LsV" secondAttribute="leading" constant="8" id="1VC-qK-Vmo"/>
+                            <constraint firstItem="5a0-2U-j8X" firstAttribute="centerX" secondItem="mh0-je-LsV" secondAttribute="centerX" id="3FH-aw-jsm"/>
+                            <constraint firstItem="Khr-gG-Kap" firstAttribute="top" secondItem="lfM-gC-BUC" secondAttribute="bottom" constant="13" id="6lb-ox-CXR"/>
+                            <constraint firstItem="5a0-2U-j8X" firstAttribute="top" secondItem="Khr-gG-Kap" secondAttribute="bottom" constant="11" id="7Pp-pw-gco"/>
+                            <constraint firstItem="lfM-gC-BUC" firstAttribute="top" secondItem="mh0-je-LsV" secondAttribute="top" id="E3u-cI-7S1"/>
+                            <constraint firstAttribute="trailing" secondItem="Khr-gG-Kap" secondAttribute="trailing" id="IPU-9U-NDR"/>
+                            <constraint firstAttribute="trailing" secondItem="qsJ-k4-ILX" secondAttribute="trailing" constant="8" id="Lpw-IB-TJM"/>
+                            <constraint firstItem="qsJ-k4-ILX" firstAttribute="height" secondItem="lfM-gC-BUC" secondAttribute="height" id="cg3-BC-6wz"/>
+                            <constraint firstItem="qsJ-k4-ILX" firstAttribute="top" secondItem="mh0-je-LsV" secondAttribute="top" id="g3s-1Q-XOn"/>
+                            <constraint firstItem="Khr-gG-Kap" firstAttribute="leading" secondItem="mh0-je-LsV" secondAttribute="leading" id="kIR-4g-3YA"/>
+                            <constraint firstItem="qsJ-k4-ILX" firstAttribute="top" secondItem="mh0-je-LsV" secondAttribute="top" constant="10" id="krf-JW-LED"/>
+                            <constraint firstItem="lfM-gC-BUC" firstAttribute="top" secondItem="mh0-je-LsV" secondAttribute="top" constant="10" id="nOA-6L-zcx"/>
+                            <constraint firstItem="qsJ-k4-ILX" firstAttribute="width" secondItem="lfM-gC-BUC" secondAttribute="width" id="tFO-sj-mhh"/>
+                            <constraint firstItem="Khr-gG-Kap" firstAttribute="centerX" secondItem="mh0-je-LsV" secondAttribute="centerX" id="xo1-9C-1tz"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="E3u-cI-7S1"/>
+                                <exclude reference="g3s-1Q-XOn"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="767"/>
+                    <connections>
+                        <outlet property="cameraPreviewImageView" destination="Khr-gG-Kap" id="wTP-mY-jfo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CHJ-3c-uTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3808" y="-269.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Uwm-og-Jyk">

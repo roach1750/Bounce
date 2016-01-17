@@ -28,6 +28,20 @@ class PostVC: UIViewController, UITextViewDelegate {
         //Need to create post
     }
     
+
+    @IBAction func goToCameraView(sender: UITapGestureRecognizer) {
+        let camera: PrivateResource = .Camera
+        
+        proposeToAccess(camera, agreed: {
+            print("I can access Camera.")
+            self.performSegueWithIdentifier("showCamera", sender: self)
+            
+            }, rejected: {
+                print("no camera permissions")
+        })
+    
+    }
+
     
     //MARK: Post Textview Stuff: 
     func configureTextview(){
@@ -48,11 +62,12 @@ class PostVC: UIViewController, UITextViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeState:", name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
     
+    //WARNGING: This is not perfect yet
     func keyboardWillChangeState(notification: NSNotification) {
         let keyboardBeginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
         let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue
-        print("Begin Frame: \(keyboardBeginFrame!)")
-        print("End Frame: \(keyboardEndFrame!)")
+//        print("Begin Frame: \(keyboardBeginFrame!)")
+//        print("End Frame: \(keyboardEndFrame!)")
         
         let keyboardHeight = keyboardEndFrame!.size.height
         let viewHeight = view.frame.size.height
@@ -85,9 +100,7 @@ class PostVC: UIViewController, UITextViewDelegate {
                 self.postTextView.transform = CGAffineTransformIdentity
             })
         }
-   
-    
-    
+       
     
     }
     
