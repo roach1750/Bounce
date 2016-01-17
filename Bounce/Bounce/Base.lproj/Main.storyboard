@@ -77,7 +77,7 @@
                                     <outletCollection property="gestureRecognizers" destination="Y50-X3-hII" appends="YES" id="uID-mZ-qRw"/>
                                 </connections>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" text="Enter capition for post" translatesAutoresizingMaskIntoConstraints="NO" id="gcQ-uc-G5z">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" text="Enter caption for post" translatesAutoresizingMaskIntoConstraints="NO" id="gcQ-uc-G5z">
                                 <rect key="frame" x="0.0" y="664" width="600" height="236"/>
                                 <color key="backgroundColor" red="0.015686274510000001" green="0.87058823529999996" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -148,7 +148,7 @@
                         <viewControllerLayoutGuide type="bottom" id="gp0-A6-44m"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mh0-je-LsV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="767"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="818"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfM-gC-BUC">
@@ -160,7 +160,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5a0-2U-j8X" userLabel="Take Picture">
-                                <rect key="frame" x="255" y="669" width="90" height="90"/>
+                                <rect key="frame" x="255" y="678" width="90" height="90"/>
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="5a0-2U-j8X" secondAttribute="height" multiplier="1:1" id="1ba-LD-SOE"/>
@@ -169,6 +169,9 @@
                                 <state key="normal">
                                     <color key="titleShadowColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="takePicture:" destination="aRa-WI-oz7" eventType="touchUpInside" id="pcA-5H-gjp"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Khr-gG-Kap">
                                 <rect key="frame" x="0.0" y="58" width="600" height="600"/>
@@ -185,12 +188,12 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.19651943919769738" green="0.21267342372728906" blue="0.21048370322899804" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="lfM-gC-BUC" firstAttribute="leading" secondItem="mh0-je-LsV" secondAttribute="leading" constant="8" id="1VC-qK-Vmo"/>
                             <constraint firstItem="5a0-2U-j8X" firstAttribute="centerX" secondItem="mh0-je-LsV" secondAttribute="centerX" id="3FH-aw-jsm"/>
                             <constraint firstItem="Khr-gG-Kap" firstAttribute="top" secondItem="lfM-gC-BUC" secondAttribute="bottom" constant="13" id="6lb-ox-CXR"/>
-                            <constraint firstItem="5a0-2U-j8X" firstAttribute="top" secondItem="Khr-gG-Kap" secondAttribute="bottom" constant="11" id="7Pp-pw-gco"/>
+                            <constraint firstItem="5a0-2U-j8X" firstAttribute="top" secondItem="Khr-gG-Kap" secondAttribute="bottom" constant="20" id="7Pp-pw-gco"/>
                             <constraint firstItem="lfM-gC-BUC" firstAttribute="top" secondItem="mh0-je-LsV" secondAttribute="top" id="E3u-cI-7S1"/>
                             <constraint firstAttribute="trailing" secondItem="Khr-gG-Kap" secondAttribute="trailing" id="IPU-9U-NDR"/>
                             <constraint firstAttribute="trailing" secondItem="qsJ-k4-ILX" secondAttribute="trailing" constant="8" id="Lpw-IB-TJM"/>
@@ -210,14 +213,15 @@
                         </variation>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="767"/>
+                    <size key="freeformSize" width="600" height="818"/>
                     <connections>
                         <outlet property="cameraPreviewImageView" destination="Khr-gG-Kap" id="wTP-mY-jfo"/>
+                        <outlet property="takePictureButton" destination="5a0-2U-j8X" id="jfp-ig-Ari"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CHJ-3c-uTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3808" y="-269.5"/>
+            <point key="canvasLocation" x="3898" y="-280"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Uwm-og-Jyk">

@@ -20,6 +20,21 @@ class PostVC: UIViewController, UITextViewDelegate {
         configureTextview()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        restoreDataIfApplicable()
+
+    }
+    
+    func restoreDataIfApplicable(){
+        if Post.sharedInstance.postImage != nil {
+            postImageView.image = Post.sharedInstance.postImage!
+        }
+        if Post.sharedInstance.postMessage != nil {
+            postTextView.text = Post.sharedInstance.postMessage!
+        }
+    }
+    
+    
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -33,7 +48,6 @@ class PostVC: UIViewController, UITextViewDelegate {
         let camera: PrivateResource = .Camera
         
         proposeToAccess(camera, agreed: {
-            print("I can access Camera.")
             self.performSegueWithIdentifier("showCamera", sender: self)
             
             }, rejected: {

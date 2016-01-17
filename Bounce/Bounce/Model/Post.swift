@@ -10,8 +10,21 @@ import UIKit
 
 class Post: NSObject {
 
+    class var sharedInstance: Post {
+        struct Singleton {
+            static let instance = Post()
+        }
+        return Singleton.instance
+    }
+    
     var postMessage: String?
     var postImage: UIImage?
+    
+    func clearData(){
+        postMessage = nil
+        postImage = nil
+    }
+    
     
     
 }
