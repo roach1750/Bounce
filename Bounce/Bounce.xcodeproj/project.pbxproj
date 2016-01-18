@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21092A981C4B39FA0087BDE9 /* CameraVC.swift */; };
+		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
+		21970FC41C4DA76E00048B54 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC31C4DA76E00048B54 /* Place.swift */; };
 		21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED251C487CEE006F294F /* AppDelegate.swift */; };
 		21FFED2B1C487CEE006F294F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED291C487CEE006F294F /* Main.storyboard */; };
 		21FFED2D1C487CEE006F294F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED2C1C487CEE006F294F /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		21092A981C4B39FA0087BDE9 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraVC.swift; path = "View Controllers/CameraVC.swift"; sourceTree = "<group>"; };
+		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		21970FC31C4DA76E00048B54 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
 		21FFED221C487CEE006F294F /* Bounce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bounce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FFED251C487CEE006F294F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FFED2A1C487CEE006F294F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -89,6 +93,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21970FC21C4DA44D00048B54 /* 3rd Party Models */ = {
+			isa = PBXGroup;
+			children = (
+				21FFED5F1C4AA325006F294F /* Proposer.swift */,
+				21970FC01C4DA44900048B54 /* SwiftyJSON.swift */,
+			);
+			name = "3rd Party Models";
+			sourceTree = "<group>";
+		};
 		21FFED191C487CEE006F294F = {
 			isa = PBXGroup;
 			children = (
@@ -149,8 +162,9 @@
 			children = (
 				21FFED631C4AAB78006F294F /* Post.swift */,
 				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
+				21970FC31C4DA76E00048B54 /* Place.swift */,
 				21FFED531C487F5F006F294F /* ParseFetcher.swift */,
-				21FFED5F1C4AA325006F294F /* Proposer.swift */,
+				21970FC21C4DA44D00048B54 /* 3rd Party Models */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -305,8 +319,10 @@
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
 				21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */,
+				21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */,
 				21FFED641C4AAB78006F294F /* Post.swift in Sources */,
 				21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */,
+				21970FC41C4DA76E00048B54 /* Place.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

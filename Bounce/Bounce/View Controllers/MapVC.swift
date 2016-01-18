@@ -58,8 +58,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
+            print("updated location")
             let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
             let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.1, 0.1))
+            LocationFetcher.sharedInstance.currentLocation = location
             mapView.setRegion(region, animated: true)
             locationManager.stopUpdatingLocation()
         }
