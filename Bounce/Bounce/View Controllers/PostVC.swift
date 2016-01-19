@@ -18,6 +18,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         registerForKeyboardNotifications()
         configureTextview()
+        configureLocationButton()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -39,8 +40,24 @@ class PostVC: UIViewController, UITextViewDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    //Do I need to put a spinner here? or what happens if the person reloads?
+    func configureLocationButton(){
+        if let place = LocationFetcher.sharedInstance.selectedPlace {
+            locationButton.setTitle(place.name!, forState: UIControlState.Normal)
+        }
+    }
+    
+    
+    //MARK: Create Post:
     @IBAction func postButtonTapped(sender: UIBarButtonItem) {
         //Need to create post
+        let newPost = Post()
+        newPost.postMessage = postTextView.text
+        newPost.postImage = postImageView.image
+        newPost.postPlace = LocationFetcher.sharedInstance.selectedPlace
+        newPost.createPFObject()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 

@@ -48,8 +48,16 @@ class NearbyPlacesTVC: UITableViewController {
             cell.textLabel?.text = place.name!
             cell.detailTextLabel?.text = String(place.distanceFromUser!)
         }
-
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let placesArray = LocationFetcher.sharedInstance.placeArray {
+            let place = placesArray[indexPath.row]
+            LocationFetcher.sharedInstance.selectedPlace = place
+        }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
 

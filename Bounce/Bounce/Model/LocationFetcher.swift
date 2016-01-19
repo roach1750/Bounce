@@ -20,8 +20,11 @@ class LocationFetcher: NSObject {
         return Singleton.instance
     }
     
+    var selectedPlace: Place?
+    
     var placeArray: [Place]?
-        var currentLocation: CLLocation? {
+    
+    var currentLocation: CLLocation? {
         didSet {
             //fetchGooglePlaces()
             fetchFourSquarePlaces()
@@ -33,10 +36,10 @@ class LocationFetcher: NSObject {
             let latitude = String(location.coordinate.latitude)
             let longitude = String(location.coordinate.longitude)
             let urlString = "https://api.foursquare.com/v2/venues/search" +
-            "?client_id=BHHFITGZBBFHH0A5NFVVAKRZENHIH4LJBWLBBC41ELKQHTIQ" +
-            "&client_secret=JAKWMQU3LZLTIJ3O2Q3MSNL4N3EVZSGDQOH3DYA1YYYJX5OG" +
-            "&v=20130815" +
-            "&ll=" + latitude + "," + longitude
+                "?client_id=BHHFITGZBBFHH0A5NFVVAKRZENHIH4LJBWLBBC41ELKQHTIQ" +
+                "&client_secret=JAKWMQU3LZLTIJ3O2Q3MSNL4N3EVZSGDQOH3DYA1YYYJX5OG" +
+                "&v=20130815" +
+                "&ll=" + latitude + "," + longitude
             
             let session = NSURLSession.sharedSession()
             let url = NSURL(string: urlString)
@@ -52,6 +55,7 @@ class LocationFetcher: NSObject {
                     do{
                         let resultsJSON = JSON(data: data!)
                         self.placeArray = [Place]()
+                        self.selectedPlace = nil
                         for (var i = 0; i < resultsJSON["response"]["venues"].count; i++) {
                             let currentPlace = Place()
                             currentPlace.name = resultsJSON["response"]["venues"][i]["name"].string
@@ -60,13 +64,13 @@ class LocationFetcher: NSObject {
                             let point = CGPointMake(CGFloat(currentPlace.latitude!), CGFloat(currentPlace.longitude!))
                             let currentLocationPoint = CGPointMake(CGFloat((self.currentLocation?.coordinate.latitude)!), CGFloat((self.currentLocation?.coordinate.longitude)!))
                             currentPlace.distanceFromUser = self.distanceBetweenPoints(point, point2: currentLocationPoint)
-                           // print(currentPlace.description)
+                            // print(currentPlace.description)
                             self.placeArray?.append(currentPlace)
                         }
                         self.placeArray?.sortInPlace({$0.distanceFromUser < $1.distanceFromUser})
                         
-                        
-                        print(self.placeArray)
+                        self.selectedPlace = self.placeArray?[0]
+                        print("Foursquare Done")
                     }
                 }
             }
@@ -119,11 +123,11 @@ class LocationFetcher: NSObject {
                     }catch _{
                         print("Received not-well-formatted JSON")
                     }
-                
-            }
+                    
+                }
             }
             dataTask.resume()
-
+            
         }
         
         
@@ -138,7 +142,7 @@ class LocationFetcher: NSObject {
         
     }
     
-
+    
     
 }
 
