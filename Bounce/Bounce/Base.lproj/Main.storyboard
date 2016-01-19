@@ -65,6 +65,9 @@
                                 <state key="normal" title="Current Location Button">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="eNS-kH-FRZ" kind="show" id="FPb-JA-hGq"/>
+                                </connections>
                             </button>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCy-el-dWO">
                                 <rect key="frame" x="0.0" y="64" width="600" height="600"/>
@@ -221,7 +224,52 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CHJ-3c-uTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3898" y="-280"/>
+            <point key="canvasLocation" x="3863" y="-731"/>
+        </scene>
+        <!--Nearby Places-->
+        <scene sceneID="TSM-dG-PFY">
+            <objects>
+                <tableViewController id="eNS-kH-FRZ" customClass="NearbyPlacesTVC" customModule="Bounce" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Q5B-y1-AlQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="1000"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="placeCell" textLabel="Nw5-sR-qga" detailTextLabel="S5T-82-Dsr" style="IBUITableViewCellStyleSubtitle" id="UgH-kc-xns">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UgH-kc-xns" id="a5e-2Y-o7V">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nw5-sR-qga">
+                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S5T-82-Dsr">
+                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="eNS-kH-FRZ" id="uLh-6h-z3M"/>
+                            <outlet property="delegate" destination="eNS-kH-FRZ" id="F1d-nw-oAY"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Nearby Places" id="a6h-fa-aQ3"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AAc-1c-TOd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3863" y="369"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Uwm-og-Jyk">

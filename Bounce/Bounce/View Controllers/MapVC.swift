@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Parse
 
 class MapVC: UIViewController, CLLocationManagerDelegate {
 

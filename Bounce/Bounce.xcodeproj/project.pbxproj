@@ -10,6 +10,19 @@
 		21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21092A981C4B39FA0087BDE9 /* CameraVC.swift */; };
 		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
 		21970FC41C4DA76E00048B54 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC31C4DA76E00048B54 /* Place.swift */; };
+		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
+		21970FC91C4DD42800048B54 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FC71C4DD42800048B54 /* Bolts.framework */; };
+		21970FCA1C4DD42800048B54 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FC81C4DD42800048B54 /* Parse.framework */; };
+		21970FCC1C4DD4A000048B54 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FCB1C4DD4A000048B54 /* AudioToolbox.framework */; };
+		21970FCE1C4DD4AF00048B54 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FCD1C4DD4AF00048B54 /* CFNetwork.framework */; };
+		21970FD01C4DD4B400048B54 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FCF1C4DD4B400048B54 /* CoreGraphics.framework */; };
+		21970FD21C4DD4BF00048B54 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD11C4DD4BF00048B54 /* CoreLocation.framework */; };
+		21970FD41C4DD4C700048B54 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD31C4DD4C700048B54 /* QuartzCore.framework */; };
+		21970FD61C4DD4CE00048B54 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD51C4DD4CE00048B54 /* Security.framework */; };
+		21970FD81C4DD4D900048B54 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD71C4DD4D900048B54 /* StoreKit.framework */; };
+		21970FDA1C4DD4E800048B54 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD91C4DD4E800048B54 /* SystemConfiguration.framework */; };
+		21970FDC1C4DD4F100048B54 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FDB1C4DD4F100048B54 /* libz.tbd */; };
+		21970FDE1C4DD4FA00048B54 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */; };
 		21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED251C487CEE006F294F /* AppDelegate.swift */; };
 		21FFED2B1C487CEE006F294F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED291C487CEE006F294F /* Main.storyboard */; };
 		21FFED2D1C487CEE006F294F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED2C1C487CEE006F294F /* Assets.xcassets */; };
@@ -46,6 +59,19 @@
 		21092A981C4B39FA0087BDE9 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraVC.swift; path = "View Controllers/CameraVC.swift"; sourceTree = "<group>"; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		21970FC31C4DA76E00048B54 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
+		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
+		21970FC71C4DD42800048B54 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		21970FC81C4DD42800048B54 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		21970FCB1C4DD4A000048B54 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		21970FCD1C4DD4AF00048B54 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		21970FCF1C4DD4B400048B54 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		21970FD11C4DD4BF00048B54 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		21970FD31C4DD4C700048B54 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		21970FD51C4DD4CE00048B54 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		21970FD71C4DD4D900048B54 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		21970FD91C4DD4E800048B54 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		21970FDB1C4DD4F100048B54 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		21FFED221C487CEE006F294F /* Bounce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bounce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FFED251C487CEE006F294F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FFED2A1C487CEE006F294F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -72,7 +98,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21970FDE1C4DD4FA00048B54 /* libsqlite3.tbd in Frameworks */,
+				21970FDC1C4DD4F100048B54 /* libz.tbd in Frameworks */,
+				21970FDA1C4DD4E800048B54 /* SystemConfiguration.framework in Frameworks */,
+				21970FD81C4DD4D900048B54 /* StoreKit.framework in Frameworks */,
+				21970FD61C4DD4CE00048B54 /* Security.framework in Frameworks */,
+				21970FD41C4DD4C700048B54 /* QuartzCore.framework in Frameworks */,
+				21970FD21C4DD4BF00048B54 /* CoreLocation.framework in Frameworks */,
+				21970FD01C4DD4B400048B54 /* CoreGraphics.framework in Frameworks */,
+				21970FCE1C4DD4AF00048B54 /* CFNetwork.framework in Frameworks */,
+				21970FCC1C4DD4A000048B54 /* AudioToolbox.framework in Frameworks */,
 				21FFED5D1C488689006F294F /* MapKit.framework in Frameworks */,
+				21970FCA1C4DD42800048B54 /* Parse.framework in Frameworks */,
+				21970FC91C4DD42800048B54 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +168,7 @@
 				21FFED5A1C488617006F294F /* MapVC.swift */,
 				21FFED611C4AAAC4006F294F /* PostVC.swift */,
 				21092A981C4B39FA0087BDE9 /* CameraVC.swift */,
+				21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */,
 				21FFED551C487F62006F294F /* Model */,
 				21FFED2C1C487CEE006F294F /* Assets.xcassets */,
 				21FFED2E1C487CEE006F294F /* LaunchScreen.storyboard */,
@@ -172,6 +211,18 @@
 		21FFED5E1C4888B7006F294F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */,
+				21970FDB1C4DD4F100048B54 /* libz.tbd */,
+				21970FD91C4DD4E800048B54 /* SystemConfiguration.framework */,
+				21970FD71C4DD4D900048B54 /* StoreKit.framework */,
+				21970FD51C4DD4CE00048B54 /* Security.framework */,
+				21970FD31C4DD4C700048B54 /* QuartzCore.framework */,
+				21970FD11C4DD4BF00048B54 /* CoreLocation.framework */,
+				21970FCF1C4DD4B400048B54 /* CoreGraphics.framework */,
+				21970FCD1C4DD4AF00048B54 /* CFNetwork.framework */,
+				21970FCB1C4DD4A000048B54 /* AudioToolbox.framework */,
+				21970FC71C4DD42800048B54 /* Bolts.framework */,
+				21970FC81C4DD42800048B54 /* Parse.framework */,
 				21FFED5C1C488689006F294F /* MapKit.framework */,
 			);
 			name = Frameworks;
@@ -315,6 +366,7 @@
 			files = (
 				21FFED621C4AAAC4006F294F /* PostVC.swift in Sources */,
 				21FFED541C487F5F006F294F /* ParseFetcher.swift in Sources */,
+				21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */,
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
@@ -462,6 +514,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Bounce/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.Bounce;
@@ -473,6 +529,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Bounce/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.Bounce;
