@@ -32,6 +32,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Bounce" id="g4o-mE-pLO">
+                        <barButtonItem key="leftBarButtonItem" title="Fetch" id="sft-Yo-B7n">
+                            <connections>
+                                <action selector="fetchButtonTapped:" destination="BYZ-38-t0r" id="A7Z-ol-7jV"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="2C3-ai-Fpl">
                             <connections>
                                 <action selector="composeButtonTapped:" destination="BYZ-38-t0r" id="sYk-pZ-uX7"/>

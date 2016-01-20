@@ -32,6 +32,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate {
         performSegueWithIdentifier("createPostSegue", sender: self)
     }
 
+    @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
+        let fetcher = ParseFetcher()
+        fetcher.fetchData()
+    }
 
     
     //MARK: - MapView Delegate Methods 
