@@ -24,6 +24,10 @@
 		21970FDC1C4DD4F100048B54 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FDB1C4DD4F100048B54 /* libz.tbd */; };
 		21970FDE1C4DD4FA00048B54 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */; };
 		21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FDF1C4EFF5600048B54 /* BounceConstants.swift */; };
+		21AC739B1C5193D300C81D68 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21AC73991C5193D300C81D68 /* Realm.framework */; };
+		21AC739C1C5193D300C81D68 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21AC73991C5193D300C81D68 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		21AC739D1C5193D300C81D68 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21AC739A1C5193D300C81D68 /* RealmSwift.framework */; };
+		21AC739E1C5193D300C81D68 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21AC739A1C5193D300C81D68 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED251C487CEE006F294F /* AppDelegate.swift */; };
 		21FFED2B1C487CEE006F294F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED291C487CEE006F294F /* Main.storyboard */; };
 		21FFED2D1C487CEE006F294F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED2C1C487CEE006F294F /* Assets.xcassets */; };
@@ -56,6 +60,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		21AC739F1C5193D300C81D68 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				21AC739E1C5193D300C81D68 /* RealmSwift.framework in Embed Frameworks */,
+				21AC739C1C5193D300C81D68 /* Realm.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		21092A981C4B39FA0087BDE9 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraVC.swift; path = "View Controllers/CameraVC.swift"; sourceTree = "<group>"; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -74,6 +93,8 @@
 		21970FDB1C4DD4F100048B54 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		21970FDF1C4EFF5600048B54 /* BounceConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceConstants.swift; path = Model/BounceConstants.swift; sourceTree = "<group>"; };
+		21AC73991C5193D300C81D68 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		21AC739A1C5193D300C81D68 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		21FFED221C487CEE006F294F /* Bounce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bounce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FFED251C487CEE006F294F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FFED2A1C487CEE006F294F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -104,12 +125,14 @@
 				21970FDC1C4DD4F100048B54 /* libz.tbd in Frameworks */,
 				21970FDA1C4DD4E800048B54 /* SystemConfiguration.framework in Frameworks */,
 				21970FD81C4DD4D900048B54 /* StoreKit.framework in Frameworks */,
+				21AC739B1C5193D300C81D68 /* Realm.framework in Frameworks */,
 				21970FD61C4DD4CE00048B54 /* Security.framework in Frameworks */,
 				21970FD41C4DD4C700048B54 /* QuartzCore.framework in Frameworks */,
 				21970FD21C4DD4BF00048B54 /* CoreLocation.framework in Frameworks */,
 				21970FD01C4DD4B400048B54 /* CoreGraphics.framework in Frameworks */,
 				21970FCE1C4DD4AF00048B54 /* CFNetwork.framework in Frameworks */,
 				21970FCC1C4DD4A000048B54 /* AudioToolbox.framework in Frameworks */,
+				21AC739D1C5193D300C81D68 /* RealmSwift.framework in Frameworks */,
 				21FFED5D1C488689006F294F /* MapKit.framework in Frameworks */,
 				21970FCA1C4DD42800048B54 /* Parse.framework in Frameworks */,
 				21970FC91C4DD42800048B54 /* Bolts.framework in Frameworks */,
@@ -214,6 +237,8 @@
 		21FFED5E1C4888B7006F294F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				21AC73991C5193D300C81D68 /* Realm.framework */,
+				21AC739A1C5193D300C81D68 /* RealmSwift.framework */,
 				21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */,
 				21970FDB1C4DD4F100048B54 /* libz.tbd */,
 				21970FD91C4DD4E800048B54 /* SystemConfiguration.framework */,
@@ -241,6 +266,7 @@
 				21FFED1E1C487CEE006F294F /* Sources */,
 				21FFED1F1C487CEE006F294F /* Frameworks */,
 				21FFED201C487CEE006F294F /* Resources */,
+				21AC739F1C5193D300C81D68 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

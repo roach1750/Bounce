@@ -28,13 +28,12 @@ class ParseFetcher: NSObject {
             query.whereKey(BOUNCELOCATIONGEOPOINTKEY, nearGeoPoint: userGeopoint, withinMiles: 300)
             query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
                 print(results)
+
+                
             }
         }
     }
-    
-    func sortData(results: [PFObject]) {
-        
-    }
+
     
     
     

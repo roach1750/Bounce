@@ -8,6 +8,9 @@
 
 import UIKit
 import Parse
+import Realm
+import RealmSwift
+
 
 class Post: NSObject {
 
