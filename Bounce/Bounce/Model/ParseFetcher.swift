@@ -27,9 +27,15 @@ class ParseFetcher: NSObject {
             let userGeopoint = PFGeoPoint(latitude: lat, longitude: lng)
             query.whereKey(BOUNCELOCATIONGEOPOINTKEY, nearGeoPoint: userGeopoint, withinMiles: 300)
             query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
-                print(results)
-
+                if results?.count > 0 {
+                    print("There are \(results!.count) results")
+                    let dm = DataModel()
+                    dm.addNewDataToDataBase(results as [PFObject]!)
                 
+                
+                }
+                
+
             }
         }
     }

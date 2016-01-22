@@ -10,6 +10,8 @@
 let BOUNCECLASSNAME  =  "BouncePost"
 let BOUNCECOMMENTKEY  =  "comment"
 let BOUNCELOCATIONGEOPOINTKEY  =  "location"
+let BOUNCEPLACEKEY =  "locationID"
+
 let BOUNCELOCATIONNAME  =  "placeName"
 let BOUNCEIMAGEKEY  =  "imageFile"
 let BOUNCEPOSTSUCCEDEDNOTIFICATION  =  "postSucceded"
@@ -18,4 +20,5 @@ let BOUNCESCOREKEY  =  "score"
 let BOUNCEKEY  =  "key"
 let BOUNCEANNOTATIONSREADYNOTIFICATION  =  "annotationsReady"
 let BOUNCETABLEDATAREADYNOTIFICATION  =  "tableDataReady"
+let BOUNCELOCATIONIDENTIFIER =  "locationID"
 

@@ -10,6 +10,8 @@ import UIKit
 import MapKit
 import CoreLocation
 import Parse
+import Realm
+import RealmSwift
 
 class MapVC: UIViewController, CLLocationManagerDelegate {
 
@@ -26,6 +28,13 @@ class MapVC: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         requestLocationData()
+        print(Realm.Configuration.defaultConfiguration.path!)
+        
+        let realm = try! Realm()
+        try! realm.write{
+            realm.deleteAll()
+        }
+
     }
     
     @IBAction func composeButtonTapped(sender: UIBarButtonItem) {

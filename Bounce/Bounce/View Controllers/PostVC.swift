@@ -23,12 +23,15 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         restoreDataIfApplicable()
+    }
+    override func viewWillAppear(animated: Bool) {
+        configureLocationButton()
 
     }
     
     func restoreDataIfApplicable(){
-        if Post.sharedInstance.postImage != nil {
-            postImageView.image = Post.sharedInstance.postImage!
+        if Post.sharedInstance.postImageData != nil {
+            postImageView.image = UIImage(data: Post.sharedInstance.postImageData!)
         }
         if Post.sharedInstance.postMessage != nil {
             postTextView.text = Post.sharedInstance.postMessage!
@@ -54,7 +57,9 @@ class PostVC: UIViewController, UITextViewDelegate {
         //Need to create post
         let newPost = Post()
         newPost.postMessage = postTextView.text
-        newPost.postImage = postImageView.image
+        if let image = postImageView.image {
+            newPost.postImageData = UIImagePNGRepresentation(image)
+        }
         newPost.postPlace = LocationFetcher.sharedInstance.selectedPlace
         newPost.createPFObject()
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -93,7 +98,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeState:", name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
     
-    //WARNGING: This is not perfect yet
+    //WARNING: This is not perfect yet
     func keyboardWillChangeState(notification: NSNotification) {
         let keyboardBeginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
         let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue

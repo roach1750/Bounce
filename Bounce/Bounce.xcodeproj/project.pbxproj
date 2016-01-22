@@ -28,6 +28,7 @@
 		21AC739C1C5193D300C81D68 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21AC73991C5193D300C81D68 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		21AC739D1C5193D300C81D68 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21AC739A1C5193D300C81D68 /* RealmSwift.framework */; };
 		21AC739E1C5193D300C81D68 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21AC739A1C5193D300C81D68 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		21AC73A11C51964800C81D68 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC73A01C51964800C81D68 /* DataModel.swift */; };
 		21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED251C487CEE006F294F /* AppDelegate.swift */; };
 		21FFED2B1C487CEE006F294F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED291C487CEE006F294F /* Main.storyboard */; };
 		21FFED2D1C487CEE006F294F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED2C1C487CEE006F294F /* Assets.xcassets */; };
@@ -95,6 +96,7 @@
 		21970FDF1C4EFF5600048B54 /* BounceConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceConstants.swift; path = Model/BounceConstants.swift; sourceTree = "<group>"; };
 		21AC73991C5193D300C81D68 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		21AC739A1C5193D300C81D68 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		21AC73A01C51964800C81D68 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataModel.swift; path = Model/DataModel.swift; sourceTree = "<group>"; };
 		21FFED221C487CEE006F294F /* Bounce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bounce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FFED251C487CEE006F294F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FFED2A1C487CEE006F294F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -226,9 +228,10 @@
 			children = (
 				21970FDF1C4EFF5600048B54 /* BounceConstants.swift */,
 				21FFED631C4AAB78006F294F /* Post.swift */,
-				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
 				21970FC31C4DA76E00048B54 /* Place.swift */,
+				21AC73A01C51964800C81D68 /* DataModel.swift */,
 				21FFED531C487F5F006F294F /* ParseFetcher.swift */,
+				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
 				21970FC21C4DA44D00048B54 /* 3rd Party Models */,
 			);
 			name = Model;
@@ -399,6 +402,7 @@
 				21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */,
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
+				21AC73A11C51964800C81D68 /* DataModel.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
 				21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */,
 				21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */,

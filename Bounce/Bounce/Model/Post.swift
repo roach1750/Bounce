@@ -12,7 +12,7 @@ import Realm
 import RealmSwift
 
 
-class Post: NSObject {
+class Post: Object {
 
     class var sharedInstance: Post {
         struct Singleton {
@@ -22,9 +22,10 @@ class Post: NSObject {
     }
     
     var postMessage: String?
-    var postImage: UIImage?
+    var postImageData: NSData?
     var postPlace: Place?
-
+    var postKey: String?
+    var postPlaceName: String?
     
     
     func createPFObject(){
@@ -38,27 +39,35 @@ class Post: NSObject {
         object[BOUNCELOCATIONGEOPOINTKEY] = geopoint
         
         //message
-        object[BOUNCECOMMENTKEY] = postMessage
+        if let comment = postMessage {
+            object[BOUNCECOMMENTKEY] = comment
+        }
         
         //image
-        if let postImage = postImage {
-            let imageData = UIImagePNGRepresentation(postImage)
-            let imageFile = PFFile(name: "image.png", data: imageData!)
+        if let postImageData = postImageData {
+            let imageFile = PFFile(name: "image.png", data: postImageData)
             object[BOUNCEIMAGEKEY] = imageFile
         }
+        
+        //place name
+        object[BOUNCELOCATIONNAME] = postPlace!.name
+        
+        //Key
+        postKey = ("\(String(place!.name!))" + "," + "\(String(place!.latitude!))" + "," + "\(String(place!.longitude!))"  )
+        print(postKey)
+        object[BOUNCELOCATIONIDENTIFIER] = postKey!
         
         object.saveInBackground()
         
         
     }
     
-    
-    
+
     
     
     func clearData(){
         postMessage = nil
-        postImage = nil
+        postImageData = nil
     }
     
     

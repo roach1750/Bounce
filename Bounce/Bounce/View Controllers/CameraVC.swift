@@ -85,7 +85,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
                     self.captureSession.stopRunning()
                     self.cameraPreviewImageView.image = image;
-                    Post.sharedInstance.postImage = image
+                    Post.sharedInstance.postImageData = UIImagePNGRepresentation(image)
                 }
             })
         }

@@ -7,14 +7,19 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
-class Place: NSObject {
+class Place: Object {
     var name: String?
     var latitude: Double?
     var longitude: Double?
     var distanceFromUser: Double?
+    var posts = List<Post>()
+    var key: String?
     
-    override var description: String {
-        return("\(name!), lat: \(latitude!), long: \(longitude!), distance from user: \(distanceFromUser!) ft)")
-    }
+    
+//    override var description: String {
+//        return("\(name!), key: \(key!), lat: \(latitude!), long: \(longitude!), distance from user: \(distanceFromUser!) ft)")
+//    }
 }

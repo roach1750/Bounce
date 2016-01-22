@@ -57,7 +57,7 @@ class NearbyPlacesTVC: UITableViewController {
             LocationFetcher.sharedInstance.selectedPlace = place
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.popToRootViewControllerAnimated(true)
     }
 
 
