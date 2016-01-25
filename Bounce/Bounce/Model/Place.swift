@@ -11,9 +11,10 @@ import Realm
 import RealmSwift
 
 class Place: Object {
-    var name: String?
-    var latitude: Double?
-    var longitude: Double?
+    dynamic var name:String = "";
+    dynamic var latitude:Double = 0;
+    dynamic var longitude:Double = 0;
+    
     var distanceFromUser: Double?
     var posts = List<Post>()
     var key: String?

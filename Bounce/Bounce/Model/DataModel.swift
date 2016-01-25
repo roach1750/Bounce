@@ -35,6 +35,7 @@ class DataModel: NSObject {
             }
             
         }
+        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil, userInfo: nil)
         
     }
     
@@ -48,11 +49,11 @@ class DataModel: NSObject {
     func createPostFromPFObject(object: PFObject) -> Post{
         let newPost = Post()
         newPost.postMessage = object[BOUNCECOMMENTKEY] as? String
-        newPost.postKey = object[BOUNCELOCATIONIDENTIFIER] as? String
-        newPost.postPlaceName = object[BOUNCELOCATIONNAME] as? String
+        newPost.postKey = object[BOUNCELOCATIONIDENTIFIER] as! String
+        newPost.postPlaceName = object[BOUNCELOCATIONNAME] as! String
         let postLocationGeoPoint = object[BOUNCELOCATIONGEOPOINTKEY] as? PFGeoPoint
-        newPost.postLatitude = postLocationGeoPoint?.latitude
-        newPost.postLongitude = postLocationGeoPoint?.longitude
+        newPost.postLatitude = (postLocationGeoPoint?.latitude)!
+        newPost.postLongitude = (postLocationGeoPoint?.longitude)!
         newPost.postID = object.objectId!
         return newPost
     }
@@ -73,7 +74,7 @@ class DataModel: NSObject {
     //checks if there is an existing place in realm for this
     func fetchExistingPlaceFromRealmForPost(post: Post) -> Place?{
         let realm = try! Realm()
-        let predicate = NSPredicate(format: "key = %@", post.postKey!)
+        let predicate = NSPredicate(format: "key = %@", post.postKey)
         let searchResults = realm.objects(Place).filter(predicate)
         if searchResults.count > 0 {
             let place = searchResults[0]
@@ -87,7 +88,7 @@ class DataModel: NSObject {
     
     func checkIfPostIsExisting(post: Post) -> Bool {
         let realm = try! Realm()
-        let predicate = NSPredicate(format: "postID = %@", post.postID!)
+        let predicate = NSPredicate(format: "postID = %@", post.postID)
         let searchResults = realm.objects(Post).filter(predicate)
         return searchResults.count > 0 ? true : false
     }
@@ -107,6 +108,10 @@ class DataModel: NSObject {
         }
     }
 
+    func fetchAllPlaces() -> Results<(Place)> {
+        let realm = try! Realm()
+        return realm.objects(Place)
+    }
     
     
     

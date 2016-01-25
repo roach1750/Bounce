@@ -21,15 +21,14 @@ class Post: Object {
         return Singleton.instance
     }
     
-    var postMessage: String?
-    var postImageData: NSData?
-    var postPlace: Place?
-    var postKey: String?
-    var postPlaceName: String?
-    var postID: String?
-    var postLatitude: Double?
-    var postLongitude: Double? 
-
+    dynamic var postMessage: String?
+    dynamic var postImageData: NSData?
+    dynamic var postPlace: Place?
+    dynamic var postKey: String = ""
+    dynamic var postID: String = ""
+    dynamic var postPlaceName:String = "";
+    dynamic var postLatitude:Double = 0;
+    dynamic var postLongitude:Double = 0;
     
     
     func createPFObject(){
@@ -39,7 +38,7 @@ class Post: Object {
         
         //location
         let place = LocationFetcher.sharedInstance.selectedPlace
-        let geopoint = PFGeoPoint(latitude: place!.latitude!, longitude: place!.longitude!)
+        let geopoint = PFGeoPoint(latitude: place!.latitude, longitude: place!.longitude)
         object[BOUNCELOCATIONGEOPOINTKEY] = geopoint
         
         //message
@@ -57,9 +56,11 @@ class Post: Object {
         object[BOUNCELOCATIONNAME] = postPlace!.name
         
         //Key
-        postKey = ("\(String(place!.name!))" + "," + "\(String(place!.latitude!))" + "," + "\(String(place!.longitude!))"  )
-        print(postKey)
-        object[BOUNCELOCATIONIDENTIFIER] = postKey!
+        
+        postKey = "\(String(place!.name))" + "," + "\(String(place!.latitude))" + "," + "\(String(place!.longitude))"
+        
+
+        object[BOUNCELOCATIONIDENTIFIER] = postKey
         
         object.saveInBackground()
         

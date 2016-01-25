@@ -47,7 +47,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     //Do I need to put a spinner here? or what happens if the person reloads?
     func configureLocationButton(){
         if let place = LocationFetcher.sharedInstance.selectedPlace {
-            locationButton.setTitle(place.name!, forState: UIControlState.Normal)
+            locationButton.setTitle(place.name, forState: UIControlState.Normal)
         }
     }
     

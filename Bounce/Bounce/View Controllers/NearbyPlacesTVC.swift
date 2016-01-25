@@ -45,7 +45,7 @@ class NearbyPlacesTVC: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("placeCell", forIndexPath: indexPath)
         if let placesArray = LocationFetcher.sharedInstance.placeArray {
             let place = placesArray[indexPath.row]
-            cell.textLabel?.text = place.name!
+            cell.textLabel?.text = place.name
             cell.detailTextLabel?.text = String(place.distanceFromUser!)
         }
         return cell

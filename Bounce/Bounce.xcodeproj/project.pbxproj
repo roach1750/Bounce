@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2106417F1C56E41E00DFF326 /* BounceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2106417E1C56E41E00DFF326 /* BounceAnnotation.swift */; };
 		21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21092A981C4B39FA0087BDE9 /* CameraVC.swift */; };
 		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
 		21970FC41C4DA76E00048B54 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC31C4DA76E00048B54 /* Place.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2106417E1C56E41E00DFF326 /* BounceAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceAnnotation.swift; path = Model/BounceAnnotation.swift; sourceTree = "<group>"; };
 		21092A981C4B39FA0087BDE9 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraVC.swift; path = "View Controllers/CameraVC.swift"; sourceTree = "<group>"; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		21970FC31C4DA76E00048B54 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				21AC73A01C51964800C81D68 /* DataModel.swift */,
 				21FFED531C487F5F006F294F /* ParseFetcher.swift */,
 				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
+				2106417E1C56E41E00DFF326 /* BounceAnnotation.swift */,
 				21970FC21C4DA44D00048B54 /* 3rd Party Models */,
 			);
 			name = Model;
@@ -404,6 +407,7 @@
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
 				21AC73A11C51964800C81D68 /* DataModel.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
+				2106417F1C56E41E00DFF326 /* BounceAnnotation.swift in Sources */,
 				21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */,
 				21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */,
 				21FFED641C4AAB78006F294F /* Post.swift in Sources */,

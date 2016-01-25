@@ -13,7 +13,7 @@ import Parse
 import Realm
 import RealmSwift
 
-class MapVC: UIViewController, CLLocationManagerDelegate {
+class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     //Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -52,6 +52,41 @@ class MapVC: UIViewController, CLLocationManagerDelegate {
     
     func configureMapView(){
         mapView.showsUserLocation = true
+        mapView.delegate = self
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "createAnnotations", name: BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
+    }
+    
+    func createAnnotations() {
+        let dm = DataModel()
+        let objects = dm.fetchAllPlaces()
+        for place in objects {
+            let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
+            let annotation = BounceAnnotation(title: place.name, subtitle: "subtitle", coordinate: coordinate)
+            
+            mapView.addAnnotation(annotation)
+        }
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        if annotation.isKindOfClass(MKUserLocation)
+        {
+            return nil
+        }
+        
+        let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotationIdentifier")
+        pinAnnotationView.pinTintColor = UIColor.blueColor()
+        
+        pinAnnotationView.canShowCallout = true
+        pinAnnotationView.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+        return pinAnnotationView
+    }
+    
+    func mapView(MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        if control == annotationView.rightCalloutAccessoryView {
+            print("Going to the next VC!")
+        }
     }
     
     //MARK: - Location Manager

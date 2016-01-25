@@ -27,7 +27,7 @@ class LocationFetcher: NSObject {
     var currentLocation: CLLocation? {
         didSet {
             //fetchGooglePlaces()
-//            fetchFourSquarePlaces()
+            fetchFourSquarePlaces()
         }
     }
     
@@ -58,10 +58,10 @@ class LocationFetcher: NSObject {
                         self.selectedPlace = nil
                         for (var i = 0; i < resultsJSON["response"]["venues"].count; i++) {
                             let currentPlace = Place()
-                            currentPlace.name = resultsJSON["response"]["venues"][i]["name"].string
-                            currentPlace.latitude = resultsJSON["response"]["venues"][i]["location"]["lat"].double
-                            currentPlace.longitude = resultsJSON["response"]["venues"][i]["location"]["lng"].double
-                            let point = CGPointMake(CGFloat(currentPlace.latitude!), CGFloat(currentPlace.longitude!))
+                            currentPlace.name = resultsJSON["response"]["venues"][i]["name"].string!
+                            currentPlace.latitude = resultsJSON["response"]["venues"][i]["location"]["lat"].double!
+                            currentPlace.longitude = resultsJSON["response"]["venues"][i]["location"]["lng"].double!
+                            let point = CGPointMake(CGFloat(currentPlace.latitude), CGFloat(currentPlace.longitude))
                             let currentLocationPoint = CGPointMake(CGFloat((self.currentLocation?.coordinate.latitude)!), CGFloat((self.currentLocation?.coordinate.longitude)!))
                             currentPlace.distanceFromUser = self.distanceBetweenPoints(point, point2: currentLocationPoint)
                             // print(currentPlace.description)
