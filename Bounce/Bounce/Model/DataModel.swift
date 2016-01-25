@@ -15,60 +15,98 @@ import RealmSwift
 class DataModel: NSObject {
     
     func addNewDataToDataBase(data: [PFObject]) {
-        let realm = try! Realm()
-        for (_, retrievedPost) in data.enumerate() {
-            
-            //Re-create the Post from the PFOBject
-            
-            let newPost = Post()
-            newPost.postMessage = retrievedPost[BOUNCECOMMENTKEY] as? String
-            newPost.postKey = retrievedPost[BOUNCELOCATIONIDENTIFIER] as? String
-            newPost.postPlaceName = retrievedPost[BOUNCELOCATIONNAME] as? String
-            let newPostGeoPoint = retrievedPost[BOUNCELOCATIONGEOPOINTKEY] as? PFGeoPoint
-            
-            //Check if a post with that key already exists
-            let predicate = NSPredicate(format: "key = %@", newPost.postKey!)
-            let place = realm.objects(Place).filter(predicate)
-            if place.count != 0 {
-                //existing place
-                print("Existing place")
-                print(place.count)
-                //Add post to existing place - there should only be 1 place that matches the key of the post
-                print(place)
-                if place[0].posts.indexOf(newPost) == nil {
-                    try! realm.write{
-                        place[0].posts.append(newPost)
-                    }
-                }
-                else {
-                    return
+        
+        for dataObject in data {
+            let post = createPostFromPFObject(dataObject)
+            //First check if we already have this post, if so return get out of this method
+            if checkIfPostIsExisting(post) {
+                return
+            }
+            if let existingPlace = fetchExistingPlaceFromRealmForPost(post) { //Returns place if there is one already, otherwise returns nil
+                //The place exist...check to make sure place doesn't already contain post:
+                if existingPlace.posts.indexOf(post) == nil {
+                    addPostToExistingPlace(existingPlace, post: post)
                 }
             }
             else {
-                //create a new place
-                let newPlace = Place()
-                newPlace.name = newPost.postPlaceName
-                newPlace.latitude = newPostGeoPoint?.latitude
-                newPlace.longitude = newPostGeoPoint?.longitude
-                newPlace.posts = List<Post>()
-                newPlace.key = newPost.postKey
-                newPlace.posts.append(newPost)
-                try! realm.write{
-                    realm.add(newPlace)
-                    
-                }
-                
-                
+                //Create new place and add post to it
+                let newPlace = createNewPlaceFromPostAndAddPostToPlace(post)
+                addPlaceToRealm(newPlace)
             }
+            
         }
-        
-        
-        
         
     }
     
     
     
+    
+    
+    
+    //MARK: - Parse Methods
+    
+    func createPostFromPFObject(object: PFObject) -> Post{
+        let newPost = Post()
+        newPost.postMessage = object[BOUNCECOMMENTKEY] as? String
+        newPost.postKey = object[BOUNCELOCATIONIDENTIFIER] as? String
+        newPost.postPlaceName = object[BOUNCELOCATIONNAME] as? String
+        let postLocationGeoPoint = object[BOUNCELOCATIONGEOPOINTKEY] as? PFGeoPoint
+        newPost.postLatitude = postLocationGeoPoint?.latitude
+        newPost.postLongitude = postLocationGeoPoint?.longitude
+        newPost.postID = object.objectId!
+        return newPost
+    }
+
+    func createNewPlaceFromPostAndAddPostToPlace(post: Post) -> Place {
+        let place = Place()
+        place.name = post.postPlaceName
+        place.latitude = post.postLatitude
+        place.longitude = post.postLongitude
+        place.posts = List<Post>()
+        place.key = post.postKey
+        place.posts.append(post)
+        return place
+    }
+    
+    //MARK: - Realm Methods
+    
+    //checks if there is an existing place in realm for this
+    func fetchExistingPlaceFromRealmForPost(post: Post) -> Place?{
+        let realm = try! Realm()
+        let predicate = NSPredicate(format: "key = %@", post.postKey!)
+        let searchResults = realm.objects(Place).filter(predicate)
+        if searchResults.count > 0 {
+            let place = searchResults[0]
+            return place
+        }
+        else {
+            return nil
+        }
+    }
+    
+    
+    func checkIfPostIsExisting(post: Post) -> Bool {
+        let realm = try! Realm()
+        let predicate = NSPredicate(format: "postID = %@", post.postID!)
+        let searchResults = realm.objects(Post).filter(predicate)
+        return searchResults.count > 0 ? true : false
+    }
+    
+    
+    func addPlaceToRealm(place:Place) {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(place)
+        }
+    }
+    
+    func addPostToExistingPlace(place: Place, post: Post) {
+        let realm = try! Realm()
+        try! realm.write {
+            place.posts.append(post)
+        }
+    }
+
     
     
     

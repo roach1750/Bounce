@@ -21,4 +21,5 @@ let BOUNCEKEY  =  "key"
 let BOUNCEANNOTATIONSREADYNOTIFICATION  =  "annotationsReady"
 let BOUNCETABLEDATAREADYNOTIFICATION  =  "tableDataReady"
 let BOUNCELOCATIONIDENTIFIER =  "locationID"
+let BOUNCEID =  "objectId"
 

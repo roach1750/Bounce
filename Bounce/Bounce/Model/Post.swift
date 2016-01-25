@@ -26,6 +26,10 @@ class Post: Object {
     var postPlace: Place?
     var postKey: String?
     var postPlaceName: String?
+    var postID: String?
+    var postLatitude: Double?
+    var postLongitude: Double? 
+
     
     
     func createPFObject(){
