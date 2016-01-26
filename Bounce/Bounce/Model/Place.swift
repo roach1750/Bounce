@@ -11,13 +11,14 @@ import Realm
 import RealmSwift
 
 class Place: Object {
+    
     dynamic var name:String = "";
     dynamic var latitude:Double = 0;
     dynamic var longitude:Double = 0;
     
     var distanceFromUser: Double?
     var posts = List<Post>()
-    var key: String?
+    dynamic var key: String = ""
     
     
 //    override var description: String {

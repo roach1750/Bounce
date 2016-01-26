@@ -26,9 +26,9 @@ class Post: Object {
     dynamic var postPlace: Place?
     dynamic var postKey: String = ""
     dynamic var postID: String = ""
-    dynamic var postPlaceName:String = "";
-    dynamic var postLatitude:Double = 0;
-    dynamic var postLongitude:Double = 0;
+    dynamic var postPlaceName: String = ""
+    dynamic var postLatitude: Double = 0
+    dynamic var postLongitude: Double = 0
     
     
     func createPFObject(){
@@ -61,6 +61,8 @@ class Post: Object {
         
 
         object[BOUNCELOCATIONIDENTIFIER] = postKey
+        
+        
         
         object.saveInBackground()
         

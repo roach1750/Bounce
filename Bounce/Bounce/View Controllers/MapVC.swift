@@ -23,8 +23,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     //Constants
     let locationManager = CLLocationManager()
     
-    ///////////////////////////////////////
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         requestLocationData()
@@ -95,7 +93,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let location: PrivateResource = .Location(.WhenInUse)
         
         proposeToAccess(location, agreed: {
-//            print("I can access Location.\n")
             self.locationManager.delegate = self
             self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
             self.locationManager.startUpdatingLocation()
@@ -109,7 +106,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let location = locations.last {
             print("updated location")
             let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.1, 0.1))
+            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01))
             LocationFetcher.sharedInstance.currentLocation = location
             mapView.setRegion(region, animated: true)
             locationManager.stopUpdatingLocation()

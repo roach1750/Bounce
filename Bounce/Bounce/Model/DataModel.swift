@@ -20,7 +20,8 @@ class DataModel: NSObject {
             let post = createPostFromPFObject(dataObject)
             //First check if we already have this post, if so return get out of this method
             if checkIfPostIsExisting(post) {
-                return
+                print("This post is ready in the database")
+                continue
             }
             if let existingPlace = fetchExistingPlaceFromRealmForPost(post) { //Returns place if there is one already, otherwise returns nil
                 //The place exist...check to make sure place doesn't already contain post:
@@ -85,7 +86,7 @@ class DataModel: NSObject {
         }
     }
     
-    
+    // Check if the post is existing based on the post's ID, This property is set by parse
     func checkIfPostIsExisting(post: Post) -> Bool {
         let realm = try! Realm()
         let predicate = NSPredicate(format: "postID = %@", post.postID)
