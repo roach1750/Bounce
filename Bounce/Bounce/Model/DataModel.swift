@@ -114,6 +114,13 @@ class DataModel: NSObject {
         return realm.objects(Place)
     }
     
-    
+    func fetchPlaceWithKey(key: String) -> Place {
+        let realm = try! Realm()
+        let predicate = NSPredicate(format: "key = %@", key)
+        let placeResults = realm.objects(Place).filter(predicate)
+        print(key)
+        print(placeResults.count)
+        return placeResults[0]
+    }
     
 }

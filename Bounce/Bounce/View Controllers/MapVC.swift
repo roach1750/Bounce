@@ -19,7 +19,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     //Variables
-    
+    var selectedPlace: Place?
     //Constants
     let locationManager = CLLocationManager()
     
@@ -80,9 +80,19 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         return pinAnnotationView
     }
     
+
+    
     func mapView(MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        //good idea to create place key here then look that up in the realm database? 
         
         if control == annotationView.rightCalloutAccessoryView {
+            let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
+            let key = "\(String(annoation.title!))" + "," + "\(String(annoation.coordinate.latitude))" + "," + "\(String(annoation.coordinate.longitude))"
+            let dm = DataModel()
+            selectedPlace = dm.fetchPlaceWithKey(key)
+            performSegueWithIdentifier("showPosts", sender: self)
+            
+            
             print("Going to the next VC!")
         }
     }
@@ -115,6 +125,16 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error.description)
+    }
+    
+    //MARK: Segue 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showPosts" {
+            let DV = segue.destinationViewController as! PlaceVC
+            if let place = selectedPlace {
+                DV.place = place
+            }
+        }
     }
     
 }

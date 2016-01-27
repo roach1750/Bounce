@@ -25,5 +25,8 @@ class Place: Object {
 //        return("\(name!), key: \(key!), lat: \(latitude!), long: \(longitude!), distance from user: \(distanceFromUser!) ft)")
 //    }
     
-
+    
+    
+    
+    
 }
