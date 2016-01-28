@@ -20,7 +20,12 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewDidLoad() {
         configureTableView()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable", name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
         super.viewDidLoad()
+    }
+    
+    func reloadTable() {
+        tableView.reloadData()
     }
     
     func configureTableView() {
@@ -37,14 +42,40 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let placesPost = place?.posts {
             let currentPost = placesPost[indexPath.section]
-            let cell:PlaceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("commentOnly") as! PlaceTableViewCell
+            let identifier = getIdentifierForCell(currentPost)
+            print(identifier)
+            let cell:PlaceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(identifier) as! PlaceTableViewCell
             cell.placeCommentLabel.text = currentPost.postMessage
-            
+            if currentPost.hasImage {
+                if let imageData = currentPost.postImageData {
+                    cell.imageView?.image = UIImage(data: imageData)
+                }
+                else {
+                    let dm = DataModel()
+                    dm.downloadImageForPost(currentPost)
+                }
+            }
             return cell
         }
         
         
         return UITableViewCell()
+    }
+    
+    func getIdentifierForCell(post: Post) -> String {
+        
+        if post.hasImage == true && post.postMessage != nil{
+            return "commentAndPhoto"
+        }
+        else if post.hasImage == true {
+            return "photoOnly"
+        }
+        else if post.postMessage != nil {
+            return "commentOnly"
+        }
+        else {
+            return ""
+        }
     }
     
     //MARK: Tableview customization

@@ -337,7 +337,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="714.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="577-sl-KLR" customClass="PFImageView">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CameraImage" translatesAutoresizingMaskIntoConstraints="NO" id="577-sl-KLR" customClass="PFImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="577-sl-KLR" secondAttribute="height" multiplier="1:1" id="xuA-WU-9Ff"/>
@@ -353,6 +353,7 @@
                                             <constraints>
                                                 <constraint firstItem="isA-ed-i8Y" firstAttribute="width" secondItem="577-sl-KLR" secondAttribute="width" multiplier="0.95" id="8s9-kL-wpG"/>
                                                 <constraint firstAttribute="trailing" secondItem="isA-ed-i8Y" secondAttribute="trailing" constant="8" id="A9P-Z0-Quz"/>
+                                                <constraint firstItem="isA-ed-i8Y" firstAttribute="top" secondItem="577-sl-KLR" secondAttribute="bottom" constant="8" id="Cel-pQ-pCI"/>
                                                 <constraint firstItem="577-sl-KLR" firstAttribute="top" secondItem="r74-c3-AEp" secondAttribute="top" id="K51-rh-wVA"/>
                                                 <constraint firstItem="isA-ed-i8Y" firstAttribute="height" secondItem="577-sl-KLR" secondAttribute="height" multiplier="0.1" id="TwM-ZM-NsS"/>
                                                 <constraint firstItem="isA-ed-i8Y" firstAttribute="top" secondItem="577-sl-KLR" secondAttribute="bottom" constant="8" id="fn2-CF-wQm"/>
@@ -378,7 +379,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="639.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="erp-xE-GC0" customClass="PFImageView">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CameraImage" translatesAutoresizingMaskIntoConstraints="NO" id="erp-xE-GC0" customClass="PFImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="erp-xE-GC0" secondAttribute="height" multiplier="1:1" id="p5d-1y-muS"/>
@@ -389,6 +390,7 @@
                                                 <constraint firstItem="erp-xE-GC0" firstAttribute="top" secondItem="dle-Cs-Twc" secondAttribute="top" id="PJj-Wh-fzf"/>
                                                 <constraint firstAttribute="trailing" secondItem="erp-xE-GC0" secondAttribute="trailing" id="ddu-So-5vq"/>
                                                 <constraint firstItem="erp-xE-GC0" firstAttribute="leading" secondItem="dle-Cs-Twc" secondAttribute="leading" id="iaS-Tu-ies"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="erp-xE-GC0" secondAttribute="bottom" constant="31.5" id="r2b-et-m9Y"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -454,4 +456,7 @@
             <point key="canvasLocation" x="2168" y="1011"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="CameraImage" width="1000" height="1000"/>
+    </resources>
 </document>

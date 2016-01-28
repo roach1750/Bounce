@@ -20,7 +20,7 @@ class DataModel: NSObject {
             let post = createPostFromPFObject(dataObject)
             //First check if we already have this post, if so return get out of this method
             if checkIfPostIsExisting(post) {
-                print("This post is ready in the database")
+                print("This post is already in the database")
                 continue
             }
             if let existingPlace = fetchExistingPlaceFromRealmForPost(post) { //Returns place if there is one already, otherwise returns nil
@@ -56,10 +56,12 @@ class DataModel: NSObject {
         newPost.postLatitude = (postLocationGeoPoint?.latitude)!
         newPost.postLongitude = (postLocationGeoPoint?.longitude)!
         newPost.postID = object.objectId!
-        
+        if let _ = object[BOUNCEIMAGEKEY] {
+            newPost.hasImage = true
+        }
         return newPost
     }
-
+    
     func createNewPlaceFromPostAndAddPostToPlace(post: Post) -> Place {
         let place = Place()
         place.name = post.postPlaceName
@@ -70,6 +72,40 @@ class DataModel: NSObject {
         place.posts.append(post)
         return place
     }
+    
+    func downloadImageForPost(post: Post) //-> PFFile {
+    {
+        let query = PFQuery(className: BOUNCECLASSNAME)
+        query.whereKey("objectId", equalTo: post.postID)
+        query.limit = 1
+        query.selectKeys([BOUNCEIMAGEKEY])
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                // The find succeeded.
+                // Do something with the found objects
+                if let objects = objects {
+                    let userImageFile = objects[0][BOUNCEIMAGEKEY] as! PFFile
+                    userImageFile.getDataInBackgroundWithBlock {
+                        (imageData: NSData?, error: NSError?) -> Void in
+                        if error == nil {
+                            if let imageData = imageData {
+                                self.addPhotoToPost(post, photo: imageData)
+                                print("Successfully retrieved image")
+                                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil, userInfo: nil)
+                            }
+                        }
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+    }
+    
+    
     
     //MARK: - Realm Methods
     
@@ -109,7 +145,7 @@ class DataModel: NSObject {
             place.posts.append(post)
         }
     }
-
+    
     func fetchAllPlaces() -> Results<(Place)> {
         let realm = try! Realm()
         return realm.objects(Place)
@@ -119,8 +155,15 @@ class DataModel: NSObject {
         let realm = try! Realm()
         let predicate = NSPredicate(format: "key = %@", key)
         let placeResults = realm.objects(Place).filter(predicate)
-
+        
         return placeResults[0]
+    }
+    
+    func addPhotoToPost(post: Post, photo: NSData){
+        let realm = try! Realm()
+        try! realm.write {
+            post.postImageData = photo
+        }
     }
     
 }
