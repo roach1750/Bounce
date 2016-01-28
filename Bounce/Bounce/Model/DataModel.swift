@@ -56,6 +56,7 @@ class DataModel: NSObject {
         newPost.postLatitude = (postLocationGeoPoint?.latitude)!
         newPost.postLongitude = (postLocationGeoPoint?.longitude)!
         newPost.postID = object.objectId!
+        
         return newPost
     }
 
@@ -118,8 +119,7 @@ class DataModel: NSObject {
         let realm = try! Realm()
         let predicate = NSPredicate(format: "key = %@", key)
         let placeResults = realm.objects(Place).filter(predicate)
-        print(key)
-        print(placeResults.count)
+
         return placeResults[0]
     }
     

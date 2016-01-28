@@ -59,7 +59,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let objects = dm.fetchAllPlaces()
         for place in objects {
             let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
-            let annotation = BounceAnnotation(title: place.name, subtitle: "subtitle", coordinate: coordinate)
+            let annotation = BounceAnnotation(title: place.name, subtitle: String(place.posts.count), coordinate: coordinate)
             
             mapView.addAnnotation(annotation)
         }
@@ -91,10 +91,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             let dm = DataModel()
             selectedPlace = dm.fetchPlaceWithKey(key)
             performSegueWithIdentifier("showPosts", sender: self)
-            
-            
-            print("Going to the next VC!")
-        }
+            }
     }
     
     //MARK: - Location Manager
@@ -116,10 +113,11 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let location = locations.last {
             print("updated location")
             let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01))
+            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.005, 0.005))
             LocationFetcher.sharedInstance.currentLocation = location
             mapView.setRegion(region, animated: true)
             locationManager.stopUpdatingLocation()
+            fetchButtonTapped(UIBarButtonItem())
         }
     }
     
