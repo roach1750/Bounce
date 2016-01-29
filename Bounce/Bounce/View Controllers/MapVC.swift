@@ -55,6 +55,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     func createAnnotations() {
+        mapView.removeAnnotations(mapView.annotations)
         let dm = DataModel()
         let objects = dm.fetchAllPlaces()
         for place in objects {

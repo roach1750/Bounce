@@ -86,10 +86,19 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n"){
+            if textView.text == "" {
+                textView.text = "Enter caption for post"
+            }
             postTextView.resignFirstResponder()
             return false
         }
         return true
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == "Enter caption for post" {
+            textView.text = ""
+        }
     }
     
     

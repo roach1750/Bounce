@@ -82,7 +82,8 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
                     let dataProvider = CGDataProviderCreateWithCFData(imageData)
                     let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
-                    let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+                    let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
+                    print(image.size)
                     self.captureSession.stopRunning()
                     self.cameraPreviewImageView.image = image;
                     Post.sharedInstance.postImageData = UIImagePNGRepresentation(image)
