@@ -48,9 +48,9 @@ class LocationFetcher: NSObject {
                 if let error = error {
                     print(error)
                 }
-                if let response = response {
-                    let httpResponse = response as! NSHTTPURLResponse
-                    print("response code = \(httpResponse.statusCode)")
+                if let _ = response {
+//                    let httpResponse = response as! NSHTTPURLResponse
+//                    print("response code = \(httpResponse.statusCode)")
                     //configure JSON
                     do{
                         let resultsJSON = JSON(data: data!)

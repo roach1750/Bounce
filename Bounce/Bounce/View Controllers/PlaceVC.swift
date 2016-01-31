@@ -33,7 +33,6 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor ( red: 0.7885, green: 0.8121, blue: 0.9454, alpha: 1.0 )
-        tableView.estimatedRowHeight = 400.0
 
     }
     
@@ -45,26 +44,30 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if let placesPost = place?.posts {
             let currentPost = placesPost[indexPath.section]
             let identifier = getIdentifierForCell(currentPost)
-            print(identifier)
             let cell:PlaceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(identifier) as! PlaceTableViewCell
-            cell.placeCommentLabel.text = currentPost.postMessage
+
+            
+            //Coment
+            cell.postCommentLabel.text = currentPost.postMessage
+            
+            //Image
             if currentPost.hasImage {
                 if let imageData = currentPost.postImageData {
                     let image = UIImage(data: imageData)
                     let imageCropper = ImageResizer()
                     let rotatedImage = imageCropper.rotateImage90Degress(image!)
-                    cell.imageView?.image = rotatedImage
-                    print("cell imageview size is: \(cell.imageView?.frame)")
+                    cell.postImageView?.image = rotatedImage
+                    cell.postImageView?.contentMode = .ScaleAspectFit
+
                 }
                 else {
                     let dm = DataModel()
                     dm.downloadImageForPost(currentPost)
-                    cell.imageView?.image = UIImage(named: "CameraImage")
+                    cell.postImageView?.image = UIImage(named: "CameraImage")
                 }
             }
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            print("cell size is: \(cell.frame)")
             return cell
         }
         
@@ -75,12 +78,15 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func getIdentifierForCell(post: Post) -> String {
         
         if post.hasImage == true && post.postMessage != nil{
+            tableView.estimatedRowHeight = 515.0
             return "commentAndPhoto"
         }
         else if post.hasImage == true {
+            tableView.estimatedRowHeight = 415.0
             return "photoOnly"
         }
         else if post.postMessage != nil {
+            tableView.estimatedRowHeight = 100.0
             return "commentOnly"
         }
         else {

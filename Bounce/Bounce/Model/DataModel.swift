@@ -56,6 +56,7 @@ class DataModel: NSObject {
         newPost.postLatitude = (postLocationGeoPoint?.latitude)!
         newPost.postLongitude = (postLocationGeoPoint?.longitude)!
         newPost.postID = object.objectId!
+        newPost.postCreationDate = object.createdAt!
         if let _ = object[BOUNCEIMAGEKEY] {
             newPost.hasImage = true
         }
@@ -92,8 +93,6 @@ class DataModel: NSObject {
                         if error == nil {
                             if let imageData = imageData {
                                 self.addPhotoToPost(post, photo: imageData)
-                                print("Successfully retrieved image")
-                                print("Image Size is: \(UIImage(data: imageData)?.size)")
                                 NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil, userInfo: nil)
                             }
                         }

@@ -12,9 +12,12 @@ import ParseUI
 
 class PlaceTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var placeCommentLabel: UILabel!
+    @IBOutlet weak var postCommentLabel: UILabel!
     
-    @IBOutlet weak var placeImageView: PFImageView!
+    @IBOutlet weak var postImageView: PFImageView!
+    
+    @IBOutlet weak var postCreationDate: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -30,6 +30,8 @@ class Post: Object {
     dynamic var postLatitude: Double = 0
     dynamic var postLongitude: Double = 0
     dynamic var hasImage: Bool = false
+    dynamic var postCreationDate: NSDate = NSDate()
+
     
     func createPFObject(){
         //Create PFObject: 
