@@ -67,6 +67,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
 
     @IBAction func cancelButtonPressed(sender: UIButton) {
+        Post.sharedInstance.postImageData = nil
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -85,16 +86,15 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
                     print(image.size)
                     self.captureSession.stopRunning()
-                    self.cameraPreviewImageView.image = image;
-                    Post.sharedInstance.postImageData = UIImagePNGRepresentation(image)
+                    let imageCropper = ImageResizer()
+                    let croppedImage = imageCropper.cropToSquare(image)
+                    self.cameraPreviewImageView.image = croppedImage;
+                    Post.sharedInstance.postImageData = UIImagePNGRepresentation(croppedImage)
                 }
             })
         }
     }
 
-    
-    
-    
     
     
     

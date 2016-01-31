@@ -12,6 +12,7 @@
 		21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21092A981C4B39FA0087BDE9 /* CameraVC.swift */; };
 		2114B42A1C59890F0002C930 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2114B4291C59890F0002C930 /* PlaceTableViewCell.swift */; };
 		2114B42C1C59A6FA0002C930 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B42B1C59A6FA0002C930 /* ParseUI.framework */; };
+		2114B42E1C5E69590002C930 /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2114B42D1C5E69590002C930 /* ImageResizer.swift */; };
 		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
 		21970FC41C4DA76E00048B54 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC31C4DA76E00048B54 /* Place.swift */; };
 		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
@@ -86,6 +87,7 @@
 		21092A981C4B39FA0087BDE9 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraVC.swift; path = "View Controllers/CameraVC.swift"; sourceTree = "<group>"; };
 		2114B4291C59890F0002C930 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		2114B42B1C59A6FA0002C930 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		2114B42D1C5E69590002C930 /* ImageResizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageResizer.swift; path = Model/ImageResizer.swift; sourceTree = "<group>"; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		21970FC31C4DA76E00048B54 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
 		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
 				2106417E1C56E41E00DFF326 /* BounceAnnotation.swift */,
 				2114B4291C59890F0002C930 /* PlaceTableViewCell.swift */,
+				2114B42D1C5E69590002C930 /* ImageResizer.swift */,
 				21970FC21C4DA44D00048B54 /* 3rd Party Models */,
 			);
 			name = Model;
@@ -420,6 +423,7 @@
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
 				2106417F1C56E41E00DFF326 /* BounceAnnotation.swift in Sources */,
 				21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */,
+				2114B42E1C5E69590002C930 /* ImageResizer.swift in Sources */,
 				2114B42A1C59890F0002C930 /* PlaceTableViewCell.swift in Sources */,
 				21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */,
 				21FFED641C4AAB78006F294F /* Post.swift in Sources */,
