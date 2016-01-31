@@ -84,12 +84,12 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     let dataProvider = CGDataProviderCreateWithCFData(imageData)
                     let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
-                    print(image.size)
                     self.captureSession.stopRunning()
                     let imageCropper = ImageResizer()
                     let croppedImage = imageCropper.cropToSquare(image)
-                    self.cameraPreviewImageView.image = croppedImage;
-                    Post.sharedInstance.postImageData = UIImagePNGRepresentation(croppedImage)
+                    let rotatedImage = imageCropper.rotateImage90Degress(croppedImage)
+                    self.cameraPreviewImageView.image = rotatedImage;
+                    Post.sharedInstance.postImageData = UIImagePNGRepresentation(rotatedImage)
                 }
             })
         }

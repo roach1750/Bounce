@@ -93,6 +93,7 @@ class DataModel: NSObject {
                             if let imageData = imageData {
                                 self.addPhotoToPost(post, photo: imageData)
                                 print("Successfully retrieved image")
+                                print("Image Size is: \(UIImage(data: imageData)?.size)")
                                 NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil, userInfo: nil)
                             }
                         }

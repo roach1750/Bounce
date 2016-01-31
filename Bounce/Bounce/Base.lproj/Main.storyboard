@@ -340,26 +340,27 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CameraImage" translatesAutoresizingMaskIntoConstraints="NO" id="577-sl-KLR" customClass="PFImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="577-sl-KLR" secondAttribute="height" multiplier="1:1" id="xuA-WU-9Ff"/>
+                                                        <constraint firstAttribute="width" secondItem="577-sl-KLR" secondAttribute="height" multiplier="1:1" id="TnB-2O-Ffm"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isA-ed-i8Y">
-                                                    <rect key="frame" x="8" y="608" width="584" height="60"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isA-ed-i8Y">
+                                                    <rect key="frame" x="8" y="608" width="584" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="577-sl-KLR" firstAttribute="width" secondItem="r74-c3-AEp" secondAttribute="width" id="1yc-3v-W8Y"/>
+                                                <constraint firstItem="577-sl-KLR" firstAttribute="leading" secondItem="r74-c3-AEp" secondAttribute="leading" id="5Tr-sj-Rcx"/>
                                                 <constraint firstItem="isA-ed-i8Y" firstAttribute="width" secondItem="577-sl-KLR" secondAttribute="width" multiplier="0.95" id="8s9-kL-wpG"/>
                                                 <constraint firstAttribute="trailing" secondItem="isA-ed-i8Y" secondAttribute="trailing" constant="8" id="A9P-Z0-Quz"/>
-                                                <constraint firstItem="isA-ed-i8Y" firstAttribute="top" secondItem="577-sl-KLR" secondAttribute="bottom" constant="8" id="Cel-pQ-pCI"/>
-                                                <constraint firstItem="577-sl-KLR" firstAttribute="top" secondItem="r74-c3-AEp" secondAttribute="top" id="K51-rh-wVA"/>
-                                                <constraint firstItem="isA-ed-i8Y" firstAttribute="height" secondItem="577-sl-KLR" secondAttribute="height" multiplier="0.1" id="TwM-ZM-NsS"/>
-                                                <constraint firstItem="isA-ed-i8Y" firstAttribute="top" secondItem="577-sl-KLR" secondAttribute="bottom" constant="8" id="fn2-CF-wQm"/>
+                                                <constraint firstItem="577-sl-KLR" firstAttribute="top" secondItem="r74-c3-AEp" secondAttribute="top" id="Ecl-xW-mKj"/>
+                                                <constraint firstAttribute="trailing" secondItem="577-sl-KLR" secondAttribute="trailing" id="Sk6-12-Fek"/>
+                                                <constraint firstItem="isA-ed-i8Y" firstAttribute="top" secondItem="577-sl-KLR" secondAttribute="bottom" constant="8" id="hBW-Zu-zAv"/>
+                                                <constraint firstAttribute="trailing" secondItem="577-sl-KLR" secondAttribute="trailing" id="jPG-gc-D4s"/>
                                                 <constraint firstItem="isA-ed-i8Y" firstAttribute="leading" secondItem="r74-c3-AEp" secondAttribute="leading" constant="8" id="paJ-Zh-YKl"/>
-                                                <constraint firstAttribute="trailing" secondItem="577-sl-KLR" secondAttribute="trailing" id="te6-TT-Uoc"/>
-                                                <constraint firstItem="577-sl-KLR" firstAttribute="leading" secondItem="r74-c3-AEp" secondAttribute="leading" id="vKO-Ed-cZR"/>
+                                                <constraint firstItem="577-sl-KLR" firstAttribute="leading" secondItem="r74-c3-AEp" secondAttribute="leading" id="szM-aq-ek2"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -387,10 +388,15 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="erp-xE-GC0" secondAttribute="trailing" id="B2b-bn-CNY"/>
+                                                <constraint firstAttribute="trailing" secondItem="erp-xE-GC0" secondAttribute="trailing" id="Ewy-HU-mV4"/>
                                                 <constraint firstItem="erp-xE-GC0" firstAttribute="top" secondItem="dle-Cs-Twc" secondAttribute="top" id="PJj-Wh-fzf"/>
+                                                <constraint firstItem="erp-xE-GC0" firstAttribute="leading" secondItem="dle-Cs-Twc" secondAttribute="leading" id="bsT-NG-WsW"/>
                                                 <constraint firstAttribute="trailing" secondItem="erp-xE-GC0" secondAttribute="trailing" id="ddu-So-5vq"/>
                                                 <constraint firstItem="erp-xE-GC0" firstAttribute="leading" secondItem="dle-Cs-Twc" secondAttribute="leading" id="iaS-Tu-ies"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="erp-xE-GC0" secondAttribute="bottom" constant="31.5" id="r2b-et-m9Y"/>
+                                                <constraint firstItem="erp-xE-GC0" firstAttribute="top" secondItem="dle-Cs-Twc" secondAttribute="top" id="u0x-XP-rhG"/>
+                                                <constraint firstItem="erp-xE-GC0" firstAttribute="leading" secondItem="dle-Cs-Twc" secondAttribute="leading" id="xMG-zM-4qv"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

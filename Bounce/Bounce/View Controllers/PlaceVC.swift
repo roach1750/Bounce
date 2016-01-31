@@ -32,7 +32,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor ( red: 0.9003, green: 0.5881, blue: 0.5432, alpha: 1.0 )
+        tableView.backgroundColor = UIColor ( red: 0.7885, green: 0.8121, blue: 0.9454, alpha: 1.0 )
+        tableView.estimatedRowHeight = 400.0
+
     }
     
 
@@ -48,13 +50,21 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.placeCommentLabel.text = currentPost.postMessage
             if currentPost.hasImage {
                 if let imageData = currentPost.postImageData {
-                    cell.imageView?.image = UIImage(data: imageData)
+                    let image = UIImage(data: imageData)
+                    let imageCropper = ImageResizer()
+                    let rotatedImage = imageCropper.rotateImage90Degress(image!)
+                    cell.imageView?.image = rotatedImage
+                    print("cell imageview size is: \(cell.imageView?.frame)")
                 }
                 else {
                     let dm = DataModel()
                     dm.downloadImageForPost(currentPost)
+                    cell.imageView?.image = UIImage(named: "CameraImage")
                 }
             }
+            cell.layoutMargins = UIEdgeInsetsZero
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            print("cell size is: \(cell.frame)")
             return cell
         }
         

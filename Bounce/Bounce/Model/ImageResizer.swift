@@ -43,12 +43,13 @@ class ImageResizer: NSObject {
         
         // Create a new image based on the imageRef and rotate back to the original orientation
         let image: UIImage = UIImage(CGImage: imageRef, scale: originalImage.scale, orientation: originalImage.imageOrientation)
-        
-        print(image.size)
-        
+                
         return image
     }
-
+    
+    func rotateImage90Degress(unrotatedImage: UIImage) -> UIImage {
+        return UIImage(CGImage: unrotatedImage.CGImage!, scale: 1.0, orientation: UIImageOrientation.Right)
+    }
     
     
     

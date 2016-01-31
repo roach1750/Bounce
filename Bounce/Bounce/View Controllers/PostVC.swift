@@ -31,11 +31,10 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     func restoreDataIfApplicable(){
         if Post.sharedInstance.postImageData != nil {
-            let unrotatedImage = UIImage(data: Post.sharedInstance.postImageData!)
-            let PortraitImage  : UIImage = UIImage(CGImage: unrotatedImage!.CGImage! ,
-                scale: 1.0 ,
-                orientation: UIImageOrientation.Right)
-            postImageView.image = PortraitImage
+            let imageCropper = ImageResizer()
+            let rotatedImage = imageCropper.rotateImage90Degress(UIImage(data: Post.sharedInstance.postImageData!)!)
+            postImageView.image = rotatedImage
+
         }
         if Post.sharedInstance.postMessage != nil {
             postTextView.text = Post.sharedInstance.postMessage!
@@ -45,6 +44,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
         Post.sharedInstance.postImageData = nil
+        Post.sharedInstance.postMessage = nil
         dismissViewControllerAnimated(true, completion: nil)
     }
     
