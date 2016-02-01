@@ -66,6 +66,10 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     cell.postImageView?.image = UIImage(named: "CameraImage")
                 }
             }
+            
+            //Creation Date 
+            cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
+            
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
@@ -93,6 +97,36 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             return ""
         }
     }
+    
+    func timeSinceObjectWasCreated(timeInSeconds: Double) -> String{
+        let timeInMinutes = timeInSeconds / 60
+        let timeInHours = timeInMinutes / 60
+        
+        if timeInSeconds >= 0 && timeInMinutes < 1{
+            return convertToProperTense(String(format: "%0.0f", timeInSeconds) + " seconds")
+        }
+            
+        else if timeInMinutes >= 1 && timeInMinutes < 60{
+            return convertToProperTense(String(format: "%0.0f", timeInMinutes) + " minutes")
+        }
+            
+        else {
+            return convertToProperTense(String(format: "%0.0f", timeInHours) + " hours")
+        }
+        
+    }
+    
+    func convertToProperTense(time: String) -> String {
+        if (time as NSString).substringToIndex(2) == "1" {
+            return time.substringToIndex(time.endIndex.predecessor())
+        }
+        else {
+            return time
+        }
+    }
+    
+    
+    
     
     //MARK: Tableview customization
     
