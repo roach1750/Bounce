@@ -21,7 +21,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var stillImageOutput = AVCaptureStillImageOutput()
     var previewLayer: AVCaptureVideoPreviewLayer!
     var switchCameraButton: UIButton!
-    var frontCamera: Bool = false
+    var frontCamera: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +33,8 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     func beginCameraSession(){
         //remove old inputs, if necessary
-        if captureSession.inputs.count != 0 {
-            captureSession.removeInput(captureSession.inputs[0] as! AVCaptureInput)
-        }
-        
+        captureSession = AVCaptureSession()
+
         //pick camera
         var camera: AVCaptureDevice?
         if frontCamera == true {
@@ -97,8 +95,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     @IBAction func takePicture(sender: UIButton) {
-
-        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){//take a photo here}
+        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){
             videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
                 if (sampleBuffer != nil) {
