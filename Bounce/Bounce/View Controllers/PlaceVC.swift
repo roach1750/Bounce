@@ -117,7 +117,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func convertToProperTense(time: String) -> String {
-        if (time as NSString).substringToIndex(2) == "1" {
+        if time.substringToIndex(time.startIndex.successor()) == "1" {
             return time.substringToIndex(time.endIndex.predecessor())
         }
         else {

@@ -74,7 +74,16 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         }
         
         let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotationIdentifier")
-        pinAnnotationView.pinTintColor = UIColor.blueColor()
+        
+        let randomRed:CGFloat = CGFloat(drand48())
+        
+        let randomGreen:CGFloat = CGFloat(drand48())
+        
+        let randomBlue:CGFloat = CGFloat(drand48())
+        
+        pinAnnotationView.pinTintColor = UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        
+        
         
         pinAnnotationView.canShowCallout = true
         pinAnnotationView.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)

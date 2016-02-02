@@ -27,7 +27,7 @@ class LocationFetcher: NSObject {
     var currentLocation: CLLocation? {
         didSet {
             //fetchGooglePlaces()
-            fetchFourSquarePlaces()
+//            fetchFourSquarePlaces()
         }
     }
     

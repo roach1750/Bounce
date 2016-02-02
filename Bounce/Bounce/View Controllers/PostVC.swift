@@ -14,6 +14,9 @@ class PostVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var locationButton: UIButton!
     
+    var postImageDeleteButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForKeyboardNotifications()
@@ -34,6 +37,7 @@ class PostVC: UIViewController, UITextViewDelegate {
             let imageCropper = ImageResizer()
             let rotatedImage = imageCropper.rotateImage90Degress(UIImage(data: Post.sharedInstance.postImageData!)!)
             postImageView.image = rotatedImage
+            addDeleteImageButton()
 
         }
         if Post.sharedInstance.postMessage != nil {
@@ -41,6 +45,24 @@ class PostVC: UIViewController, UITextViewDelegate {
         }
     }
     
+    
+    func addDeleteImageButton(){
+        postImageDeleteButton = UIButton(frame: CGRect(x: 10, y: 10 + postImageView.frame.origin.y, width: 30, height: 30))
+        postImageDeleteButton.setTitle("x", forState: .Normal)
+        postImageDeleteButton.addTarget(self, action: "deleteImagePressed", forControlEvents: .TouchUpInside)
+        view.addSubview(postImageDeleteButton)
+        view.bringSubviewToFront(postImageDeleteButton)
+    }
+    
+    func removeDeleteImageButton(){
+        postImageDeleteButton.hidden = true
+    }
+    
+    func deleteImagePressed(){
+        removeDeleteImageButton()
+        Post.sharedInstance.postImageData = nil
+        postImageView.image = nil
+    }
     
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
         Post.sharedInstance.postImageData = nil
