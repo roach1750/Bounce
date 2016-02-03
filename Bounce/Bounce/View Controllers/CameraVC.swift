@@ -24,8 +24,8 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var frontCamera: Bool = true
     
     override func viewDidLoad() {
+        takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
         super.viewDidLoad()
-        takePictureButton.layer.cornerRadius = 0.5 * takePictureButton.bounds.size.width
     }
     override func viewDidAppear(animated: Bool) {
         beginCameraSession()
@@ -64,7 +64,6 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                 captureSession.sessionPreset = AVCaptureSessionPresetPhoto
                 self.cameraPreviewImageView.layer.addSublayer(previewLayer)
-                print(previewLayer.frame)
                 captureSession.startRunning()
                 addSwitchCameraButton()
             }
@@ -97,6 +96,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     @IBAction func takePicture(sender: UIButton) {
+        if cameraPreviewImageView.image == nil {
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){
             videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
@@ -111,10 +111,18 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     let rotatedImage = imageCropper.rotateImage90Degress(croppedImage)
                     self.cameraPreviewImageView.image = rotatedImage;
                     Post.sharedInstance.postImageData = UIImagePNGRepresentation(rotatedImage)
+                    self.takePictureButton.setImage(UIImage(named: "Delete Picture Button"), forState: .Normal)
                 }
             })
         }
+        }
+        else {
+            cameraPreviewImageView.image = nil
+            takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
+            beginCameraSession()
+        }
     }
+    
     
     
 

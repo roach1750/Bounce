@@ -51,7 +51,10 @@ class ImageResizer: NSObject {
         return UIImage(CGImage: unrotatedImage.CGImage!, scale: 1.0, orientation: UIImageOrientation.Right)
     }
     
-    
+    func reflectImage(image: UIImage) -> UIImage {
+        let relfectedImageToReturn = UIImage(CGImage: image.CGImage!, scale: image.scale, orientation: .LeftMirrored)
+        return relfectedImageToReturn
+    }
     
     
     
