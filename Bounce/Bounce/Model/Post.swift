@@ -31,7 +31,7 @@ class Post: Object {
     dynamic var postLongitude: Double = 0
     dynamic var hasImage: Bool = false
     dynamic var postCreationDate: NSDate = NSDate()
-
+    dynamic var postScore = 0
     
     func createPFObject(){
         //Create PFObject: 
@@ -60,10 +60,10 @@ class Post: Object {
         //Key
         
         postKey = "\(String(place!.name))" + "," + "\(String(place!.latitude))" + "," + "\(String(place!.longitude))"
-        
-
         object[BOUNCELOCATIONIDENTIFIER] = postKey
         
+        //score 
+        object[BOUNCESCOREKEY] = 0
         
         
         object.saveInBackground()

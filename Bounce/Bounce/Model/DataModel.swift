@@ -19,8 +19,10 @@ class DataModel: NSObject {
         for dataObject in data {
             let post = createPostFromPFObject(dataObject)
             //First check if we already have this post, if so return get out of this method
-            if checkIfPostIsExisting(post) {
+            if checkIfPostIsExistingAndUpdateScore(post) {
                 print("This post is already in the database")
+                //Update the post score: 
+                
                 continue
             }
             if let existingPlace = fetchExistingPlaceFromRealmForPost(post) { //Returns place if there is one already, otherwise returns nil
@@ -57,6 +59,7 @@ class DataModel: NSObject {
         newPost.postLongitude = (postLocationGeoPoint?.longitude)!
         newPost.postID = object.objectId!
         newPost.postCreationDate = object.createdAt!
+        newPost.postScore = object[BOUNCESCOREKEY] as! Int
         if let _ = object[BOUNCEIMAGEKEY] {
             newPost.hasImage = true
         }
@@ -74,7 +77,7 @@ class DataModel: NSObject {
         return place
     }
     
-    func downloadImageForPost(post: Post) //-> PFFile {
+    func downloadImageForPost(post: Post)
     {
         let query = PFQuery(className: BOUNCECLASSNAME)
         query.whereKey("objectId", equalTo: post.postID)
@@ -84,8 +87,6 @@ class DataModel: NSObject {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
-                // The find succeeded.
-                // Do something with the found objects
                 if let objects = objects {
                     let userImageFile = objects[0][BOUNCEIMAGEKEY] as! PFFile
                     userImageFile.getDataInBackgroundWithBlock {
@@ -105,6 +106,37 @@ class DataModel: NSObject {
         }
     }
     
+    func incrementScoreForObject(post: Post, amount:Int) {
+        
+        let query = PFQuery(className: BOUNCECLASSNAME)
+        query.whereKey("objectId", equalTo: post.postID)
+        query.limit = 1
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                if let results = objects {
+                    let object = results[0]
+                    [object .incrementKey(BOUNCESCOREKEY, byAmount: amount)]
+                    object.saveInBackgroundWithBlock {
+                        (success: Bool, error: NSError?) -> Void in
+                        if (success) {
+                            // The score key has been incremented
+                        } else {
+                            // There was a problem, check error.description
+                            print("ERROR UPDATING SCORE: \(error?.description)")
+                        }
+                    }
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
+        }
+        
+        
+        
+    }
     
     
     //MARK: - Realm Methods
@@ -124,12 +156,23 @@ class DataModel: NSObject {
     }
     
     // Check if the post is existing based on the post's ID, This property is set by parse
-    func checkIfPostIsExisting(post: Post) -> Bool {
+    func checkIfPostIsExistingAndUpdateScore(post: Post) -> Bool {
         let realm = try! Realm()
         let predicate = NSPredicate(format: "postID = %@", post.postID)
         let searchResults = realm.objects(Post).filter(predicate)
+        if searchResults.count > 0 {
+            let existingPost = searchResults[0]
+            let realm = try! Realm()
+            try! realm.write {
+                existingPost.postScore = post.postScore
+            }
+        }
+        
+        
+        
         return searchResults.count > 0 ? true : false
     }
+    
     
     
     func addPlaceToRealm(place:Place) {
@@ -165,5 +208,5 @@ class DataModel: NSObject {
             post.postImageData = photo
         }
     }
-    
+
 }

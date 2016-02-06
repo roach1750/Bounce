@@ -8,8 +8,29 @@
 
 import UIKit
 
-class ImageResizer: NSObject {
+class ImageConfigurer: NSObject {
 
+    class var sharedInstance: ImageConfigurer {
+        struct Singleton {
+            static let instance = ImageConfigurer()
+        }
+        return Singleton.instance
+    }
+    
+    var image: UIImage?
+    
+    func processImage(){
+        let croppedImage = cropToSquare(image!)
+        let rotatedImage = rotateImage90Degress(croppedImage)
+        let filteredImage = addSepiaToneToImage(rotatedImage)
+        image = filteredImage
+        Post.sharedInstance.postImageData = UIImagePNGRepresentation(image!)
+        dispatch_async(dispatch_get_main_queue()) {
+            NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEPROCESSEDNOTIFICATION, object: nil, userInfo: nil)
+        }
+
+    }
+    
     
     func cropToSquare(originalImage: UIImage) -> UIImage {
         // Create a copy of the image without the imageOrientation property so it is in its native orientation (landscape)
@@ -48,13 +69,44 @@ class ImageResizer: NSObject {
     }
     
     func rotateImage90Degress(unrotatedImage: UIImage) -> UIImage {
-        return UIImage(CGImage: unrotatedImage.CGImage!, scale: 1.0, orientation: UIImageOrientation.Right)
+        let rotatedImage = UIImage(CGImage: unrotatedImage.CGImage!, scale: 1.0, orientation: UIImageOrientation.Right)
+        return rotatedImage
     }
+    
+    
+    
+    
     
     func reflectImage(image: UIImage) -> UIImage {
         let relfectedImageToReturn = UIImage(CGImage: image.CGImage!, scale: image.scale, orientation: .LeftMirrored)
         return relfectedImageToReturn
     }
+    
+    
+    
+    
+    //Filter Methods
+    
+    func addSepiaToneToImage(inputImage: UIImage) -> UIImage {
+        
+        let context = CIContext(options: nil)
+        
+        if let currentFilter = CIFilter(name: "CISepiaTone") {
+            let beginImage = CIImage(image: inputImage)
+            currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+            currentFilter.setValue(0.5, forKey: kCIInputIntensityKey)
+            
+            if let output = currentFilter.outputImage {
+                let cgimg = context.createCGImage(output, fromRect: output.extent)
+                let processedImage = UIImage(CGImage: cgimg)
+                return processedImage
+                // do something interesting with the processed image
+            }
+        }
+        
+        return inputImage
+    }
+    
     
     
     

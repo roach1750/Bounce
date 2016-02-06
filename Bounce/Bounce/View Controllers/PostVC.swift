@@ -34,9 +34,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     func restoreDataIfApplicable(){
         if Post.sharedInstance.postImageData != nil {
-            let imageCropper = ImageResizer()
-            let rotatedImage = imageCropper.rotateImage90Degress(UIImage(data: Post.sharedInstance.postImageData!)!)
-            postImageView.image = rotatedImage
+            postImageView.image = UIImage(data: Post.sharedInstance.postImageData!)!
             addDeleteImageButton()
 
         }

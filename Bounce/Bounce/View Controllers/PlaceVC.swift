@@ -54,9 +54,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             if currentPost.hasImage {
                 if let imageData = currentPost.postImageData {
                     let image = UIImage(data: imageData)
-                    let imageCropper = ImageResizer()
-                    let rotatedImage = imageCropper.rotateImage90Degress(image!)
-                    cell.postImageView?.image = rotatedImage
+//                    let imageCropper = ImageResizer()
+//                    let rotatedImage = imageCropper.rotateImage90Degress(image!)
+                    cell.postImageView?.image = image
                     cell.postImageView?.contentMode = .ScaleAspectFit
 
                 }
@@ -69,6 +69,10 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             //Creation Date 
             cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
+            
+            //Score
+            cell.postScoreLabel.text = String(currentPost.postScore)
+            
             
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -124,6 +128,32 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             return time
         }
     }
+    
+    //MARK: Score Buttons
+    
+    
+    @IBAction func plusButtonPressed(sender: UIButton) {
+        
+        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        if let currentPost = place?.posts[(indexPath?.row)!] {
+            let dm = DataModel()
+            dm.incrementScoreForObject(currentPost, amount: 1)
+        }
+        
+        
+        
+    }
+    
+    
+    @IBAction func minusButtonPressed(sender: UIButton) {
+        
+        
+    }
+    
+    
+    
+    
     
     
     

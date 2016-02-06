@@ -18,6 +18,12 @@ class PlaceTableViewCell: UITableViewCell {
     
     @IBOutlet weak var postCreationDate: UILabel!
     
+    @IBOutlet weak var postPlusButton: UIButton!
+    
+    @IBOutlet weak var postMinusButton: UIButton!
+    
+    @IBOutlet weak var postScoreLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

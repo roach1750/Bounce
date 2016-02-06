@@ -361,6 +361,9 @@
                                                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                                         <rect key="frame" x="255" y="460" width="30" height="44"/>
                                                     </variation>
+                                                    <connections>
+                                                        <action selector="minusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="Rkn-Nn-s85"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oZ-xw-hut">
                                                     <rect key="frame" x="329" y="607" width="30" height="30"/>
@@ -371,6 +374,9 @@
                                                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                                         <rect key="frame" x="315" y="460" width="30" height="44"/>
                                                     </variation>
+                                                    <connections>
+                                                        <action selector="plusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="qHV-BQ-VkC"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 minutes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spA-uX-RsV">
                                                     <rect key="frame" x="8" y="617" width="63" height="20"/>
@@ -416,6 +422,9 @@
                                         <connections>
                                             <outlet property="postCreationDate" destination="spA-uX-RsV" id="kWD-8S-BVO"/>
                                             <outlet property="postImageView" destination="G8m-ax-61C" id="uUH-yG-sfD"/>
+                                            <outlet property="postMinusButton" destination="2K9-ZR-QXY" id="64I-8v-6Sf"/>
+                                            <outlet property="postPlusButton" destination="3oZ-xw-hut" id="BSa-zD-hbs"/>
+                                            <outlet property="postScoreLabel" destination="iJD-eu-m68" id="M85-7T-XDs"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentAndPhoto" rowHeight="715" id="MBl-Vd-qvx" userLabel="Image and Comment" customClass="PlaceTableViewCell" customModule="Bounce" customModuleProvider="target">
@@ -460,6 +469,9 @@
                                                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                                         <rect key="frame" x="255" y="460" width="30" height="44"/>
                                                     </variation>
+                                                    <connections>
+                                                        <action selector="minusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="51j-bb-v4X"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 minutes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4DA-4i-gEl">
                                                     <rect key="frame" x="8" y="693" width="63" height="21"/>
@@ -482,6 +494,9 @@
                                                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                                         <rect key="frame" x="315" y="460" width="30" height="44"/>
                                                     </variation>
+                                                    <connections>
+                                                        <action selector="plusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="WBW-6f-5Lb"/>
+                                                    </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-K5-QGh" customClass="PFImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -518,6 +533,9 @@
                                             <outlet property="postCommentLabel" destination="fLq-jL-T0d" id="qFg-dZ-m7b"/>
                                             <outlet property="postCreationDate" destination="4DA-4i-gEl" id="9IH-mQ-v6V"/>
                                             <outlet property="postImageView" destination="W5Y-K5-QGh" id="4Wd-n9-duo"/>
+                                            <outlet property="postMinusButton" destination="NGO-wB-a9c" id="ffU-WT-s4C"/>
+                                            <outlet property="postPlusButton" destination="k1N-TJ-jVa" id="Sd1-A1-8ps"/>
+                                            <outlet property="postScoreLabel" destination="QuP-vi-Mvt" id="gHe-Hc-IrE"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentOnly" rowHeight="115" id="Qhq-0U-UrM" userLabel="Comment Only" customClass="PlaceTableViewCell" customModule="Bounce" customModuleProvider="target">
@@ -563,6 +581,9 @@
                                                     <state key="normal" title="+">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="plusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="7Cd-6t-bYD"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5pG-cY-it7">
                                                     <rect key="frame" x="242" y="82" width="30" height="31"/>
@@ -570,6 +591,9 @@
                                                     <state key="normal" title="-">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="minusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="n8J-Lf-v5U"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -599,6 +623,9 @@
                                         <connections>
                                             <outlet property="postCommentLabel" destination="UMh-Zk-rTP" id="cXr-xW-EJ1"/>
                                             <outlet property="postCreationDate" destination="h8U-8m-s7l" id="3xW-zu-Sia"/>
+                                            <outlet property="postMinusButton" destination="5pG-cY-it7" id="Lui-YA-0CE"/>
+                                            <outlet property="postPlusButton" destination="7C7-kd-ZTa" id="V7H-MJ-ccG"/>
+                                            <outlet property="postScoreLabel" destination="cTm-b0-wfk" id="3Mo-hr-L0s"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

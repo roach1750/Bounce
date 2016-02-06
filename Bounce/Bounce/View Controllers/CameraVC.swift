@@ -15,9 +15,9 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     @IBOutlet weak var cameraPreviewImageView: UIImageView!
     @IBOutlet weak var takePictureButton: UIButton!
     
-//    let captureSession: AVCaptureSession = AVCaptureSession()
+    //    let captureSession: AVCaptureSession = AVCaptureSession()
     var captureSession: AVCaptureSession = AVCaptureSession()
-
+    
     var stillImageOutput = AVCaptureStillImageOutput()
     var previewLayer: AVCaptureVideoPreviewLayer!
     var switchCameraButton: UIButton!
@@ -25,6 +25,8 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     override func viewDidLoad() {
         takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "saveImage", name: BOUNCEIMAGEPROCESSEDNOTIFICATION, object: nil)
+        
         super.viewDidLoad()
     }
     override func viewDidAppear(animated: Bool) {
@@ -34,7 +36,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     func beginCameraSession(){
         //remove old inputs, if necessary
         captureSession = AVCaptureSession()
-
+        
         //pick camera
         var camera: AVCaptureDevice?
         if frontCamera == true {
@@ -97,24 +99,25 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     @IBAction func takePicture(sender: UIButton) {
         if cameraPreviewImageView.image == nil {
-        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){
-            videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
-            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
-                if (sampleBuffer != nil) {
-                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
-                    let dataProvider = CGDataProviderCreateWithCFData(imageData)
-                    let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
-                    let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
-                    self.captureSession.stopRunning()
-                    let imageCropper = ImageResizer()
-                    let croppedImage = imageCropper.cropToSquare(image)
-                    let rotatedImage = imageCropper.rotateImage90Degress(croppedImage)
-                    self.cameraPreviewImageView.image = rotatedImage;
-                    Post.sharedInstance.postImageData = UIImagePNGRepresentation(rotatedImage)
-                    self.takePictureButton.setImage(UIImage(named: "Delete Picture Button"), forState: .Normal)
-                }
-            })
-        }
+            if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){
+                videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
+                stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
+                    if (sampleBuffer != nil) {
+                        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+                            
+                            let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+                            
+                            let dataProvider = CGDataProviderCreateWithCFData(imageData)
+                            let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
+                            let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
+                            self.captureSession.stopRunning()
+                            let IC = ImageConfigurer.sharedInstance
+                            IC.image = image
+                            IC.processImage()
+                        }
+                    }
+                })
+            }
         }
         else {
             cameraPreviewImageView.image = nil
@@ -124,8 +127,16 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     
-    
+    func saveImage() {
+        let IC = ImageConfigurer.sharedInstance
+        if let configuredImage = IC.image {
+            self.cameraPreviewImageView.image = configuredImage;
+            self.takePictureButton.setImage(UIImage(named: "Delete Picture Button"), forState: .Normal)
+        }
 
+        
+    }
+    
     
     
     // MARK: - UI Configuration
