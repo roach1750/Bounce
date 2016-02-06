@@ -32,6 +32,7 @@ class LocationFetcher: NSObject {
     }
     
     func fetchFourSquarePlaces(){
+        print("Fetching Four Square Places")
         if let location = currentLocation {
             let latitude = String(location.coordinate.latitude)
             let longitude = String(location.coordinate.longitude)

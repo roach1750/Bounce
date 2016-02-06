@@ -21,7 +21,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     //Variables
     var selectedPlace: Place?
     //Constants
-    let locationManager = CLLocationManager()
+    var locationManager: CLLocationManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,9 +110,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let location: PrivateResource = .Location(.WhenInUse)
         
         proposeToAccess(location, agreed: {
-            self.locationManager.delegate = self
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            self.locationManager.startUpdatingLocation()
+            self.locationManager = CLLocationManager()
+            self.locationManager!.delegate = self
+            self.locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager!.startUpdatingLocation()
             self.configureMapView()
             }, rejected: {
                 print("Location denied")
@@ -126,7 +127,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.005, 0.005))
             LocationFetcher.sharedInstance.currentLocation = location
             mapView.setRegion(region, animated: true)
-            locationManager.stopUpdatingLocation()
+            locationManager!.stopUpdatingLocation()
+            locationManager = nil
             fetchButtonTapped(UIBarButtonItem())
         }
     }

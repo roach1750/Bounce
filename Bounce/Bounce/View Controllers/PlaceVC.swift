@@ -131,7 +131,6 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: Score Buttons
     
-    
     @IBAction func plusButtonPressed(sender: UIButton) {
         
         let point = sender.convertPoint(CGPointZero, toView: tableView)
@@ -139,16 +138,26 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if let currentPost = place?.posts[(indexPath?.row)!] {
             let dm = DataModel()
             dm.incrementScoreForObject(currentPost, amount: 1)
+            let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
+            let currentScore = Int(cell!.postScoreLabel.text!)
+            let newScore = currentScore! + 1
+            cell?.postScoreLabel.text = String(newScore)
         }
-        
-        
-        
     }
     
     
     @IBAction func minusButtonPressed(sender: UIButton) {
-        
-        
+        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        if let currentPost = place?.posts[(indexPath?.row)!] {
+            let dm = DataModel()
+            dm.incrementScoreForObject(currentPost, amount: -1)
+            let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
+            let currentScore = Int(cell!.postScoreLabel.text!)
+            let newScore = currentScore! - 1
+            cell?.postScoreLabel.text = String(newScore)
+            
+        }
     }
     
     

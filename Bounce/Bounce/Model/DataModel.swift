@@ -107,7 +107,6 @@ class DataModel: NSObject {
     }
     
     func incrementScoreForObject(post: Post, amount:Int) {
-        
         let query = PFQuery(className: BOUNCECLASSNAME)
         query.whereKey("objectId", equalTo: post.postID)
         query.limit = 1
@@ -133,6 +132,7 @@ class DataModel: NSObject {
                 }
             }
         }
+        
         
         
         
