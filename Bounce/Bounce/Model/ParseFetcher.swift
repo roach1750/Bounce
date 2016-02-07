@@ -10,14 +10,7 @@ import UIKit
 import Parse
 
 class ParseFetcher: NSObject {
-    
-    class var sharedInstance: LocationFetcher {
-        struct Singleton {
-            static let instance = LocationFetcher()
-        }
-        return Singleton.instance
-    }
-    
+
     
     func fetchData(){
         if let userLocation = LocationFetcher.sharedInstance.currentLocation {
@@ -40,6 +33,17 @@ class ParseFetcher: NSObject {
         }
     }
 
+    
+    func fetchScoreForPlace(place: Place) {
+        PFCloud.callFunctionInBackground("totalScore", withParameters: ["key": place.key]) {
+            (score, error) in
+            if (error == nil) {
+                print("new score is: \(score)")
+                let dm = DataModel()
+                dm.updateScoreForPlaceWithKeyAndScore(place.key, score: Int(score! as! Int))
+            }
+        }
+    }
     
     
     

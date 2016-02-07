@@ -60,7 +60,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let objects = dm.fetchAllPlaces()
         for place in objects {
             let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
-            let annotation = BounceAnnotation(title: place.name, subtitle: String(place.posts.count), coordinate: coordinate)
+            let annotation = BounceAnnotation(title: place.name, subtitle: String(place.score), coordinate: coordinate)
             
             mapView.addAnnotation(annotation)
         }

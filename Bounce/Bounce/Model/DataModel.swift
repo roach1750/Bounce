@@ -20,7 +20,6 @@ class DataModel: NSObject {
             let post = createPostFromPFObject(dataObject)
             //First check if we already have this post, if so return get out of this method
             if checkIfPostIsExistingAndUpdateScore(post) {
-                print("This post is already in the database")
                 //Update the post score: 
                 
                 continue
@@ -34,12 +33,14 @@ class DataModel: NSObject {
             else {
                 //Create new place and add post to it
                 let newPlace = createNewPlaceFromPostAndAddPostToPlace(post)
+                let fetcher = ParseFetcher()
+                fetcher.fetchScoreForPlace(newPlace)
                 addPlaceToRealm(newPlace)
             }
             
         }
-        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil, userInfo: nil)
-        
+        updateScoresForAllPlaces()
+
     }
     
     
@@ -137,6 +138,9 @@ class DataModel: NSObject {
         
         
     }
+
+    
+    
     
     
     //MARK: - Realm Methods
@@ -208,5 +212,31 @@ class DataModel: NSObject {
             post.postImageData = photo
         }
     }
+    
+    
+    
+    func updateScoreForPlaceWithKeyAndScore(key: String, score: Int) {
+        let place = fetchPlaceWithKey(key)
+        let realm = try! Realm()
+        try! realm.write {
+            place.score = score
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil, userInfo: nil)
 
+    }
+
+    
+    func updateScoresForAllPlaces(){
+        print("Getting more scores...")
+        let places = fetchAllPlaces()
+        if places.count > 0 {
+            for place in places {
+                let parseFetcher = ParseFetcher()
+                parseFetcher.fetchScoreForPlace(place)
+            }
+        }
+    }
+    
+    
+    
 }
