@@ -54,9 +54,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             if currentPost.hasImage {
                 if let imageData = currentPost.postImageData {
                     let image = UIImage(data: imageData)
-//                    let imageCropper = ImageResizer()
-//                    let rotatedImage = imageCropper.rotateImage90Degress(image!)
-                    cell.postImageView?.image = image
+                    let IC = ImageConfigurer()
+                    let rotatedImage = IC.rotateImage90Degress(image!)
+                    cell.postImageView?.image = rotatedImage
                     cell.postImageView?.contentMode = .ScaleAspectFit
 
                 }

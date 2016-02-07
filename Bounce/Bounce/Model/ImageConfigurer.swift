@@ -22,8 +22,8 @@ class ImageConfigurer: NSObject {
     func processImage(){
         let croppedImage = cropToSquare(image!)
         let rotatedImage = rotateImage90Degress(croppedImage)
-        let filteredImage = addSepiaToneToImage(rotatedImage)
-        image = filteredImage
+//        let filteredImage = addSepiaToneToImage(rotatedImage)
+        image = rotatedImage
         Post.sharedInstance.postImageData = UIImagePNGRepresentation(image!)
         dispatch_async(dispatch_get_main_queue()) {
             NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEPROCESSEDNOTIFICATION, object: nil, userInfo: nil)
@@ -87,26 +87,26 @@ class ImageConfigurer: NSObject {
     
     //Filter Methods
     
-    func addSepiaToneToImage(inputImage: UIImage) -> UIImage {
-        
-        let context = CIContext(options: nil)
-        
-        if let currentFilter = CIFilter(name: "CISepiaTone") {
-            let beginImage = CIImage(image: inputImage)
-            currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-            currentFilter.setValue(0.5, forKey: kCIInputIntensityKey)
-            
-            if let output = currentFilter.outputImage {
-                let cgimg = context.createCGImage(output, fromRect: output.extent)
-                let processedImage = UIImage(CGImage: cgimg)
-                return processedImage
-                // do something interesting with the processed image
-            }
-        }
-        
-        return inputImage
-    }
-    
+//    func addSepiaToneToImage(inputImage: UIImage) -> UIImage {
+//        
+//        let context = CIContext(options: nil)
+//        
+//        if let currentFilter = CIFilter(name: "CISepiaTone") {
+//            let beginImage = CIImage(image: inputImage)
+//            currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+//            currentFilter.setValue(0.5, forKey: kCIInputIntensityKey)
+//            
+//            if let output = currentFilter.outputImage {
+//                let cgimg = context.createCGImage(output, fromRect: output.extent)
+//                let processedImage = UIImage(CGImage: cgimg)
+//                return processedImage
+//                // do something interesting with the processed image
+//            }
+//        }
+//        
+//        return inputImage
+//    }
+//    
     
     
     

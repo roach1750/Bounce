@@ -103,6 +103,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
                 stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
                     if (sampleBuffer != nil) {
+                        
                         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
                             
                             let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
