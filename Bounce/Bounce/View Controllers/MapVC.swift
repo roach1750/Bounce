@@ -60,7 +60,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let objects = dm.fetchAllPlaces()
         for place in objects {
             let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
-            let annotation = BounceAnnotation(title: place.name, subtitle: String(place.score), coordinate: coordinate)
+            let annotation = BounceAnnotation(title: place.name, subtitle: String(place.score), coordinate: coordinate, place: place)
             
             mapView.addAnnotation(annotation)
         }
@@ -73,15 +73,31 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             return nil
         }
         
+        let bounceAnnotation = annotation as! BounceAnnotation
         let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotationIdentifier")
+        if let place = bounceAnnotation.place {
+            let score = place.score
+            if score <= BOUNCEDARKBLUESCORE {
+                pinAnnotationView.pinTintColor = BOUNCEDARKBLUE
+            }
+            else if (score > BOUNCEDARKBLUESCORE && score <= BOUNCELIGHTBLUESCORE){
+                pinAnnotationView.pinTintColor = BOUNCELIGHTBLUE
+            }
+            else if (score > BOUNCELIGHTBLUESCORE && score <= BOUNCEGREENSCORE){
+                pinAnnotationView.pinTintColor = BOUNCEGREEN
+            }
+            else if (score > BOUNCEGREENSCORE && score <= BOUNCEYELLOWSCORE){
+                pinAnnotationView.pinTintColor = BOUNCEYELLOW
+            }
+            else if (score > BOUNCEYELLOWSCORE && score <= BOUNCEORANGESCORE){
+                pinAnnotationView.pinTintColor = BOUNCEORANGE
+            }
+            else {
+                pinAnnotationView.pinTintColor = BOUNCERED
+            }
+        }
         
-        let randomRed:CGFloat = CGFloat(drand48())
-        
-        let randomGreen:CGFloat = CGFloat(drand48())
-        
-        let randomBlue:CGFloat = CGFloat(drand48())
-        
-        pinAnnotationView.pinTintColor = UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+
         
         
         
