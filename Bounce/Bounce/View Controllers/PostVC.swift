@@ -39,6 +39,9 @@ class PostVC: UIViewController, UITextViewDelegate {
             addDeleteImageButton()
 
         }
+        else {
+            postImageView.image = UIImage(named: "cameraImage")
+        }
         if Post.sharedInstance.postMessage != nil {
             postTextView.text = Post.sharedInstance.postMessage!
         }
@@ -60,7 +63,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     func deleteImagePressed(){
         removeDeleteImageButton()
         Post.sharedInstance.postImageData = nil
-        postImageView.image = nil
+        postImageView.image = UIImage(named: "cameraImage")
     }
     
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {

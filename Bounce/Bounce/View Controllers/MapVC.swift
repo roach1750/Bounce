@@ -32,7 +32,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         try! realm.write{
             realm.deleteAll()
         }
-        //test commit
     }
     
     @IBAction func composeButtonTapped(sender: UIBarButtonItem) {

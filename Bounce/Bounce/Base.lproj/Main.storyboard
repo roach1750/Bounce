@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cTA-66-VL9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cTA-66-VL9">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -76,7 +76,7 @@
                                     <segue destination="eNS-kH-FRZ" kind="show" id="FPb-JA-hGq"/>
                                 </connections>
                             </button>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCy-el-dWO">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cameraImage" translatesAutoresizingMaskIntoConstraints="NO" id="jCy-el-dWO">
                                 <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.015686274510000001" green="0.22023126911314986" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -290,7 +290,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fQf-5l-C2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="273" y="361"/>
+            <point key="canvasLocation" x="252" y="369"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fjN-qk-4YF">
@@ -655,4 +655,7 @@
             <point key="canvasLocation" x="2180" y="714"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cameraImage" width="1000" height="1000"/>
+    </resources>
 </document>
