@@ -8,6 +8,70 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
+        <!--LoginVC-->
+        <scene sceneID="2aW-Qj-rMN">
+            <objects>
+                <viewController id="ijD-7d-m1j" customClass="FBLoginVC" customModule="Bounce" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U1q-xb-o4B"/>
+                        <viewControllerLayoutGuide type="bottom" id="6n9-Pr-pXi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Q1h-MR-LcL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xK4-S5-K5Z" customClass="FBSDKProfilePictureView">
+                                <rect key="frame" x="200" y="72" width="200" height="200"/>
+                                <color key="backgroundColor" red="0.9529411793" green="0.19607843459999999" blue="0.090196080509999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="ssD-WB-GBf"/>
+                                    <constraint firstAttribute="width" secondItem="xK4-S5-K5Z" secondAttribute="height" multiplier="1:1" id="xIC-XG-AdZ"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwg-Q1-Rni">
+                                <rect key="frame" x="20" y="499" width="560" height="81"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="81" id="q3T-QX-jmT"/>
+                                </constraints>
+                                <state key="normal" title="Continue Without Facebook">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="showDetail" action="showViewController:sender:" id="V7R-yX-5T9"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YpB-ha-Jtz">
+                                <rect key="frame" x="20" y="280" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xK4-S5-K5Z" firstAttribute="centerX" secondItem="Q1h-MR-LcL" secondAttribute="centerX" id="2MD-nk-gtD"/>
+                            <constraint firstItem="xK4-S5-K5Z" firstAttribute="top" secondItem="U1q-xb-o4B" secondAttribute="bottom" constant="8" id="AJU-UN-Ixp"/>
+                            <constraint firstItem="cwg-Q1-Rni" firstAttribute="leading" secondItem="Q1h-MR-LcL" secondAttribute="leading" constant="20" id="BIH-Ae-wuU"/>
+                            <constraint firstAttribute="trailing" secondItem="YpB-ha-Jtz" secondAttribute="trailing" constant="20" id="OLC-d2-Wih"/>
+                            <constraint firstItem="6n9-Pr-pXi" firstAttribute="top" secondItem="cwg-Q1-Rni" secondAttribute="bottom" constant="20" id="Ot8-8F-atQ"/>
+                            <constraint firstAttribute="trailing" secondItem="cwg-Q1-Rni" secondAttribute="trailing" constant="20" id="UUj-2C-Z9S"/>
+                            <constraint firstItem="cwg-Q1-Rni" firstAttribute="centerX" secondItem="Q1h-MR-LcL" secondAttribute="centerX" id="eCa-ox-sOB"/>
+                            <constraint firstItem="YpB-ha-Jtz" firstAttribute="top" secondItem="xK4-S5-K5Z" secondAttribute="bottom" constant="8" id="iLn-4k-9PF"/>
+                            <constraint firstItem="YpB-ha-Jtz" firstAttribute="leading" secondItem="Q1h-MR-LcL" secondAttribute="leading" constant="20" id="pVO-0I-uw9"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bFP-zi-APS"/>
+                    <connections>
+                        <outlet property="continueButton" destination="cwg-Q1-Rni" id="s65-gf-KCS"/>
+                        <outlet property="nameLabel" destination="YpB-ha-Jtz" id="RtP-tl-nUY"/>
+                        <outlet property="profilePictureView" destination="xK4-S5-K5Z" id="6gB-En-y8R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P2V-5U-iHU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="354" y="369"/>
+        </scene>
         <!--Bounce-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -285,12 +349,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="kvS-Dg-XWj"/>
+                        <segue destination="ijD-7d-m1j" kind="relationship" relationship="rootViewController" id="CO8-3m-JaS"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fQf-5l-C2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="252" y="369"/>
+            <point key="canvasLocation" x="-483" y="369"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fjN-qk-4YF">
@@ -328,7 +392,7 @@
                                 <gestureRecognizers/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoOnly" rowHeight="640" id="OJR-uK-ydp" userLabel="Image Only" customClass="PlaceTableViewCell" customModule="Bounce" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="86" width="600" height="640"/>
+                                        <rect key="frame" x="0.0" y="22" width="600" height="640"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OJR-uK-ydp" id="gke-3n-DCp">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="639.5"/>
@@ -428,7 +492,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentAndPhoto" rowHeight="715" id="MBl-Vd-qvx" userLabel="Image and Comment" customClass="PlaceTableViewCell" customModule="Bounce" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="726" width="600" height="715"/>
+                                        <rect key="frame" x="0.0" y="662" width="600" height="715"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MBl-Vd-qvx" id="mRe-fd-HKw">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="714.5"/>
@@ -539,7 +603,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentOnly" rowHeight="115" id="Qhq-0U-UrM" userLabel="Comment Only" customClass="PlaceTableViewCell" customModule="Bounce" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1441" width="600" height="115"/>
+                                        <rect key="frame" x="0.0" y="1377" width="600" height="115"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qhq-0U-UrM" id="Ibk-0a-ZWL">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="114.5"/>

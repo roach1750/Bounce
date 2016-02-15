@@ -21,6 +21,8 @@ let BOUNCESCOREKEY  =  "score"
 let BOUNCEKEY  =  "key"
 let BOUNCELOCATIONIDENTIFIER =  "locationID"
 let BOUNCEID =  "objectId"
+let BOUNCESHARESETTING =  "shareSetting"
+
 
 
 let BOUNCEANNOTATIONSREADYNOTIFICATION  =  "annotationsReady"

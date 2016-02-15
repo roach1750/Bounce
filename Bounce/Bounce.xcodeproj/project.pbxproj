@@ -27,6 +27,11 @@
 		2114B46A1C6172330002C930 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4671C6172330002C930 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2114B46B1C6172330002C930 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4681C6172330002C930 /* RealmSwift.framework */; };
 		2114B46C1C6172330002C930 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4681C6172330002C930 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2143299F1C7251BB00FB9B99 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2143299B1C7251BB00FB9B99 /* FBSDKLoginKit.framework */; };
+		214329A01C7251BB00FB9B99 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2143299C1C7251BB00FB9B99 /* FBSDKShareKit.framework */; };
+		214329A11C7251BB00FB9B99 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2143299D1C7251BB00FB9B99 /* FBSDKCoreKit.framework */; };
+		214329A21C7251BB00FB9B99 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2143299E1C7251BB00FB9B99 /* Bolts.framework */; };
+		214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A31C7254D200FB9B99 /* FBLoginVC.swift */; };
 		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
 		21970FC41C4DA76E00048B54 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC31C4DA76E00048B54 /* Place.swift */; };
 		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
@@ -106,6 +111,11 @@
 		2114B4671C6172330002C930 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Bounce/Realm.framework; sourceTree = "<group>"; };
 		2114B4681C6172330002C930 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Bounce/RealmSwift.framework; sourceTree = "<group>"; };
 		211BC37B1C665DCD005A17AB /* Arlington.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Arlington.gpx; sourceTree = "<group>"; };
+		2143299B1C7251BB00FB9B99 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		2143299C1C7251BB00FB9B99 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		2143299D1C7251BB00FB9B99 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		2143299E1C7251BB00FB9B99 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		214329A31C7254D200FB9B99 /* FBLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBLoginVC.swift; path = "View Controllers/FBLoginVC.swift"; sourceTree = "<group>"; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		21970FC31C4DA76E00048B54 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
 		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
@@ -147,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				214329A21C7251BB00FB9B99 /* Bolts.framework in Frameworks */,
 				21970FDE1C4DD4FA00048B54 /* libsqlite3.tbd in Frameworks */,
 				21970FDC1C4DD4F100048B54 /* libz.tbd in Frameworks */,
 				2114B46B1C6172330002C930 /* RealmSwift.framework in Frameworks */,
@@ -154,10 +165,13 @@
 				21970FDA1C4DD4E800048B54 /* SystemConfiguration.framework in Frameworks */,
 				2114B4691C6172330002C930 /* Realm.framework in Frameworks */,
 				2114B4561C616F0C0002C930 /* ParseUI.framework in Frameworks */,
+				214329A01C7251BB00FB9B99 /* FBSDKShareKit.framework in Frameworks */,
 				21970FD81C4DD4D900048B54 /* StoreKit.framework in Frameworks */,
+				2143299F1C7251BB00FB9B99 /* FBSDKLoginKit.framework in Frameworks */,
 				2114B4611C6170120002C930 /* Parse.framework in Frameworks */,
 				21970FD61C4DD4CE00048B54 /* Security.framework in Frameworks */,
 				2114B4591C6170120002C930 /* ParseUI.framework in Frameworks */,
+				214329A11C7251BB00FB9B99 /* FBSDKCoreKit.framework in Frameworks */,
 				2114B4651C61722B0002C930 /* Realm.framework in Frameworks */,
 				2114B4661C61722B0002C930 /* RealmSwift.framework in Frameworks */,
 				21970FD41C4DD4C700048B54 /* QuartzCore.framework in Frameworks */,
@@ -224,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				21FFED291C487CEE006F294F /* Main.storyboard */,
+				214329A31C7254D200FB9B99 /* FBLoginVC.swift */,
 				21FFED5A1C488617006F294F /* MapVC.swift */,
 				210641801C585DDF00DFF326 /* PlaceVC.swift */,
 				21FFED611C4AAAC4006F294F /* PostVC.swift */,
@@ -277,6 +292,10 @@
 		21FFED5E1C4888B7006F294F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2143299B1C7251BB00FB9B99 /* FBSDKLoginKit.framework */,
+				2143299C1C7251BB00FB9B99 /* FBSDKShareKit.framework */,
+				2143299D1C7251BB00FB9B99 /* FBSDKCoreKit.framework */,
+				2143299E1C7251BB00FB9B99 /* Bolts.framework */,
 				2114B4631C61722B0002C930 /* Realm.framework */,
 				2114B4641C61722B0002C930 /* RealmSwift.framework */,
 				21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */,
@@ -436,6 +455,7 @@
 			files = (
 				21FFED621C4AAAC4006F294F /* PostVC.swift in Sources */,
 				21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */,
+				214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */,
 				21FFED541C487F5F006F294F /* ParseFetcher.swift in Sources */,
 				210641811C585DDF00DFF326 /* PlaceVC.swift in Sources */,
 				21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */,

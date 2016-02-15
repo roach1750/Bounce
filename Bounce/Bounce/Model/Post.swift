@@ -32,6 +32,8 @@ class Post: Object {
     dynamic var hasImage: Bool = false
     dynamic var postCreationDate: NSDate = NSDate()
     dynamic var postScore = 0
+    dynamic var postShareSetting: String = ""
+
     
     func createPFObject(){
         //Create PFObject: 
@@ -65,6 +67,9 @@ class Post: Object {
         //score 
         object[BOUNCESCOREKEY] = 0
         
+        
+        //ShareSetting 
+        object[BOUNCESHARESETTING] = postShareSetting
         
         object.saveInBackground()
         

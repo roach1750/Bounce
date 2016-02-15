@@ -21,10 +21,7 @@ class Place: Object {
     dynamic var key: String = ""
     dynamic var score = 0
 
-    
-//    override var description: String {
-//        return("\(name!), key: \(key!), lat: \(latitude!), long: \(longitude!), distance from user: \(distanceFromUser!) ft)")
-//    }
+
     
     
     

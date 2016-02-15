@@ -83,16 +83,32 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     //MARK: Create Post:
     @IBAction func postButtonTapped(sender: UIBarButtonItem) {
-        //Need to create post
-        let newPost = Post()
-        newPost.postMessage = postTextView.text
-        if let image = postImageView.image {
-            newPost.postImageData = UIImagePNGRepresentation(image)
+        
+        let alertController = UIAlertController(title: "Select Who Can See This Bounce", message:nil, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            
         }
-        newPost.postPlace = LocationFetcher.sharedInstance.selectedPlace
-        newPost.createPFObject()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        let friendsOnlyAction = UIAlertAction(title: "Friends Only", style: .Default) { (action) in
+            self.createPost("friendsOnly")
+        }
+        let EveryoneAction = UIAlertAction(title: "Everyone", style: .Default) { (action) in
+            self.createPost("everyone")
+        }
+
+        alertController.addAction(friendsOnlyAction)
+        alertController.addAction(EveryoneAction)
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        
+        }
+        
+        
     }
+    
+    
     
 
     @IBAction func goToCameraView(sender: UITapGestureRecognizer) {
@@ -107,6 +123,22 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     }
 
+    
+    //MARK: Create Post
+    
+    func createPost(shareSetting: String){
+        
+        let newPost = Post()
+        newPost.postMessage = postTextView.text
+        if let image = postImageView.image {
+            newPost.postImageData = UIImagePNGRepresentation(image)
+        }
+        newPost.postPlace = LocationFetcher.sharedInstance.selectedPlace
+        newPost.createPFObject()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
     
     //MARK: Post Textview Stuff: 
     func configureTextview(){
