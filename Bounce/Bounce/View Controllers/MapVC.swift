@@ -25,6 +25,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavBar()
         requestLocationData()
         print(Realm.Configuration.defaultConfiguration.path!)
         
@@ -161,6 +162,18 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             }
         }
     }
+    
+    //MARK: View customization 
+    
+    func configureNavBar(){
+        UINavigationBar.appearance().setBackgroundImage(
+            UIImage(),
+            forBarPosition: .Any,
+            barMetrics: .Default)
+        
+        UINavigationBar.appearance().shadowImage = UIImage()
+    }
+    
     
 }
 
