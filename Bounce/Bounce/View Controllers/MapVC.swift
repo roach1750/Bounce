@@ -14,7 +14,7 @@ import Realm
 import RealmSwift
 
 class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-
+    
     //Outlets
     @IBOutlet weak var mapView: MKMapView!
     
@@ -29,23 +29,35 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         requestLocationData()
         print(Realm.Configuration.defaultConfiguration.path!)
         
-        let realm = try! Realm()
-        try! realm.write{
-            realm.deleteAll()
-        }
+//        let realm = try! Realm()
+//        try! realm.write{
+//            realm.deleteAll()
+//        }
     }
     
     @IBAction func composeButtonTapped(sender: UIBarButtonItem) {
         performSegueWithIdentifier("createPostSegue", sender: self)
     }
-
+    
     @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
         let fetcher = ParseFetcher()
         fetcher.fetchData()
     }
-
     
-    //MARK: - MapView Delegate Methods 
+    @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
+        switch (sender.selectedSegmentIndex) {
+        case 0:
+            //friends
+            break
+        case 1:
+            //Everyone
+            break
+        default:
+            break
+        }
+    }
+    
+    //MARK: - MapView Delegate Methods
     
     
     func configureMapView(){
@@ -97,7 +109,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             }
         }
         
-
+        
         
         
         
@@ -106,10 +118,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         return pinAnnotationView
     }
     
-
+    
     
     func mapView(MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        //good idea to create place key here then look that up in the realm database? 
+        //good idea to create place key here then look that up in the realm database?
         
         if control == annotationView.rightCalloutAccessoryView {
             let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
@@ -117,7 +129,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             let dm = DataModel()
             selectedPlace = dm.fetchPlaceWithKey(key)
             performSegueWithIdentifier("showPosts", sender: self)
-            }
+        }
     }
     
     //MARK: - Location Manager
@@ -153,7 +165,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         print(error.description)
     }
     
-    //MARK: Segue 
+    //MARK: Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showPosts" {
             let DV = segue.destinationViewController as! PlaceVC
@@ -163,7 +175,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         }
     }
     
-    //MARK: View customization 
+    //MARK: View customization
     
     func configureNavBar(){
         UINavigationBar.appearance().setBackgroundImage(

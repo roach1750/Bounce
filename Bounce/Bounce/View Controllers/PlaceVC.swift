@@ -36,7 +36,18 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     }
     
-
+    @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
+        switch (sender.selectedSegmentIndex) {
+        case 0:
+            //friends
+            break
+        case 1:
+            //Everyone
+            break
+        default:
+            break
+        }
+    }
     
     
     

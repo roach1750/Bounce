@@ -9,7 +9,8 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
-
+import RealmSwift
+import Realm
 
 class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
 
@@ -22,22 +23,26 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Realm.Configuration.defaultConfiguration.path!)
+
         nameLabel.text = ""
         if FBSDKAccessToken.currentAccessToken() == nil {
             print("Not Login")
             
         }
         else {
-            print("Logged in")
+            print("Already Logged in")
+            //user is already logged in, check if the user has any new friends on bounce
+            let user = User()
+            user.updateUserFriends()
         }
-        
+
         let loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["public_profile", "email", "user_friends"]
         loginButton.center = self.view.center
         loginButton.delegate = self
         self.view.addSubview(loginButton)
         self.continueButton.setTitle("Contine", forState: .Normal)
-
     }
 
     
@@ -45,32 +50,15 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
     {
         print("fetching user")
-        FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name, last_name, picture.type(large)"]).startWithCompletionHandler { (connection, result, error) -> Void in
-            print("got results for user")
-            let strFirstName: String = (result.objectForKey("first_name") as? String)!
-            let strLastName: String = (result.objectForKey("last_name") as? String)!
-            self.nameLabel.text = "Welcome " + strFirstName + " " + strLastName
-            self.continueButton.setTitle("Contine", forState: .Normal)
-            print(strFirstName)
-            print(strLastName)
-        }
-        print("fetching user's friends")
-
-        let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields": "id"]);
-        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-            print("got results for user's friends")
-
-            if error == nil {
-                print("Friends are : \(result)")
-                
-            } else {
-                print("Error Getting Friends \(error)");
-            }
-        }
+        let user = User()
+        user.createUser()
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("User Logged Out")
+        let dm = DataModel()
+        dm.deleteUser()
+
     }
     
     

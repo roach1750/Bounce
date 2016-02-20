@@ -33,6 +33,7 @@
 		214329A21C7251BB00FB9B99 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2143299E1C7251BB00FB9B99 /* Bolts.framework */; };
 		214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A31C7254D200FB9B99 /* FBLoginVC.swift */; };
 		214329A61C73F8C700FB9B99 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A51C73F8C700FB9B99 /* User.swift */; };
+		214329A81C78EC8D00FB9B99 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A71C78EC8D00FB9B99 /* Friend.swift */; };
 		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
 		21970FC41C4DA76E00048B54 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC31C4DA76E00048B54 /* Place.swift */; };
 		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
@@ -118,6 +119,7 @@
 		2143299E1C7251BB00FB9B99 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		214329A31C7254D200FB9B99 /* FBLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBLoginVC.swift; path = "View Controllers/FBLoginVC.swift"; sourceTree = "<group>"; };
 		214329A51C73F8C700FB9B99 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		214329A71C78EC8D00FB9B99 /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Friend.swift; path = Model/Friend.swift; sourceTree = "<group>"; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		21970FC31C4DA76E00048B54 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
 		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				21970FDF1C4EFF5600048B54 /* BounceConstants.swift */,
 				21FFED631C4AAB78006F294F /* Post.swift */,
 				214329A51C73F8C700FB9B99 /* User.swift */,
+				214329A71C78EC8D00FB9B99 /* Friend.swift */,
 				21970FC31C4DA76E00048B54 /* Place.swift */,
 				21AC73A01C51964800C81D68 /* DataModel.swift */,
 				21FFED531C487F5F006F294F /* ParseFetcher.swift */,
@@ -463,6 +466,7 @@
 				210641811C585DDF00DFF326 /* PlaceVC.swift in Sources */,
 				21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */,
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
+				214329A81C78EC8D00FB9B99 /* Friend.swift in Sources */,
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
 				21AC73A11C51964800C81D68 /* DataModel.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
@@ -669,6 +673,7 @@
 		21FFED511C487CEE006F294F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BounceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

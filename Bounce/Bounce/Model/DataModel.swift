@@ -20,7 +20,7 @@ class DataModel: NSObject {
             let post = createPostFromPFObject(dataObject)
             //First check if we already have this post, if so return get out of this method
             if checkIfPostIsExistingAndUpdateScore(post) {
-                //Update the post score: 
+                //Update the post score:
                 
                 continue
             }
@@ -40,7 +40,7 @@ class DataModel: NSObject {
             
         }
         updateScoresForAllPlaces()
-
+        
     }
     
     
@@ -138,7 +138,7 @@ class DataModel: NSObject {
         
         
     }
-
+    
     
     
     
@@ -222,12 +222,11 @@ class DataModel: NSObject {
             place.score = score
         }
         NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil, userInfo: nil)
-
+        
     }
-
+    
     
     func updateScoresForAllPlaces(){
-        print("Getting more scores...")
         let places = fetchAllPlaces()
         if places.count > 0 {
             for place in places {
@@ -237,6 +236,57 @@ class DataModel: NSObject {
         }
     }
     
+    //MARK: - REALM FACEBOOK METHODS
     
+    func getUser() -> User?{
+        let realm = try! Realm()
+        if let user = realm.objects(User).first {
+            return user
+        }
+        return nil
+    }
+    
+    func getFriends() -> Results<Friend> {
+        let realm = try! Realm()
+        let friends = realm.objects(Friend)
+        return friends
+    }
+    
+    func saveUser(user: User){
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(user)
+        }
+    }
+    
+    func saveFriend(friend: Friend) {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(friend)
+        }
+    }
+    
+    func deleteUser(){
+        if let user = getUser() {
+            let realm = try! Realm()
+            try! realm.write {
+                realm.delete(user)
+            }
+        }
+    }
+    
+    
+    func deleteAllFriends(){
+        let friends = getFriends()
+        if friends.count > 0 {
+            let realm = try! Realm()
+            try! realm.write {
+                for friend in friends {
+                    realm.delete(friend)
+                }
+            }
+        }
+
+    }
     
 }
