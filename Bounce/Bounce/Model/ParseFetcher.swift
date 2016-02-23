@@ -14,7 +14,7 @@ class ParseFetcher: NSObject {
     
     func fetchData(){
         if let userLocation = LocationFetcher.sharedInstance.currentLocation {
-            let query = PFQuery(className: BOUNCECLASSNAME)
+            let query = queryConfigurer()
             let lat = userLocation.coordinate.latitude
             let lng = userLocation.coordinate.longitude
             let userGeopoint = PFGeoPoint(latitude: lat, longitude: lng)
@@ -34,11 +34,28 @@ class ParseFetcher: NSObject {
     }
 
     
+    func queryConfigurer() -> PFQuery {
+        let dm = DataModel()
+        //Friend Only Query
+        let friendIDS = dm.getFriendIDs()
+        let friendOnlyQuery = PFQuery(className: BOUNCECLASSNAME)
+        friendOnlyQuery.whereKey(BOUNCEUSERIDKEY, containedIn: friendIDS)
+        friendOnlyQuery.whereKey(BOUNCESHARESETTING, equalTo: BOUNCEFRIENDSONLYSHARESETTING)
+        
+        //Everyone Query
+        let everyoneQuery = PFQuery(className: BOUNCECLASSNAME)
+        everyoneQuery.whereKey(BOUNCESHARESETTING, equalTo: BOUNCEEVERYONESHARESETTING)
+        
+        //Combine Query
+        let query = PFQuery.orQueryWithSubqueries([friendOnlyQuery, everyoneQuery])
+        
+        return query
+    }
+    
     func fetchScoreForPlace(place: Place) {
         PFCloud.callFunctionInBackground("totalScore", withParameters: ["key": place.key]) {
             (score, error) in
             if (error == nil) {
-                print("new score is: \(score)")
                 let dm = DataModel()
                 dm.updateScoreForPlaceWithKeyAndScore(place.key, score: Int(score! as! Int))
             }

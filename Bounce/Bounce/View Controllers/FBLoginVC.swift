@@ -23,8 +23,6 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Realm.Configuration.defaultConfiguration.path!)
-
         nameLabel.text = ""
         if FBSDKAccessToken.currentAccessToken() == nil {
             print("Not Login")

@@ -55,6 +55,9 @@ class User: Object {
                     friendIDs.append(friend)
                     dm.saveFriend(friend)
                 }
+                if let userAsFriend = self.addUserToUsersFriendsList() {
+                    dm.saveFriend(userAsFriend)
+                }
                 
             } else {
                 
@@ -64,7 +67,17 @@ class User: Object {
         }
     }
     
-
+    func addUserToUsersFriendsList() -> Friend? {
+        let dm = DataModel()
+        if let user = dm.getUser() {
+            let friend = Friend()
+            friend.firstName = user.firstName
+            friend.lastName = user.lastName
+            friend.userID = user.userID
+            return friend
+        }
+        return nil
+    }
     
 
     

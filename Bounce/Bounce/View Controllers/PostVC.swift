@@ -91,10 +91,10 @@ class PostVC: UIViewController, UITextViewDelegate {
         }
         
         let friendsOnlyAction = UIAlertAction(title: "Friends Only", style: .Default) { (action) in
-            self.createPost("friendsOnly")
+            self.createPost(BOUNCEFRIENDSONLYSHARESETTING)
         }
         let EveryoneAction = UIAlertAction(title: "Everyone", style: .Default) { (action) in
-            self.createPost("everyone")
+            self.createPost(BOUNCEEVERYONESHARESETTING)
         }
 
         alertController.addAction(friendsOnlyAction)
@@ -134,6 +134,7 @@ class PostVC: UIViewController, UITextViewDelegate {
             newPost.postImageData = UIImagePNGRepresentation(image)
         }
         newPost.postPlace = LocationFetcher.sharedInstance.selectedPlace
+        newPost.postShareSetting = shareSetting
         newPost.createPFObject()
         self.dismissViewControllerAnimated(true, completion: nil)
     }

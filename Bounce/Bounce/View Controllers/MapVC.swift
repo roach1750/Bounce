@@ -29,10 +29,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         requestLocationData()
         print(Realm.Configuration.defaultConfiguration.path!)
         
-//        let realm = try! Realm()
-//        try! realm.write{
-//            realm.deleteAll()
-//        }
     }
     
     @IBAction func composeButtonTapped(sender: UIBarButtonItem) {

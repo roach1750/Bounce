@@ -33,6 +33,7 @@ class Post: Object {
     dynamic var postCreationDate: NSDate = NSDate()
     dynamic var postScore = 0
     dynamic var postShareSetting: String = ""
+    dynamic var postUserID: String = ""
 
     
     func createPFObject(){
@@ -70,6 +71,11 @@ class Post: Object {
         
         //ShareSetting 
         object[BOUNCESHARESETTING] = postShareSetting
+        
+        //UserID
+        let dm = DataModel()
+        let user = dm.getUser()
+        object[BOUNCEUSERIDKEY] = user!.userID
         
         object.saveInBackground()
         

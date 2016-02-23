@@ -252,6 +252,15 @@ class DataModel: NSObject {
         return friends
     }
     
+    func getFriendIDs() -> [String] {
+        let friends = getFriends()
+        var friendIDs = [String]()
+        for friend in friends {
+            friendIDs.append(friend.userID)
+        }
+        return friendIDs
+    }
+    
     func saveUser(user: User){
         let realm = try! Realm()
         try! realm.write {
@@ -286,7 +295,6 @@ class DataModel: NSObject {
                 }
             }
         }
-
     }
     
 }
