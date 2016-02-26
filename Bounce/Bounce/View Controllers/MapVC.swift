@@ -15,6 +15,7 @@ import RealmSwift
 
 class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    @IBOutlet weak var shareSettingSegmentControl: UISegmentedControl!
     //Outlets
     @IBOutlet weak var mapView: MKMapView!
     
@@ -29,6 +30,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         requestLocationData()
         print(Realm.Configuration.defaultConfiguration.path!)
         
+        
     }
     
     @IBAction func composeButtonTapped(sender: UIBarButtonItem) {
@@ -41,21 +43,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
-        switch (sender.selectedSegmentIndex) {
-        case 0:
-            //friends
-            break
-        case 1:
-            //Everyone
-            break
-        default:
-            break
-        }
+        createAnnotations()
     }
     
     //MARK: - MapView Delegate Methods
-    
-    
     func configureMapView(){
         mapView.showsUserLocation = true
         mapView.delegate = self
@@ -65,14 +56,27 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func createAnnotations() {
         mapView.removeAnnotations(mapView.annotations)
         let dm = DataModel()
-        let objects = dm.fetchAllPlaces()
-        for place in objects {
-            let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
-            let annotation = BounceAnnotation(title: place.name, subtitle: String(place.score), coordinate: coordinate, place: place)
-            
-            mapView.addAnnotation(annotation)
+        if let objects = dm.fetchPlacesForShareSetting(currentShareSetting()) {
+            for place in objects {
+                let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
+                let annotation = BounceAnnotation(title: place.name, subtitle: String(place.score), coordinate: coordinate, place: place)
+                mapView.addAnnotation(annotation)
+                
+            }
         }
     }
+    
+    func currentShareSetting() -> String {
+        switch (shareSettingSegmentControl.selectedSegmentIndex) {
+        case 0:
+            return BOUNCEFRIENDSONLYSHARESETTING
+        case 1:
+            return BOUNCEEVERYONESHARESETTING
+        default:
+            return ""
+        }
+    }
+    
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
     {

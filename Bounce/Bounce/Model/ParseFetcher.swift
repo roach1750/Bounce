@@ -24,11 +24,7 @@ class ParseFetcher: NSObject {
                     print("There are \(results!.count) results")
                     let dm = DataModel()
                     dm.addNewDataToDataBase(results as [PFObject]!)
-                
-                
                 }
-                
-
             }
         }
     }
@@ -36,6 +32,7 @@ class ParseFetcher: NSObject {
     
     func queryConfigurer() -> PFQuery {
         let dm = DataModel()
+        
         //Friend Only Query
         let friendIDS = dm.getFriendIDs()
         let friendOnlyQuery = PFQuery(className: BOUNCECLASSNAME)

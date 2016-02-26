@@ -74,9 +74,10 @@ class Post: Object {
         
         //UserID
         let dm = DataModel()
-        let user = dm.getUser()
-        object[BOUNCEUSERIDKEY] = user!.userID
-        
+        if let user = dm.getUser() {
+            print("Fetched USER TO POST ID is: " + user.userID)
+            object[BOUNCEUSERIDKEY] = user.userID
+        }
         object.saveInBackground()
         
         

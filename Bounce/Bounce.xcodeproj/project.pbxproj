@@ -34,6 +34,7 @@
 		214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A31C7254D200FB9B99 /* FBLoginVC.swift */; };
 		214329A61C73F8C700FB9B99 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A51C73F8C700FB9B99 /* User.swift */; };
 		214329A81C78EC8D00FB9B99 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A71C78EC8D00FB9B99 /* Friend.swift */; };
+		21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */; };
 		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
 		21970FC41C4DA76E00048B54 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC31C4DA76E00048B54 /* Place.swift */; };
 		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
@@ -120,6 +121,7 @@
 		214329A31C7254D200FB9B99 /* FBLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBLoginVC.swift; path = "View Controllers/FBLoginVC.swift"; sourceTree = "<group>"; };
 		214329A51C73F8C700FB9B99 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		214329A71C78EC8D00FB9B99 /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Friend.swift; path = Model/Friend.swift; sourceTree = "<group>"; };
+		21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserFetcher.swift; path = Model/UserFetcher.swift; sourceTree = "<group>"; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		21970FC31C4DA76E00048B54 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
 		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				21970FDF1C4EFF5600048B54 /* BounceConstants.swift */,
 				21FFED631C4AAB78006F294F /* Post.swift */,
 				214329A51C73F8C700FB9B99 /* User.swift */,
+				21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */,
 				214329A71C78EC8D00FB9B99 /* Friend.swift */,
 				21970FC31C4DA76E00048B54 /* Place.swift */,
 				21AC73A01C51964800C81D68 /* DataModel.swift */,
@@ -468,6 +471,7 @@
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
 				214329A81C78EC8D00FB9B99 /* Friend.swift in Sources */,
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
+				21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */,
 				21AC73A11C51964800C81D68 /* DataModel.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
 				2106417F1C56E41E00DFF326 /* BounceAnnotation.swift in Sources */,

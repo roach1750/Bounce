@@ -19,67 +19,7 @@ class User: Object {
     dynamic var lastName:String = ""
     dynamic var userID:String = ""
     
-
-    
-    func createUser() {
-
-        
-        FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name, last_name, id, picture.type(large)"]).startWithCompletionHandler { (connection, result, error) -> Void in
-            self.firstName = result.objectForKey("first_name") as! String
-            self.lastName = result.objectForKey("last_name") as! String
-            self.userID = result.objectForKey("id") as! String
-            print(self.userID)
-            let dm = DataModel()
-            dm.saveUser(self)
-            self.updateUserFriends()
-        }
-        
+    override var description : String {
+        return self.firstName + "," + self.lastName + "," + self.userID
     }
-    
-    func updateUserFriends(){
-        
-        let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields": "id, first_name, last_name"])
-        
-        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-            
-            if error == nil {
-                let dm = DataModel()
-                dm.deleteAllFriends()
-                let friendIDs = List<Friend>()
-                let friendObjects = result["data"] as! [NSDictionary]
-                for friendObject in friendObjects {
-                    let friend = Friend()
-                    friend.firstName = friendObject.objectForKey("first_name") as! String
-                    friend.lastName = friendObject.objectForKey("last_name") as! String
-                    friend.userID = friendObject.objectForKey("id") as! String
-                    friendIDs.append(friend)
-                    dm.saveFriend(friend)
-                }
-                if let userAsFriend = self.addUserToUsersFriendsList() {
-                    dm.saveFriend(userAsFriend)
-                }
-                
-            } else {
-                
-                print("Error Getting Friends \(error)");
-                
-            }
-        }
-    }
-    
-    func addUserToUsersFriendsList() -> Friend? {
-        let dm = DataModel()
-        if let user = dm.getUser() {
-            let friend = Friend()
-            friend.firstName = user.firstName
-            friend.lastName = user.lastName
-            friend.userID = user.userID
-            return friend
-        }
-        return nil
-    }
-    
-
-    
-    
 }

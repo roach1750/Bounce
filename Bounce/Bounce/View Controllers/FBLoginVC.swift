@@ -31,8 +31,8 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
         else {
             print("Already Logged in")
             //user is already logged in, check if the user has any new friends on bounce
-            let user = User()
-            user.updateUserFriends()
+            let userFetcher = UserFetcher()
+            userFetcher.updateUserFriends()
         }
 
         let loginButton = FBSDKLoginButton()
@@ -48,8 +48,8 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
     {
         print("fetching user")
-        let user = User()
-        user.createUser()
+        let userFetcher = UserFetcher()
+        userFetcher.createUser()
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {

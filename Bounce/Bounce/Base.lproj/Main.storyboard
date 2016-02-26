@@ -133,6 +133,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="5oW-Xg-fee" id="Ygs-3T-cG5"/>
+                        <outlet property="shareSettingSegmentControl" destination="nYe-xz-who" id="LAG-An-xPs"/>
                         <segue destination="DZd-tu-Inh" kind="presentation" identifier="createPostSegue" id="e9q-qm-p92"/>
                         <segue destination="xKU-Dn-mW3" kind="show" identifier="showPosts" id="Aj1-6w-8ZS"/>
                     </connections>

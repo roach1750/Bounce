@@ -61,6 +61,8 @@ class DataModel: NSObject {
         newPost.postID = object.objectId!
         newPost.postCreationDate = object.createdAt!
         newPost.postScore = object[BOUNCESCOREKEY] as! Int
+        newPost.postShareSetting = object[BOUNCESHARESETTING] as! String
+        newPost.postUserID = object[BOUNCEUSERIDKEY] as! String
         if let _ = object[BOUNCEIMAGEKEY] {
             newPost.hasImage = true
         }
@@ -193,10 +195,34 @@ class DataModel: NSObject {
         }
     }
     
+    
+    //Right here configure if we should return the a place that is a everyone place or friend only place
     func fetchAllPlaces() -> Results<(Place)> {
         let realm = try! Realm()
         return realm.objects(Place)
     }
+    
+    func fetchPlacesForShareSetting(shareSetting: String) -> [Place]?{
+        var placeArray = [Place]()
+        let allPostWithShareSetting = fetchAllPostForShareSetting(shareSetting)
+        for post in allPostWithShareSetting {
+            if let placeForPost = fetchExistingPlaceFromRealmForPost(post) {
+                if !placeArray.contains({$0 == placeForPost}) {
+                    placeArray.append(placeForPost)
+                }
+            }
+        }
+        return placeArray
+    }
+    
+    
+    func fetchAllPostForShareSetting(shareSetting: String) -> Results<(Post)> {
+        let realm = try! Realm()
+        let predicate = NSPredicate(format: "postShareSetting = %@", shareSetting)
+        let placeResults = realm.objects(Post).filter(predicate)
+        return placeResults
+    }
+    
     
     func fetchPlaceWithKey(key: String) -> Place {
         let realm = try! Realm()
@@ -240,10 +266,10 @@ class DataModel: NSObject {
     
     func getUser() -> User?{
         let realm = try! Realm()
-        if let user = realm.objects(User).first {
-            return user
-        }
-        return nil
+        let user = realm.objects(User)
+            print(user)
+            return user.first
+        
     }
     
     func getFriends() -> Results<Friend> {
@@ -262,10 +288,12 @@ class DataModel: NSObject {
     }
     
     func saveUser(user: User){
+        print("ID TO SAVE IS: " + user.userID)
         let realm = try! Realm()
         try! realm.write {
             realm.add(user)
         }
+
     }
     
     func saveFriend(friend: Friend) {

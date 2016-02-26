@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import RealmSwift
+import Realm
 class PostVC: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var postImageView: UIImageView!
