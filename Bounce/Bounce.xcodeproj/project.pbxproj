@@ -50,6 +50,7 @@
 		21970FDE1C4DD4FA00048B54 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */; };
 		21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FDF1C4EFF5600048B54 /* BounceConstants.swift */; };
 		21AC73A11C51964800C81D68 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC73A01C51964800C81D68 /* DataModel.swift */; };
+		21EC4E441C820090002C3572 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EC4E431C820090002C3572 /* Extensions.swift */; };
 		21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED251C487CEE006F294F /* AppDelegate.swift */; };
 		21FFED2B1C487CEE006F294F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED291C487CEE006F294F /* Main.storyboard */; };
 		21FFED2D1C487CEE006F294F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED2C1C487CEE006F294F /* Assets.xcassets */; };
@@ -137,6 +138,7 @@
 		21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		21970FDF1C4EFF5600048B54 /* BounceConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceConstants.swift; path = Model/BounceConstants.swift; sourceTree = "<group>"; };
 		21AC73A01C51964800C81D68 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataModel.swift; path = Model/DataModel.swift; sourceTree = "<group>"; };
+		21EC4E431C820090002C3572 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Model/Extensions.swift; sourceTree = "<group>"; };
 		21FFED221C487CEE006F294F /* Bounce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bounce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FFED251C487CEE006F294F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FFED2A1C487CEE006F294F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				2106417E1C56E41E00DFF326 /* BounceAnnotation.swift */,
 				2114B4291C59890F0002C930 /* PlaceTableViewCell.swift */,
 				2114B42D1C5E69590002C930 /* ImageConfigurer.swift */,
+				21EC4E431C820090002C3572 /* Extensions.swift */,
 				211BC37B1C665DCD005A17AB /* Arlington.gpx */,
 				21970FC21C4DA44D00048B54 /* 3rd Party Models */,
 			);
@@ -471,6 +474,7 @@
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
 				214329A81C78EC8D00FB9B99 /* Friend.swift in Sources */,
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
+				21EC4E441C820090002C3572 /* Extensions.swift in Sources */,
 				21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */,
 				21AC73A11C51964800C81D68 /* DataModel.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,

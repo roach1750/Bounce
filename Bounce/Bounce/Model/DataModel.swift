@@ -173,9 +173,6 @@ class DataModel: NSObject {
                 existingPost.postScore = post.postScore
             }
         }
-        
-        
-        
         return searchResults.count > 0 ? true : false
     }
     
@@ -196,11 +193,16 @@ class DataModel: NSObject {
     }
     
     
-    //Right here configure if we should return the a place that is a everyone place or friend only place
     func fetchAllPlaces() -> Results<(Place)> {
         let realm = try! Realm()
         return realm.objects(Place)
     }
+    
+    func fetchAllPost() -> Results<(Post)> {
+        let realm = try! Realm()
+        return realm.objects(Post)
+    }
+    
     
     func fetchPlacesForShareSetting(shareSetting: String) -> [Place]?{
         var placeArray = [Place]()
@@ -218,9 +220,14 @@ class DataModel: NSObject {
     
     func fetchAllPostForShareSetting(shareSetting: String) -> Results<(Post)> {
         let realm = try! Realm()
-        let predicate = NSPredicate(format: "postShareSetting = %@", shareSetting)
-        let placeResults = realm.objects(Post).filter(predicate)
-        return placeResults
+        if shareSetting == BOUNCEEVERYONESHARESETTING {
+            return realm.objects(Post)
+        }
+        else {
+            let predicate = NSPredicate(format: "postShareSetting = %@", shareSetting)
+            let placeResults = realm.objects(Post).filter(predicate)
+            return placeResults
+        }
     }
     
     
@@ -261,6 +268,21 @@ class DataModel: NSObject {
             }
         }
     }
+    
+    
+    //MARK: - DELETE OLD POST
+    
+    func deletePostOlderThanTime(date: NSDate) {
+        let realm = try! Realm()
+        let allPost = fetchAllPost()
+        for post in allPost {
+            if post.postCreationDate.isLessThanDate(date) {
+                realm.delete(post)
+            }
+        }
+    }
+    
+    
     
     //MARK: - REALM FACEBOOK METHODS
     
