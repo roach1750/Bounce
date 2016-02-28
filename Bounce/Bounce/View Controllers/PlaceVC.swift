@@ -11,6 +11,8 @@ import Parse
 class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var shareSettingToolbar: UIToolbar!
+    @IBOutlet weak var shareSettingSegmentedControl: UISegmentedControl!
     
     var place: Place? {
         didSet {
@@ -21,7 +23,20 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         configureTableView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable", name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+        configureViewColors()
         super.viewDidLoad()
+    }
+    
+    func configureViewColors() {
+        //Navigation Bar Colors
+        
+        //Toolbar Colors
+        shareSettingToolbar.backgroundColor = BOUNCEPRIMARYCOLOR
+        shareSettingSegmentedControl.tintColor = BOUNCESECONDARYCOLOR
+        
+        //Remove Line under Navigation Bar
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     func reloadTable() {

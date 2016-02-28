@@ -14,10 +14,14 @@ import Realm
 import RealmSwift
 
 class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-    
-    @IBOutlet weak var shareSettingSegmentControl: UISegmentedControl!
     //Outlets
+    @IBOutlet weak var shareSettingSegmentControl: UISegmentedControl!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var shareSettingToolbar: UIToolbar!
+    @IBOutlet weak var fetchButton: UIBarButtonItem!
+    @IBOutlet weak var composeButton: UIBarButtonItem!
+        
+    
     
     //Variables
     var selectedPlace: Place?
@@ -29,8 +33,20 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         configureNavBar()
         requestLocationData()
         print(Realm.Configuration.defaultConfiguration.path!)
+
+        configureViewColors()
+    }
+    
+    func configureViewColors() {
+        //Navigation Bar Colors
         
+        //Toolbar Colors
+        shareSettingToolbar.backgroundColor = BOUNCEPRIMARYCOLOR
+        shareSettingSegmentControl.tintColor = BOUNCESECONDARYCOLOR
         
+        //Remove Line under Navigation Bar
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     @IBAction func composeButtonTapped(sender: UIBarButtonItem) {
@@ -171,6 +187,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             let DV = segue.destinationViewController as! PlaceVC
             if let place = selectedPlace {
                 DV.place = place
+                configureViewColors()
             }
         }
     }
@@ -185,6 +202,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         
         UINavigationBar.appearance().shadowImage = UIImage()
     }
+    
+
     
     
 }

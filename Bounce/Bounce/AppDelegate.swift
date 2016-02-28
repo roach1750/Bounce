@@ -31,8 +31,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        
+
+        UINavigationBar.appearance().barTintColor = BOUNCEPRIMARYCOLOR
+        UINavigationBar.appearance().tintColor = BOUNCESECONDARYCOLOR
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : BOUNCESECONDARYCOLOR]
+        UINavigationBar.appearance().barStyle = .Black
+        
         return true
     }
+    
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(

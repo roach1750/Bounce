@@ -20,7 +20,6 @@ class UserFetcher: NSObject {
             newUser.firstName = result.objectForKey("first_name") as! String
             newUser.lastName = result.objectForKey("last_name") as! String
             newUser.userID = result.objectForKey("id") as! String
-            print(newUser.userID)
             let dm = DataModel()
             dm.saveUser(newUser)
             self.updateUserFriends()

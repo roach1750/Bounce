@@ -40,7 +40,7 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
         loginButton.center = self.view.center
         loginButton.delegate = self
         self.view.addSubview(loginButton)
-        self.continueButton.setTitle("Contine", forState: .Normal)
+        self.continueButton.setTitle("Continue", forState: .Normal)
     }
 
     

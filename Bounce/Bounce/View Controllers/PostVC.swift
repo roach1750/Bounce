@@ -30,8 +30,9 @@ class PostVC: UIViewController, UITextViewDelegate {
     }
     override func viewWillAppear(animated: Bool) {
         configureLocationButton()
-
     }
+    
+
     
     func restoreDataIfApplicable(){
         if Post.sharedInstance.postImageData != nil {

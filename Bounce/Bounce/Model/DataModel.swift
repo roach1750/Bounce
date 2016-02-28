@@ -289,8 +289,7 @@ class DataModel: NSObject {
     func getUser() -> User?{
         let realm = try! Realm()
         let user = realm.objects(User)
-            print(user)
-            return user.first
+        return user.first
         
     }
     
@@ -310,12 +309,10 @@ class DataModel: NSObject {
     }
     
     func saveUser(user: User){
-        print("ID TO SAVE IS: " + user.userID)
         let realm = try! Realm()
         try! realm.write {
             realm.add(user)
         }
-
     }
     
     func saveFriend(friend: Friend) {

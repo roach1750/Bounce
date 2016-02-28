@@ -23,10 +23,6 @@
 		2114B4621C6170120002C930 /* Parse.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4501C616ECB0002C930 /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2114B4651C61722B0002C930 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4631C61722B0002C930 /* Realm.framework */; };
 		2114B4661C61722B0002C930 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4641C61722B0002C930 /* RealmSwift.framework */; };
-		2114B4691C6172330002C930 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4671C6172330002C930 /* Realm.framework */; };
-		2114B46A1C6172330002C930 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4671C6172330002C930 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2114B46B1C6172330002C930 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4681C6172330002C930 /* RealmSwift.framework */; };
-		2114B46C1C6172330002C930 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2114B4681C6172330002C930 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2143299F1C7251BB00FB9B99 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2143299B1C7251BB00FB9B99 /* FBSDKLoginKit.framework */; };
 		214329A01C7251BB00FB9B99 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2143299C1C7251BB00FB9B99 /* FBSDKShareKit.framework */; };
 		214329A11C7251BB00FB9B99 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2143299D1C7251BB00FB9B99 /* FBSDKCoreKit.framework */; };
@@ -44,13 +40,18 @@
 		21970FD21C4DD4BF00048B54 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD11C4DD4BF00048B54 /* CoreLocation.framework */; };
 		21970FD41C4DD4C700048B54 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD31C4DD4C700048B54 /* QuartzCore.framework */; };
 		21970FD61C4DD4CE00048B54 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD51C4DD4CE00048B54 /* Security.framework */; };
-		21970FD81C4DD4D900048B54 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD71C4DD4D900048B54 /* StoreKit.framework */; };
 		21970FDA1C4DD4E800048B54 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FD91C4DD4E800048B54 /* SystemConfiguration.framework */; };
 		21970FDC1C4DD4F100048B54 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FDB1C4DD4F100048B54 /* libz.tbd */; };
 		21970FDE1C4DD4FA00048B54 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */; };
 		21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FDF1C4EFF5600048B54 /* BounceConstants.swift */; };
 		21AC73A11C51964800C81D68 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC73A01C51964800C81D68 /* DataModel.swift */; };
 		21EC4E441C820090002C3572 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EC4E431C820090002C3572 /* Extensions.swift */; };
+		21EC4E471C8202DF002C3572 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21EC4E451C8202DF002C3572 /* Realm.framework */; };
+		21EC4E481C8202DF002C3572 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21EC4E461C8202DF002C3572 /* RealmSwift.framework */; };
+		21EC4E491C82033A002C3572 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21EC4E451C8202DF002C3572 /* Realm.framework */; };
+		21EC4E4A1C82033A002C3572 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21EC4E451C8202DF002C3572 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		21EC4E4B1C82033A002C3572 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21EC4E461C8202DF002C3572 /* RealmSwift.framework */; };
+		21EC4E4C1C82033A002C3572 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 21EC4E461C8202DF002C3572 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED251C487CEE006F294F /* AppDelegate.swift */; };
 		21FFED2B1C487CEE006F294F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED291C487CEE006F294F /* Main.storyboard */; };
 		21FFED2D1C487CEE006F294F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED2C1C487CEE006F294F /* Assets.xcassets */; };
@@ -90,8 +91,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2114B46A1C6172330002C930 /* Realm.framework in Embed Frameworks */,
-				2114B46C1C6172330002C930 /* RealmSwift.framework in Embed Frameworks */,
+				21EC4E4A1C82033A002C3572 /* Realm.framework in Embed Frameworks */,
+				21EC4E4C1C82033A002C3572 /* RealmSwift.framework in Embed Frameworks */,
 				2114B45A1C6170120002C930 /* ParseUI.framework in Embed Frameworks */,
 				2114B4601C6170120002C930 /* Bolts.framework in Embed Frameworks */,
 				2114B4621C6170120002C930 /* Parse.framework in Embed Frameworks */,
@@ -112,8 +113,6 @@
 		2114B4551C616F0C0002C930 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		2114B4631C61722B0002C930 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Bounce/Realm.framework; sourceTree = "<group>"; };
 		2114B4641C61722B0002C930 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Bounce/RealmSwift.framework; sourceTree = "<group>"; };
-		2114B4671C6172330002C930 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Bounce/Realm.framework; sourceTree = "<group>"; };
-		2114B4681C6172330002C930 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Bounce/RealmSwift.framework; sourceTree = "<group>"; };
 		211BC37B1C665DCD005A17AB /* Arlington.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Arlington.gpx; sourceTree = "<group>"; };
 		2143299B1C7251BB00FB9B99 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		2143299C1C7251BB00FB9B99 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -132,13 +131,14 @@
 		21970FD11C4DD4BF00048B54 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		21970FD31C4DD4C700048B54 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		21970FD51C4DD4CE00048B54 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		21970FD71C4DD4D900048B54 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		21970FD91C4DD4E800048B54 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		21970FDB1C4DD4F100048B54 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		21970FDD1C4DD4FA00048B54 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		21970FDF1C4EFF5600048B54 /* BounceConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceConstants.swift; path = Model/BounceConstants.swift; sourceTree = "<group>"; };
 		21AC73A01C51964800C81D68 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataModel.swift; path = Model/DataModel.swift; sourceTree = "<group>"; };
 		21EC4E431C820090002C3572 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Model/Extensions.swift; sourceTree = "<group>"; };
+		21EC4E451C8202DF002C3572 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		21EC4E461C8202DF002C3572 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		21FFED221C487CEE006F294F /* Bounce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bounce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FFED251C487CEE006F294F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21FFED2A1C487CEE006F294F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -165,20 +165,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21EC4E4B1C82033A002C3572 /* RealmSwift.framework in Frameworks */,
 				214329A21C7251BB00FB9B99 /* Bolts.framework in Frameworks */,
 				21970FDE1C4DD4FA00048B54 /* libsqlite3.tbd in Frameworks */,
 				21970FDC1C4DD4F100048B54 /* libz.tbd in Frameworks */,
-				2114B46B1C6172330002C930 /* RealmSwift.framework in Frameworks */,
 				2114B4541C616ECB0002C930 /* Parse.framework in Frameworks */,
 				21970FDA1C4DD4E800048B54 /* SystemConfiguration.framework in Frameworks */,
-				2114B4691C6172330002C930 /* Realm.framework in Frameworks */,
 				2114B4561C616F0C0002C930 /* ParseUI.framework in Frameworks */,
 				214329A01C7251BB00FB9B99 /* FBSDKShareKit.framework in Frameworks */,
-				21970FD81C4DD4D900048B54 /* StoreKit.framework in Frameworks */,
 				2143299F1C7251BB00FB9B99 /* FBSDKLoginKit.framework in Frameworks */,
 				2114B4611C6170120002C930 /* Parse.framework in Frameworks */,
+				21EC4E491C82033A002C3572 /* Realm.framework in Frameworks */,
 				21970FD61C4DD4CE00048B54 /* Security.framework in Frameworks */,
 				2114B4591C6170120002C930 /* ParseUI.framework in Frameworks */,
+				21EC4E471C8202DF002C3572 /* Realm.framework in Frameworks */,
 				214329A11C7251BB00FB9B99 /* FBSDKCoreKit.framework in Frameworks */,
 				2114B4651C61722B0002C930 /* Realm.framework in Frameworks */,
 				2114B4661C61722B0002C930 /* RealmSwift.framework in Frameworks */,
@@ -187,6 +187,7 @@
 				21970FD01C4DD4B400048B54 /* CoreGraphics.framework in Frameworks */,
 				2114B45F1C6170120002C930 /* Bolts.framework in Frameworks */,
 				21970FCE1C4DD4AF00048B54 /* CFNetwork.framework in Frameworks */,
+				21EC4E481C8202DF002C3572 /* RealmSwift.framework in Frameworks */,
 				21970FCC1C4DD4A000048B54 /* AudioToolbox.framework in Frameworks */,
 				21FFED5D1C488689006F294F /* MapKit.framework in Frameworks */,
 				2114B4531C616ECB0002C930 /* Bolts.framework in Frameworks */,
@@ -222,8 +223,6 @@
 		21FFED191C487CEE006F294F = {
 			isa = PBXGroup;
 			children = (
-				2114B4671C6172330002C930 /* Realm.framework */,
-				2114B4681C6172330002C930 /* RealmSwift.framework */,
 				21FFED241C487CEE006F294F /* Bounce */,
 				21FFED391C487CEE006F294F /* BounceTests */,
 				21FFED441C487CEE006F294F /* BounceUITests */,
@@ -304,6 +303,8 @@
 		21FFED5E1C4888B7006F294F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				21EC4E451C8202DF002C3572 /* Realm.framework */,
+				21EC4E461C8202DF002C3572 /* RealmSwift.framework */,
 				2143299B1C7251BB00FB9B99 /* FBSDKLoginKit.framework */,
 				2143299C1C7251BB00FB9B99 /* FBSDKShareKit.framework */,
 				2143299D1C7251BB00FB9B99 /* FBSDKCoreKit.framework */,
@@ -316,7 +317,6 @@
 				2114B44F1C616ECB0002C930 /* Bolts.framework */,
 				2114B4501C616ECB0002C930 /* Parse.framework */,
 				21970FD91C4DD4E800048B54 /* SystemConfiguration.framework */,
-				21970FD71C4DD4D900048B54 /* StoreKit.framework */,
 				21970FD51C4DD4CE00048B54 /* Security.framework */,
 				21970FD31C4DD4C700048B54 /* QuartzCore.framework */,
 				21970FD11C4DD4BF00048B54 /* CoreLocation.framework */,
@@ -397,7 +397,11 @@
 				TargetAttributes = {
 					21FFED211C487CEE006F294F = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = P44AL382B9;
 						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
 							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
