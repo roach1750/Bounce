@@ -138,6 +138,9 @@ class PostVC: UIViewController, UITextViewDelegate {
         newPost.postPlace = LocationFetcher.sharedInstance.selectedPlace
         newPost.postShareSetting = shareSetting
         newPost.createPFObject()
+        
+        Post.sharedInstance.postImageData = nil
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
