@@ -205,6 +205,7 @@ class DataModel: NSObject {
     
     
     func fetchPlacesForShareSetting(shareSetting: String) -> [Place]?{
+        
         var placeArray = [Place]()
         let allPostWithShareSetting = fetchAllPostForShareSetting(shareSetting)
         for post in allPostWithShareSetting {
@@ -214,7 +215,24 @@ class DataModel: NSObject {
                 }
             }
         }
-        return placeArray
+        
+        if shareSetting == BOUNCEFRIENDSONLYSHARESETTING {
+            return placeArray
+        }
+        else if shareSetting == BOUNCEEVERYONESHARESETTING {
+            //Need to add friends to the everyone list:
+            let friendsPost = fetchAllPostForShareSetting(BOUNCEFRIENDSONLYSHARESETTING)
+            for post in friendsPost {
+                if let placeForPost = fetchExistingPlaceFromRealmForPost(post) {
+                    if !placeArray.contains({$0 == placeForPost}) {
+                        placeArray.append(placeForPost)
+                    }
+                }
+            }
+            return placeArray
+        }
+        
+        return nil
     }
     
     
@@ -235,7 +253,6 @@ class DataModel: NSObject {
         let realm = try! Realm()
         let predicate = NSPredicate(format: "key = %@", key)
         let placeResults = realm.objects(Place).filter(predicate)
-        
         return placeResults[0]
     }
     
