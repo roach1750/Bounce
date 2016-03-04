@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        
 
         UINavigationBar.appearance().barTintColor = BOUNCEPRIMARYCOLOR
         UINavigationBar.appearance().tintColor = BOUNCESECONDARYCOLOR

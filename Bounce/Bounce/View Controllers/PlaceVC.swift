@@ -8,6 +8,9 @@
 
 import UIKit
 import Parse
+import Realm
+import RealmSwift
+
 class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
@@ -17,8 +20,12 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var place: Place? {
         didSet {
             self.title = place?.name
+            let dm = DataModel()
+            posts = dm.fetchPostsForPlaceWithShareSetting(BOUNCEFRIENDSONLYSHARESETTING, place: place!)
         }
     }
+    
+    var posts: List<Post>?
     
     override func viewDidLoad() {
         configureTableView()
@@ -54,20 +61,25 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
         switch (sender.selectedSegmentIndex) {
         case 0:
-            //friends
+            getDataForTable(BOUNCEFRIENDSONLYSHARESETTING)
             break
         case 1:
-            //Everyone
+            getDataForTable(BOUNCEEVERYONESHARESETTING)
             break
         default:
             break
         }
     }
+
     
-    
+    func getDataForTable(shareSetting: String) {
+        let dm = DataModel()
+        posts = dm.fetchPostsForPlaceWithShareSetting(shareSetting, place: place!)
+        tableView.reloadData()
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let placesPost = place?.posts {
+        if let placesPost = posts {
             let currentPost = placesPost[indexPath.section]
             let identifier = getIdentifierForCell(currentPost)
             let cell:PlaceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(identifier) as! PlaceTableViewCell
@@ -196,10 +208,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //MARK: Tableview customization
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if let placesPost = place?.posts {
-            return placesPost.count
-        }
-        return 0
+        return (posts?.count)!
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -248,6 +248,22 @@ class DataModel: NSObject {
         }
     }
     
+    func fetchPostsForPlaceWithShareSetting(shareSetting: String, place: Place) -> List<Post>{
+        if shareSetting == BOUNCEEVERYONESHARESETTING {
+            return place.posts
+        }
+        else if shareSetting == BOUNCEFRIENDSONLYSHARESETTING {
+            let postToReturn = List<Post>()
+            for post in place.posts {
+                if post.postShareSetting == BOUNCEFRIENDSONLYSHARESETTING {
+                    postToReturn.append(post)
+                }
+            }
+            return postToReturn
+        }
+        return List<Post>()
+    }
+    
     
     func fetchPlaceWithKey(key: String) -> Place {
         let realm = try! Realm()
@@ -289,15 +305,15 @@ class DataModel: NSObject {
     
     //MARK: - DELETE OLD POST
     
-    func deletePostOlderThanTime(date: NSDate) {
-        let realm = try! Realm()
-        let allPost = fetchAllPost()
-        for post in allPost {
-            if post.postCreationDate.isLessThanDate(date) {
-                realm.delete(post)
-            }
-        }
-    }
+//    func deletePostOlderThanTime(date: NSDate) {
+//        let realm = try! Realm()
+//        let allPost = fetchAllPost()
+//        for post in allPost {
+//            if post.postCreationDate.isLessThanDate(date) {
+//                realm.delete(post)
+//            }
+//        }
+//    }
     
     
     
