@@ -75,7 +75,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func getDataForTable(shareSetting: String) {
         let dm = DataModel()
         posts = dm.fetchPostsForPlaceWithShareSetting(shareSetting, place: place!)
-        tableView.reloadData()
+        reloadTable()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -96,7 +96,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     let rotatedImage = IC.rotateImage90Degress(image!)
                     cell.postImageView?.image = rotatedImage
                     cell.postImageView?.contentMode = .ScaleAspectFit
-
+                    
                 }
                 else {
                     let dm = DataModel()
@@ -114,6 +114,15 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
+            print("CELL FRAME : \(cell.frame)")
+            
+            print("VIEW FRAME: \(view.frame)")
+        
+            if cell.frame.width != view.frame.width {
+                reloadTable()
+            }
+            
             return cell
         }
         
@@ -208,6 +217,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //MARK: Tableview customization
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//        print("There are \(posts!.count) rows and the frame is: \(tableView.frame)")
         return (posts?.count)!
     }
     
@@ -225,4 +235,10 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         headerView.backgroundColor = UIColor.clearColor()
         return headerView
     }
+    
+
+    
+    
+    
+    
 }
