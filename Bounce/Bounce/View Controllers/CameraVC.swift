@@ -25,7 +25,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     override func viewDidLoad() {
         takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "saveImage", name: BOUNCEIMAGEPROCESSEDNOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraVC.saveImage), name: BOUNCEIMAGEPROCESSEDNOTIFICATION, object: nil)
         
         super.viewDidLoad()
     }
@@ -149,7 +149,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     func addSwitchCameraButton() {
         switchCameraButton = UIButton(frame: CGRect(x:  cameraPreviewImageView.frame.size.width - 70, y: 10 + cameraPreviewImageView.frame.origin.y, width: 50, height: 50))
         switchCameraButton.setImage(UIImage(named: "SwitchCamera"), forState: .Normal)
-        switchCameraButton.addTarget(self, action: "switchCamera", forControlEvents: .TouchUpInside)
+        switchCameraButton.addTarget(self, action: #selector(CameraVC.switchCamera), forControlEvents: .TouchUpInside)
         view.addSubview(switchCameraButton)
         view.bringSubviewToFront(switchCameraButton)
     }

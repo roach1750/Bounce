@@ -66,7 +66,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func configureMapView(){
         mapView.showsUserLocation = true
         mapView.delegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "createAnnotations", name: BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MapVC.createAnnotations), name: BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
+        
     }
     
     func createAnnotations() {

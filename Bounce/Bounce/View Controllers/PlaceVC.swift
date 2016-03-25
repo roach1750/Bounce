@@ -29,7 +29,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewDidLoad() {
         configureTableView()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadTable", name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.reloadTable), name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
         configureViewColors()
         super.viewDidLoad()
     }
@@ -115,9 +115,6 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-            print("CELL FRAME : \(cell.frame)")
-            
-            print("VIEW FRAME: \(view.frame)")
         
             if cell.frame.width != view.frame.width {
                 reloadTable()
@@ -208,9 +205,29 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     
+    @IBAction func moreButtonPressed(sender: UIButton) {
+        
+        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        if let currentPost = place?.posts[(indexPath?.row)!] {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            let firstAction = UIAlertAction(title: "Report", style: .Destructive) { (alert: UIAlertAction!) -> Void in
+                let dm = DataModel()
+                dm.reportPost(currentPost)
+            }
+            let secondAction = UIAlertAction(title: "Cancel", style: .Cancel) { (alert: UIAlertAction!) -> Void in
+            }
+            
+            alert.addAction(firstAction)
+            alert.addAction(secondAction)
+            presentViewController(alert, animated: true, completion:nil)
+            
+        }
+        
+        
+    }
     
-    
-    
+
     
     
     

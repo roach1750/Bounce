@@ -142,7 +142,9 @@ class DataModel: NSObject {
     }
     
     
-    
+    func reportPost(post: Post) {
+        
+    }
     
     
     //MARK: - Realm Methods

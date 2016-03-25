@@ -53,7 +53,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     func addDeleteImageButton(){
         postImageDeleteButton = UIButton(frame: CGRect(x: 10, y: 10 + postImageView.frame.origin.y, width: 30, height: 30))
         postImageDeleteButton.setTitle("x", forState: .Normal)
-        postImageDeleteButton.addTarget(self, action: "deleteImagePressed", forControlEvents: .TouchUpInside)
+        postImageDeleteButton.addTarget(self, action: #selector(PostVC.deleteImagePressed), forControlEvents: .TouchUpInside)
         view.addSubview(postImageDeleteButton)
         view.bringSubviewToFront(postImageDeleteButton)
     }
@@ -171,7 +171,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     //MARK: Keyboard Animations
     func registerForKeyboardNotifications(){
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeState:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.keyboardWillChangeState(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
     
     //WARNING: This is not perfect yet
