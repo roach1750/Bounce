@@ -1,8 +1,19 @@
-platform :ios, '9.3'
+platform :ios, '9.0'
 use_frameworks!
 
 target 'Bounce' do
+
 pod 'RealmSwift'
+
+pod 'Parse'
+
+pod 'FBSDKCoreKit'
+
+pod 'FBSDKLoginKit'
+
+pod 'FBSDKShareKit'
+
+pod 'ParseUI'
 
 end
 
@@ -13,4 +24,3 @@ end
 target 'BounceUITests' do
 
 end
-

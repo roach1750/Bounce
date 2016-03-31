@@ -30,12 +30,27 @@
                   moduleName = "Realm"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/andrewroach/Documents/Programming%20/Git%20Projects/Bounce/Bounce/Pods/Realm/Realm/RLMUtil.mm"
-                  timestampString = "481079318.958604"
+                  timestampString = "481155669.193365"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
                   endingLineNumber = "259"
-                  offsetFromSymbolStart = "335">
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RLMException(NSString*, NSDictionary*)"
+                  moduleName = "Realm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrewroach/Documents/Programming%20/Git%20Projects/Bounce/Bounce/Pods/Realm/Realm/RLMUtil.mm"
+                  timestampString = "481155669.19348"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "96">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -45,12 +60,12 @@
                   moduleName = "Realm"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/andrewroach/Documents/Programming%20/Git%20Projects/Bounce/Bounce/Pods/Realm/Realm/RLMUtil.mm"
-                  timestampString = "481079318.958883"
+                  timestampString = "481155669.193561"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "266"
                   endingLineNumber = "266"
-                  offsetFromSymbolStart = "12">
+                  offsetFromSymbolStart = "16">
                </Location>
             </Locations>
          </BreakpointContent>

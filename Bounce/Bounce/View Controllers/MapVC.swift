@@ -34,7 +34,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         requestLocationData()
         print(Realm.Configuration.defaultConfiguration.path!)
 
-        configureViewColors()
+        //configureViewColors()
     }
     
     func configureViewColors() {

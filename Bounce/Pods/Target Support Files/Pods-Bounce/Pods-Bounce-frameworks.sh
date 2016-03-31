@@ -84,10 +84,22 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-Bounce/Bolts.framework"
+  install_framework "Pods-Bounce/FBSDKCoreKit.framework"
+  install_framework "Pods-Bounce/FBSDKLoginKit.framework"
+  install_framework "Pods-Bounce/FBSDKShareKit.framework"
+  install_framework "Pods-Bounce/Parse.framework"
+  install_framework "Pods-Bounce/ParseUI.framework"
   install_framework "Pods-Bounce/Realm.framework"
   install_framework "Pods-Bounce/RealmSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-Bounce/Bolts.framework"
+  install_framework "Pods-Bounce/FBSDKCoreKit.framework"
+  install_framework "Pods-Bounce/FBSDKLoginKit.framework"
+  install_framework "Pods-Bounce/FBSDKShareKit.framework"
+  install_framework "Pods-Bounce/Parse.framework"
+  install_framework "Pods-Bounce/ParseUI.framework"
   install_framework "Pods-Bounce/Realm.framework"
   install_framework "Pods-Bounce/RealmSwift.framework"
 fi
