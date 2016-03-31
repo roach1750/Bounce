@@ -1,0 +1,16 @@
+platform :ios, '9.3'
+use_frameworks!
+
+target 'Bounce' do
+pod 'RealmSwift'
+
+end
+
+target 'BounceTests' do
+
+end
+
+target 'BounceUITests' do
+
+end
+

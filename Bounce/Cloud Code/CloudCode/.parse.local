@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "Bounce 2.0": {
+      "applicationId": "dbXVdXUR57MYaZp24jxsTuikEKPnKRNzTnEuzUQx"
+    },
+    "_default": {
+      "link": "Bounce 2.0"
+    }
+  }
+}
