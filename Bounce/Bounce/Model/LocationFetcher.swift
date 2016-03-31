@@ -57,7 +57,7 @@ class LocationFetcher: NSObject {
                         let resultsJSON = JSON(data: data!)
                         self.placeArray = [Place]()
                         self.selectedPlace = nil
-                        for (var i = 0; i < resultsJSON["response"]["venues"].count; i++) {
+                        for i in 0..<resultsJSON["response"]["venues"].count {
                             let currentPlace = Place()
                             currentPlace.name = resultsJSON["response"]["venues"][i]["name"].string!
                             currentPlace.latitude = resultsJSON["response"]["venues"][i]["location"]["lat"].double!
