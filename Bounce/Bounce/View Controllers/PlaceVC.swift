@@ -139,6 +139,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 reloadTable()
             }
             
+            
             return cell
         }
         

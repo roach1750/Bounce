@@ -173,8 +173,6 @@ class DataModel: NSObject {
         let searchResults = realm.objects(Post).filter(predicate)
         if searchResults.count > 0 {
             let existingPost = searchResults[0]
-            print("existing Post score is: \(existingPost.postScore)")
-            print("new post score is: \(post.postScore)")
             let realm = try! Realm()
             try! realm.write {
                 existingPost.postScore = post.postScore

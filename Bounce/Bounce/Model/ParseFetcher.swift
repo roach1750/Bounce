@@ -65,7 +65,6 @@ class ParseFetcher: NSObject {
         query.whereKey(BOUNCELOCATIONIDENTIFIER, equalTo: place.key)
         query.findObjectsInBackgroundWithBlock { (results, error) in
             if results?.count > 0 {
-                print("newData Count is: \(results?.count)")
                 let dm = DataModel()
                 for PFObject in results! {
                     let post = dm.createPostFromPFObject(PFObject)
