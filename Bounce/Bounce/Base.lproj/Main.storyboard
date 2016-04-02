@@ -8,7 +8,7 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--LoginVC-->
+        <!--Bounce-->
         <scene sceneID="2aW-Qj-rMN">
             <objects>
                 <viewController id="ijD-7d-m1j" customClass="FBLoginVC" customModule="Bounce" customModuleProvider="target" sceneMemberID="viewController">
@@ -61,7 +61,7 @@
                             <constraint firstItem="YpB-ha-Jtz" firstAttribute="leading" secondItem="Q1h-MR-LcL" secondAttribute="leading" constant="20" id="pVO-0I-uw9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="bFP-zi-APS"/>
+                    <navigationItem key="navigationItem" title="Bounce" id="bFP-zi-APS"/>
                     <connections>
                         <outlet property="continueButton" destination="cwg-Q1-Rni" id="s65-gf-KCS"/>
                         <outlet property="nameLabel" destination="YpB-ha-Jtz" id="RtP-tl-nUY"/>

@@ -17,6 +17,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var shareSettingToolbar: UIToolbar!
     @IBOutlet weak var shareSettingSegmentedControl: UISegmentedControl!
     
+    var refreshControl: UIRefreshControl!
+    
     var place: Place? {
         didSet {
             self.title = place?.name
@@ -30,6 +32,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         configureTableView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.reloadTable), name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.refreshComplete), name: BOUNCETABLEDATARELOADCOMPLETE, object: nil)
         configureViewColors()
         super.viewDidLoad()
     }
@@ -55,8 +58,24 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor ( red: 0.7885, green: 0.8121, blue: 0.9454, alpha: 1.0 )
-
+        
+        //Pull to refresh
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(PlaceVC.pullToRefresh), forControlEvents: .ValueChanged)
+        tableView.addSubview(refreshControl)
+        
     }
+    
+    func pullToRefresh() {
+        let pf = ParseFetcher()
+        pf.fetchPostForPlace(place!)
+    }
+    
+    func refreshComplete() {
+        refreshControl.endRefreshing()
+        reloadTable()
+    }
+    
     
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
         switch (sender.selectedSegmentIndex) {
@@ -70,7 +89,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             break
         }
     }
-
+    
     
     func getDataForTable(shareSetting: String) {
         let dm = DataModel()
@@ -83,7 +102,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let currentPost = placesPost[indexPath.section]
             let identifier = getIdentifierForCell(currentPost)
             let cell:PlaceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(identifier) as! PlaceTableViewCell
-
+            
             
             //Coment
             cell.postCommentLabel.text = currentPost.postMessage
@@ -105,7 +124,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 }
             }
             
-            //Creation Date 
+            //Creation Date
             cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
             
             //Score
@@ -115,7 +134,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-        
+            
             if cell.frame.width != view.frame.width {
                 reloadTable()
             }
@@ -227,14 +246,14 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
     }
     
-
+    
     
     
     
     //MARK: Tableview customization
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        print("There are \(posts!.count) rows and the frame is: \(tableView.frame)")
+        //        print("There are \(posts!.count) rows and the frame is: \(tableView.frame)")
         return (posts?.count)!
     }
     
@@ -253,7 +272,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return headerView
     }
     
-
+    
     
     
     
