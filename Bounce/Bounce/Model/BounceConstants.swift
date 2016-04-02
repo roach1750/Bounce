@@ -52,7 +52,7 @@ let BOUNCEYELLOW = UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0);
 let BOUNCEORANGE = UIColor(red: 1.0, green: 0.502, blue: 0.0, alpha: 1.0);
 let BOUNCERED = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0);
 
-let BOUNCEPRIMARYCOLOR = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0);
+let BOUNCEPRIMARYCOLOR = UIColor(red: 255.0 / 255.0, green: 85.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0);
 let BOUNCESECONDARYCOLOR = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0);
 
 

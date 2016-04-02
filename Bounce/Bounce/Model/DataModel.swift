@@ -29,7 +29,7 @@ class DataModel: NSObject {
                 if existingPlace.posts.indexOf(post) == nil {
                     addPostToExistingPlace(existingPlace, post: post)
                 }
-
+                
             }
             else {
                 //Create new place and add post to it
@@ -42,7 +42,7 @@ class DataModel: NSObject {
         }
         updateScoresForAllPlaces()
         NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil, userInfo: nil)
-
+        
         
     }
     
@@ -173,13 +173,15 @@ class DataModel: NSObject {
         let searchResults = realm.objects(Post).filter(predicate)
         if searchResults.count > 0 {
             let existingPost = searchResults[0]
-            print(post.postScore)
+            print("existing Post score is: \(existingPost.postScore)")
+            print("new post score is: \(post.postScore)")
             let realm = try! Realm()
             try! realm.write {
-                
                 existingPost.postScore = post.postScore
-                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil, userInfo: nil)
             }
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil, userInfo: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATARELOADCOMPLETE, object: nil, userInfo: nil)
             
         }
         return searchResults.count > 0 ? true : false
@@ -311,20 +313,20 @@ class DataModel: NSObject {
         }
     }
     
-
+    
     
     
     //MARK: - DELETE OLD POST
     
-//    func deletePostOlderThanTime(date: NSDate) {
-//        let realm = try! Realm()
-//        let allPost = fetchAllPost()
-//        for post in allPost {
-//            if post.postCreationDate.isLessThanDate(date) {
-//                realm.delete(post)
-//            }
-//        }
-//    }
+    //    func deletePostOlderThanTime(date: NSDate) {
+    //        let realm = try! Realm()
+    //        let allPost = fetchAllPost()
+    //        for post in allPost {
+    //            if post.postCreationDate.isLessThanDate(date) {
+    //                realm.delete(post)
+    //            }
+    //        }
+    //    }
     
     
     

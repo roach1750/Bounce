@@ -24,3 +24,4 @@ Parse.Cloud.define("totalScore", function(request, response) {
                               }
                               });
                    });
+
