@@ -7,17 +7,17 @@
 //
 
 import UIKit
-import RealmSwift
-import Realm
+
 import FBSDKCoreKit
 import FBSDKLoginKit
 
 
-class User: Object {
+class User: NSObject {
 
-    dynamic var firstName:String = ""
-    dynamic var lastName:String = ""
-    dynamic var userID:String = ""
+    var firstName:String = ""
+    var lastName:String = ""
+    var userID:String = ""
+    var friends: [String]?
     
     override var description : String {
         return self.firstName + "," + self.lastName + "," + self.userID

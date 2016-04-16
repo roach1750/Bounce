@@ -30,14 +30,15 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwg-Q1-Rni">
                                 <rect key="frame" x="20" y="435" width="560" height="81"/>
-                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.16862745098039217" green="0.52156862745098043" blue="0.82745098039215681" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="81" id="q3T-QX-jmT"/>
                                 </constraints>
-                                <state key="normal" title="Continue Without Facebook">
+                                <state key="normal" title="Let's Bounce!">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
+                                    <action selector="continueToBounceButtonPressed:" destination="ijD-7d-m1j" eventType="touchUpInside" id="vSy-4C-JjM"/>
                                     <segue destination="BYZ-38-t0r" kind="show" id="PMQ-fa-fFl"/>
                                 </connections>
                             </button>

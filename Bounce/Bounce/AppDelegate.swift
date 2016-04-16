@@ -11,23 +11,13 @@ import Parse
 import Bolts
 import FBSDKCoreKit
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        Parse.enableLocalDatastore()
-        
-        // Initialize Parse.
-        Parse.setApplicationId("dbXVdXUR57MYaZp24jxsTuikEKPnKRNzTnEuzUQx",
-            clientKey: "nk9a0UQ8sB9Wfb9JTIcy0KBUJGBWlNJofW9hfGcI")
-        
-        // [Optional] Track statistics around application opens.
-        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -36,6 +26,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = BOUNCESECONDARYCOLOR
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : BOUNCESECONDARYCOLOR]
         UINavigationBar.appearance().barStyle = .Black
+        
+        
+        ///Kinvey 
+        KCSClient.sharedClient().initializeKinveyServiceForAppKey(
+            "kid_-k1tqoyxb-",
+            withAppSecret: "15346761ee6841b59901e9925185f380",
+            usingOptions: nil
+        )
+        
+        KCSPing.pingKinveyWithBlock { (result: KCSPingResult!) -> Void in
+            if result.pingWasSuccessful {
+                print("Kinvey Ping Success")
+            } else {
+                print("Kinvey Ping Failed")
+            }
+        }
+        
+        
+
+        
+        
         
         return true
     }

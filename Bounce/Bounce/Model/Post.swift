@@ -7,19 +7,8 @@
 //
 
 import UIKit
-import Parse
-import Realm
-import RealmSwift
 
-
-class Post: Object {
-
-    class var sharedInstance: Post {
-        struct Singleton {
-            static let instance = Post()
-        }
-        return Singleton.instance
-    }
+class Post: NSObject {
     
     dynamic var postMessage: String?
     dynamic var postImageData: NSData?
@@ -34,57 +23,30 @@ class Post: Object {
     dynamic var postScore = 0
     dynamic var postShareSetting: String = ""
     dynamic var postUserID: String = ""
-
+    dynamic var postEntityId: String? //Kinvey entity _id
+    dynamic var postImageFileInfo: String?
     
-    func createPFObject(){
-        //Create PFObject: 
-        
-        let object = PFObject(className:BOUNCECLASSNAME)
-        
-        //location
-        let place = LocationFetcher.sharedInstance.selectedPlace
-        let geopoint = PFGeoPoint(latitude: place!.latitude, longitude: place!.longitude)
-        object[BOUNCELOCATIONGEOPOINTKEY] = geopoint
-        
-        //message
-        if let comment = postMessage {
-            object[BOUNCECOMMENTKEY] = comment
+    class var sharedInstance: Post {
+        struct Singleton {
+            static let instance = Post()
         }
-        
-        //image
-        if let postImageData = postImageData {
-            let imageFile = PFFile(name: "image.png", data: postImageData)
-            object[BOUNCEIMAGEKEY] = imageFile
-        }
-        
-        //place name
-        object[BOUNCELOCATIONNAME] = postPlace!.name
-        
-        //Key
-        
-        postKey = "\(String(place!.name))" + "," + "\(String(place!.latitude))" + "," + "\(String(place!.longitude))"
-        object[BOUNCELOCATIONIDENTIFIER] = postKey
-        
-        //score 
-        object[BOUNCESCOREKEY] = 0
-        
-        
-        //ShareSetting 
-        object[BOUNCESHARESETTING] = postShareSetting
-        
-        //UserID
-        let dm = DataModel()
-        if let user = dm.getUser() {
-            print("Fetched USER TO POST ID is: " + user.userID)
-            object[BOUNCEUSERIDKEY] = user.userID
-        }
-        object.saveInBackground()
-        
-        
+        return Singleton.instance
     }
     
-
-    
+    override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
+        return [
+            BOUNCEKINVEYID : KCSEntityKeyId, //the required _id field
+            BOUNCECOMMENTKEY : "postMessage",
+            BOUNCEIMAGEKEY : "postImageData",
+            BOUNCEKEY : "postKey",
+            BOUNCEID : "postID",
+            BOUNCELOCATIONNAME : "postPlaceName",
+            BOUNCEPOSTGEOLOCATION : "PostLocation",
+            BOUNCESHARESETTING : "postShareSetting",
+            BOUNCEUSERIDKEY : "postUserID",
+            BOUNCEKINVEYIMAGEFILEID : "postImageFileInfo"
+        ]
+    }
     
     func clearData(){
         postMessage = nil

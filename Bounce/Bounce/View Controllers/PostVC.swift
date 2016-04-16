@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
-import Realm
+
 class PostVC: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var postImageView: UIImageView!
@@ -135,9 +134,14 @@ class PostVC: UIViewController, UITextViewDelegate {
         if let image = postImageView.image {
             newPost.postImageData = UIImagePNGRepresentation(image)
         }
-        newPost.postPlace = LocationFetcher.sharedInstance.selectedPlace
+        let postPlace = LocationFetcher.sharedInstance.selectedPlace
+        newPost.postLatitude = postPlace!.latitude
+        newPost.postLongitude = postPlace!.longitude
+        
         newPost.postShareSetting = shareSetting
-        newPost.createPFObject()
+        
+        let uploader = KinveyInteractor()
+        uploader.upLoadPostImage(newPost)
         
         Post.sharedInstance.postImageData = nil
         

@@ -7,17 +7,15 @@
 //
 
 import UIKit
-import Realm
-import RealmSwift
 
-class Place: Object {
+class Place: NSObject {
     
     dynamic var name:String = "";
     dynamic var latitude:Double = 0;
     dynamic var longitude:Double = 0;
     
     var distanceFromUser: Double?
-    var posts = List<Post>()
+    var posts = [Post]()
     dynamic var key: String = ""
     dynamic var score = 0
 

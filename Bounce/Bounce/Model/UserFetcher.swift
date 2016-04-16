@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
-import Realm
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -16,13 +14,32 @@ class UserFetcher: NSObject {
 
     func createUser() {
         FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name, last_name, id, picture.type(large)"]).startWithCompletionHandler { (connection, result, error) -> Void in
-            let newUser = User()
-            newUser.firstName = result.objectForKey("first_name") as! String
-            newUser.lastName = result.objectForKey("last_name") as! String
-            newUser.userID = result.objectForKey("id") as! String
-            let dm = DataModel()
-            dm.saveUser(newUser)
-            self.updateUserFriends()
+            
+            
+            let givenName = result.objectForKey("first_name") as! String
+            let surname = result.objectForKey("last_name") as! String
+            let userId = result.objectForKey("id") as! String
+            
+            let userName = givenName + "_" + surname + "_" + userId
+            
+            print(userName)
+            
+
+            
+            KCSUser.userWithUsername(
+                userName,
+                password: "bounce",
+                fieldsAndValues: nil,
+                withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
+                    if errorOrNil == nil {
+                        //user is created
+                    } else {
+                        print(errorOrNil)
+                        //there was an error with the create
+                    }
+                }
+            )
+            
         }
         
     }
@@ -34,19 +51,17 @@ class UserFetcher: NSObject {
             
             if error == nil {
                 let dm = DataModel()
-                dm.deleteAllFriends()
-                let friendIDs = List<Friend>()
                 let friendObjects = result["data"] as! [NSDictionary]
                 for friendObject in friendObjects {
                     let friend = Friend()
                     friend.firstName = friendObject.objectForKey("first_name") as! String
                     friend.lastName = friendObject.objectForKey("last_name") as! String
                     friend.userID = friendObject.objectForKey("id") as! String
-                    friendIDs.append(friend)
-                    dm.saveFriend(friend)
+//                    friendIDs.append(friend)
+//                    dm.saveFriend(friend)
                 }
                 if let userAsFriend = self.addUserToUsersFriendsList() {
-                    dm.saveFriend(userAsFriend)
+//                    dm.saveFriend(userAsFriend)
                 }
                 
             } else {
@@ -58,14 +73,14 @@ class UserFetcher: NSObject {
     }
     
     func addUserToUsersFriendsList() -> Friend? {
-        let dm = DataModel()
-        if let user = dm.getUser() {
-            let friend = Friend()
-            friend.firstName = user.firstName
-            friend.lastName = user.lastName
-            friend.userID = user.userID
-            return friend
-        }
+//        let dm = DataModel()
+//        if let user = dm.getUser() {
+//            let friend = Friend()
+//            friend.firstName = user.firstName
+//            friend.lastName = user.lastName
+//            friend.userID = user.userID
+//            return friend
+//        }
         return nil
     }
 

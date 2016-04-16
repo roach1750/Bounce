@@ -3,17 +3,13 @@ use_frameworks!
 
 target 'Bounce' do
 
-pod 'RealmSwift'
-
-pod 'Parse'
-
 pod 'FBSDKCoreKit'
 
 pod 'FBSDKLoginKit'
 
 pod 'FBSDKShareKit'
 
-pod 'ParseUI'
+pod 'KinveyKit'
 
 end
 

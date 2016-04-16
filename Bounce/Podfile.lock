@@ -11,33 +11,19 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.10.1):
     - FBSDKCoreKit
-  - Parse (1.13.0):
-    - Bolts/Tasks (~> 1.6)
-  - ParseUI (1.2.0):
-    - Bolts/Tasks (~> 1.3)
-    - Parse (~> 1.9)
-  - Realm (0.98.6):
-    - Realm/Headers (= 0.98.6)
-  - Realm/Headers (0.98.6)
-  - RealmSwift (0.98.6):
-    - Realm (= 0.98.6)
+  - KinveyKit (1.40.7)
 
 DEPENDENCIES:
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
-  - Parse
-  - ParseUI
-  - RealmSwift
+  - KinveyKit
 
 SPEC CHECKSUMS:
   Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
   FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
   FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
   FBSDKShareKit: 2fd887cce0056bdda91f99b2021d724a4fed8e88
-  Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
-  ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
-  Realm: 44803f35418c5d89b27825a564247fcd190de37e
-  RealmSwift: c7239c52c83f8c43525a5269ba7be1694da33afc
+  KinveyKit: 76c5e4b2865b6f490d481845c88d1b5d5ed986f7
 
 COCOAPODS: 0.39.0

@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import Parse
-import Realm
-import RealmSwift
+
 
 class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -23,11 +21,11 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         didSet {
             self.title = place?.name
             let dm = DataModel()
-            posts = dm.fetchPostsForPlaceWithShareSetting(BOUNCEFRIENDSONLYSHARESETTING, place: place!)
+//            posts = dm.fetchPostsForPlaceWithShareSetting(BOUNCEFRIENDSONLYSHARESETTING, place: place!)
         }
     }
     
-    var posts: List<Post>?
+    var posts:[Post]?
     
     override func viewDidLoad() {
         configureTableView()
@@ -67,8 +65,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func pullToRefresh() {
-        let pf = ParseFetcher()
-        pf.fetchPostForPlace(place!)
+//        let pf = ParseFetcher()
+//        pf.fetchPostForPlace(place!)
     }
     
     func refreshComplete() {
@@ -92,9 +90,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     func getDataForTable(shareSetting: String) {
-        let dm = DataModel()
-        posts = dm.fetchPostsForPlaceWithShareSetting(shareSetting, place: place!)
-        reloadTable()
+//        let dm = DataModel()
+//        posts = dm.fetchPostsForPlaceWithShareSetting(shareSetting, place: place!)
+//        reloadTable()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -118,9 +116,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     
                 }
                 else {
-                    let dm = DataModel()
-                    dm.downloadImageForPost(currentPost)
-                    cell.postImageView?.image = UIImage(named: "CameraImage")
+//                    let dm = DataModel()
+//                    dm.downloadImageForPost(currentPost)
+//                    cell.postImageView?.image = UIImage(named: "CameraImage")
                 }
             }
             
@@ -200,8 +198,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let point = sender.convertPoint(CGPointZero, toView: tableView)
         let indexPath = tableView.indexPathForRowAtPoint(point)
         if let currentPost = place?.posts[(indexPath?.row)!] {
-            let dm = DataModel()
-            dm.incrementScoreForObject(currentPost, amount: 1)
+//            let dm = DataModel()
+//            dm.incrementScoreForObject(currentPost, amount: 1)
             let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
             let currentScore = Int(cell!.postScoreLabel.text!)
             let newScore = currentScore! + 1
@@ -214,8 +212,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let point = sender.convertPoint(CGPointZero, toView: tableView)
         let indexPath = tableView.indexPathForRowAtPoint(point)
         if let currentPost = place?.posts[(indexPath?.row)!] {
-            let dm = DataModel()
-            dm.incrementScoreForObject(currentPost, amount: -1)
+//            let dm = DataModel()
+//            dm.incrementScoreForObject(currentPost, amount: -1)
             let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
             let currentScore = Int(cell!.postScoreLabel.text!)
             let newScore = currentScore! - 1
@@ -232,8 +230,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if let currentPost = place?.posts[(indexPath?.row)!] {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             let firstAction = UIAlertAction(title: "Report", style: .Destructive) { (alert: UIAlertAction!) -> Void in
-                let dm = DataModel()
-                dm.reportPost(currentPost)
+//                let dm = DataModel()
+//                dm.reportPost(currentPost)
             }
             let secondAction = UIAlertAction(title: "Cancel", style: .Cancel) { (alert: UIAlertAction!) -> Void in
             }
