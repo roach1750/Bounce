@@ -44,11 +44,14 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
         if FBSDKAccessToken.currentAccessToken() != nil && KCSUser.activeUser() != nil {
             print("Logged in with Facebook & Kinvey")
             self.continueButton.setTitle("Let's Bounce!", forState: .Normal)
-            let userFetcher = UserFetcher()
-            userFetcher.updateUserFriends()
+            self.continueButton.enabled = true
+            self.continueButton.alpha = 1.0
+        
         }
         else {
             print("Not Login")
+            self.continueButton.enabled = false
+            self.continueButton.alpha = 0.3
             self.continueButton.setTitle("Continue without facebook...", forState: .Normal)
 
         }

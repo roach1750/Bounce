@@ -14,6 +14,7 @@
 		2114B42E1C5E69590002C930 /* ImageConfigurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2114B42D1C5E69590002C930 /* ImageConfigurer.swift */; };
 		212DE0E01CBC750200FEE5C4 /* KinveyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0DF1CBC750200FEE5C4 /* KinveyInteractor.swift */; };
 		212DE0E41CBDD3C900FEE5C4 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0E31CBDD3C900FEE5C4 /* Friend.swift */; };
+		212DE0E61CC29E4400FEE5C4 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0E51CC29E4400FEE5C4 /* SettingsVC.swift */; };
 		214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A31C7254D200FB9B99 /* FBLoginVC.swift */; };
 		214329A61C73F8C700FB9B99 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A51C73F8C700FB9B99 /* User.swift */; };
 		21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */; };
@@ -79,6 +80,7 @@
 		212DE0DF1CBC750200FEE5C4 /* KinveyInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KinveyInteractor.swift; path = Model/KinveyInteractor.swift; sourceTree = "<group>"; };
 		212DE0E21CBDD19400FEE5C4 /* Bounce-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bounce-Bridging-Header.h"; sourceTree = "<group>"; };
 		212DE0E31CBDD3C900FEE5C4 /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Friend.swift; path = Model/Friend.swift; sourceTree = "<group>"; };
+		212DE0E51CC29E4400FEE5C4 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsVC.swift; path = "View Controllers/SettingsVC.swift"; sourceTree = "<group>"; };
 		214329A31C7254D200FB9B99 /* FBLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBLoginVC.swift; path = "View Controllers/FBLoginVC.swift"; sourceTree = "<group>"; };
 		214329A51C73F8C700FB9B99 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserFetcher.swift; path = Model/UserFetcher.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			children = (
 				21FFED291C487CEE006F294F /* Main.storyboard */,
 				214329A31C7254D200FB9B99 /* FBLoginVC.swift */,
+				212DE0E51CC29E4400FEE5C4 /* SettingsVC.swift */,
 				21FFED5A1C488617006F294F /* MapVC.swift */,
 				210641801C585DDF00DFF326 /* PlaceVC.swift */,
 				21FFED611C4AAAC4006F294F /* PostVC.swift */,
@@ -466,6 +469,7 @@
 				21FFED641C4AAB78006F294F /* Post.swift in Sources */,
 				21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */,
 				21970FC41C4DA76E00048B54 /* Place.swift in Sources */,
+				212DE0E61CC29E4400FEE5C4 /* SettingsVC.swift in Sources */,
 				214329A61C73F8C700FB9B99 /* User.swift in Sources */,
 				212DE0E41CBDD3C900FEE5C4 /* Friend.swift in Sources */,
 			);

@@ -63,7 +63,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         
     }
     @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
-        
+        self.performSegueWithIdentifier("showSettingsSegue", sender: self)
+
     }
     
     

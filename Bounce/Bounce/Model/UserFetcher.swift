@@ -22,9 +22,6 @@ class UserFetcher: NSObject {
             
             let userName = givenName + "_" + surname + "_" + userId
             
-            print(userName)
-            
-            
             KCSUser.checkUsername(userName, withCompletionBlock: { (userName, alreadyTaken, error) in
                 if alreadyTaken {
                     print("this user already exists...attempting to login")
@@ -34,7 +31,7 @@ class UserFetcher: NSObject {
                         withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
                             if errorOrNil == nil {
                                 print("logged in with existing userName")
-                                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEUSERLOGGEDIN, object: nil)
+                                self.updateUserFriends()
 
                             } else {
                                 print(errorOrNil.localizedDescription)
@@ -42,8 +39,6 @@ class UserFetcher: NSObject {
                         }
                     )
                 }
-                    
-                    
                 else {
                     print("creating a new kinvey user")
                     KCSUser.userWithUsername(
@@ -53,7 +48,7 @@ class UserFetcher: NSObject {
                         withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
                             if errorOrNil == nil {
                                 print("Created new user")
-                                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEUSERLOGGEDIN, object: nil)
+                                self.updateUserFriends()
                             } else {
                                 print(errorOrNil)
                             }
@@ -75,20 +70,29 @@ class UserFetcher: NSObject {
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
             
             if error == nil {
-//                let dm = DataModel()
-//                let friendObjects = result["data"] as! [NSDictionary]
-//                for friendObject in friendObjects {
-//                    let friend = Friend()
-//                    friend.firstName = friendObject.objectForKey("first_name") as! String
-//                    friend.lastName = friendObject.objectForKey("last_name") as! String
-//                    friend.userID = friendObject.objectForKey("id") as! String
-////                    friendIDs.append(friend)
-////                    dm.saveFriend(friend)
-//                }
-//                if let userAsFriend = self.addUserToUsersFriendsList() {
-////                    dm.saveFriend(userAsFriend)
-//                }
+                var friendIDs = [String]()
+                let friendObjects = result["data"] as! [NSDictionary]
+                for friendObject in friendObjects {
+                    let friend = Friend()
+                    friend.firstName = friendObject.objectForKey("first_name") as! String
+                    friend.lastName = friendObject.objectForKey("last_name") as! String
+                    friend.userID = friendObject.objectForKey("id") as! String
+                    print(friend.firstName + " " + friend.lastName + " " + friend.userID)
+                    friendIDs.append(friend.userID)
+                }
                 
+                KCSUser.activeUser().setValue(friendIDs, forAttribute: "Friend Facebook IDs")
+                KCSUser.activeUser().saveWithCompletionBlock({ (saveUser, error) in
+                    if error != nil {
+                        print(error)
+                    }
+                    else {
+                        print("user's friends updated on the server")
+                        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEUSERLOGGEDIN, object: nil)
+                    }
+                })
+                
+            
             } else {
                 
                 print("Error Getting Friends \(error)");
