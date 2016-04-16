@@ -24,21 +24,46 @@ class UserFetcher: NSObject {
             
             print(userName)
             
-
             
-            KCSUser.userWithUsername(
-                userName,
-                password: "bounce",
-                fieldsAndValues: nil,
-                withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
-                    if errorOrNil == nil {
-                        //user is created
-                    } else {
-                        print(errorOrNil)
-                        //there was an error with the create
-                    }
+            KCSUser.checkUsername(userName, withCompletionBlock: { (userName, alreadyTaken, error) in
+                if alreadyTaken {
+                    print("this user already exists...attempting to login")
+                    KCSUser.loginWithUsername(
+                        userName,
+                        password: "bounce",
+                        withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
+                            if errorOrNil == nil {
+                                print("logged in with existing userName")
+                                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEUSERLOGGEDIN, object: nil)
+
+                            } else {
+                                print(errorOrNil.localizedDescription)
+                            }
+                        }
+                    )
                 }
-            )
+                    
+                    
+                else {
+                    print("creating a new kinvey user")
+                    KCSUser.userWithUsername(
+                        userName,
+                        password: "bounce",
+                        fieldsAndValues: nil,
+                        withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
+                            if errorOrNil == nil {
+                                print("Created new user")
+                                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEUSERLOGGEDIN, object: nil)
+                            } else {
+                                print(errorOrNil)
+                            }
+                        }
+                    )
+                }
+                
+            })
+            
+
             
         }
         
@@ -50,19 +75,19 @@ class UserFetcher: NSObject {
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
             
             if error == nil {
-                let dm = DataModel()
-                let friendObjects = result["data"] as! [NSDictionary]
-                for friendObject in friendObjects {
-                    let friend = Friend()
-                    friend.firstName = friendObject.objectForKey("first_name") as! String
-                    friend.lastName = friendObject.objectForKey("last_name") as! String
-                    friend.userID = friendObject.objectForKey("id") as! String
-//                    friendIDs.append(friend)
-//                    dm.saveFriend(friend)
-                }
-                if let userAsFriend = self.addUserToUsersFriendsList() {
-//                    dm.saveFriend(userAsFriend)
-                }
+//                let dm = DataModel()
+//                let friendObjects = result["data"] as! [NSDictionary]
+//                for friendObject in friendObjects {
+//                    let friend = Friend()
+//                    friend.firstName = friendObject.objectForKey("first_name") as! String
+//                    friend.lastName = friendObject.objectForKey("last_name") as! String
+//                    friend.userID = friendObject.objectForKey("id") as! String
+////                    friendIDs.append(friend)
+////                    dm.saveFriend(friend)
+//                }
+//                if let userAsFriend = self.addUserToUsersFriendsList() {
+////                    dm.saveFriend(userAsFriend)
+//                }
                 
             } else {
                 
@@ -73,14 +98,7 @@ class UserFetcher: NSObject {
     }
     
     func addUserToUsersFriendsList() -> Friend? {
-//        let dm = DataModel()
-//        if let user = dm.getUser() {
-//            let friend = Friend()
-//            friend.firstName = user.firstName
-//            friend.lastName = user.lastName
-//            friend.userID = user.userID
-//            return friend
-//        }
+        
         return nil
     }
 

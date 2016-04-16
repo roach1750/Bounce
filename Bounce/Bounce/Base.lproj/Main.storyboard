@@ -6,6 +6,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Bounce-->
@@ -126,11 +127,23 @@
                                 <action selector="fetchButtonTapped:" destination="BYZ-38-t0r" id="A7Z-ol-7jV"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="2C3-ai-Fpl">
-                            <connections>
-                                <action selector="composeButtonTapped:" destination="BYZ-38-t0r" id="sYk-pZ-uX7"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="compose" id="2C3-ai-Fpl">
+                                <connections>
+                                    <action selector="composeButtonTapped:" destination="BYZ-38-t0r" id="sYk-pZ-uX7"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Info" id="R52-Ot-aiH">
+                                <connections>
+                                    <action selector="infoButtonPressed:" destination="BYZ-38-t0r" id="Ovq-xW-wgy"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="gear" id="dqE-xc-jPh">
+                                <connections>
+                                    <action selector="settingsButtonPressed:" destination="BYZ-38-t0r" id="9dm-Ii-VaA"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="composeButton" destination="2C3-ai-Fpl" id="qJ1-zJ-2zU"/>
@@ -823,5 +836,6 @@
     <resources>
         <image name="MoreInfo" width="79" height="30"/>
         <image name="cameraImage" width="1000" height="1000"/>
+        <image name="gear" width="22" height="22"/>
     </resources>
 </document>

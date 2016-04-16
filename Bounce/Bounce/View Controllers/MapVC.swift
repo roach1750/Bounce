@@ -55,6 +55,18 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 //        fetcher.fetchData()
     }
     
+    @IBAction func infoButtonPressed(sender: UIBarButtonItem) {
+        print(KCSUser.activeUser().username)
+        print(KCSUser.activeUser().userId)
+
+
+        
+    }
+    @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
+        
+    }
+    
+    
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
         createAnnotations()
     }
@@ -69,15 +81,15 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     func createAnnotations() {
         mapView.removeAnnotations(mapView.annotations)
-        let dm = DataModel()
-//        if let objects = dm.fetchPlacesForShareSetting(currentShareSetting()) {
-//            for place in objects {
-//                let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
-//                let annotation = BounceAnnotation(title: place.name, subtitle: String(place.score), coordinate: coordinate, place: place)
-//                mapView.addAnnotation(annotation)
-//                
-//            }
-//        }
+//        let dm = DataModel()
+////        if let objects = dm.fetchPlacesForShareSetting(currentShareSetting()) {
+////            for place in objects {
+////                let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
+////                let annotation = BounceAnnotation(title: place.name, subtitle: String(place.score), coordinate: coordinate, place: place)
+////                mapView.addAnnotation(annotation)
+////                
+////            }
+////        }
     }
     
     func currentShareSetting() -> String {
@@ -137,13 +149,13 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func mapView(MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
 
         
-        if control == annotationView.rightCalloutAccessoryView {
-            let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
-            let key = "\(String(annoation.title!))" + "," + "\(String(annoation.coordinate.latitude))" + "," + "\(String(annoation.coordinate.longitude))"
-//            let dm = DataModel()
-//            selectedPlace = dm.fetchPlaceWithKey(key)
-            performSegueWithIdentifier("showPosts", sender: self)
-        }
+//        if control == annotationView.rightCalloutAccessoryView {
+//            let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
+//            let key = "\(String(annoation.title!))" + "," + "\(String(annoation.coordinate.latitude))" + "," + "\(String(annoation.coordinate.longitude))"
+////            let dm = DataModel()
+////            selectedPlace = dm.fetchPlaceWithKey(key)
+//            performSegueWithIdentifier("showPosts", sender: self)
+//        }
     }
     
     //MARK: - Location Manager
