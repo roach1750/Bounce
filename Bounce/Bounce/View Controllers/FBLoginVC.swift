@@ -33,6 +33,8 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
         loginButton.delegate = self
         self.view.addSubview(loginButton)
         
+        login()
+
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FBLoginVC.configureContinueButton), name: BOUNCEUSERLOGGEDIN, object: nil)
         
@@ -57,17 +59,18 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
         }
     }
     
-    
-    
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
-    {
+    func login() {
         if FBSDKAccessToken.currentAccessToken() != nil {
             //facebook login succesfull
             let userFetcher = UserFetcher()
             userFetcher.createUser()
         }
         
-        
+    }
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
+    {
+        login()
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {

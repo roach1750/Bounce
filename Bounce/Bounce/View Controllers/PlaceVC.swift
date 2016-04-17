@@ -123,7 +123,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
             
             //Creation Date
-            cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
+//            cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
             
             //Score
             cell.postScoreLabel.text = String(currentPost.postScore)

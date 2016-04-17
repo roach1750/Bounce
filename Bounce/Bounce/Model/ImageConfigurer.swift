@@ -32,6 +32,7 @@ class ImageConfigurer: NSObject {
     }
     
     
+    
     func cropToSquare(originalImage: UIImage) -> UIImage {
         // Create a copy of the image without the imageOrientation property so it is in its native orientation (landscape)
         let contextImage: UIImage = UIImage(CGImage: originalImage.CGImage!)

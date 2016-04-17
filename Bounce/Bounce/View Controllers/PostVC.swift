@@ -141,7 +141,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         newPost.postShareSetting = shareSetting
         
         let uploader = KinveyInteractor()
-        uploader.upLoadPostImage(newPost)
+        uploader.uploadPost(newPost)
         
         Post.sharedInstance.postImageData = nil
         

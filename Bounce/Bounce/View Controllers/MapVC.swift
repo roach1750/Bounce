@@ -56,9 +56,11 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     @IBAction func infoButtonPressed(sender: UIBarButtonItem) {
-        print(KCSUser.activeUser().username)
-        print(KCSUser.activeUser().userId)
-
+        
+        print("\nUsername: \(KCSUser.activeUser().username)")
+        print("User ID: \(KCSUser.activeUser().userId)")
+        print("Facebook ID: \(KCSUser.activeUser().getValueForAttribute("Facebook ID"))")
+        print("Facebook Friends: \(KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs"))")
 
         
     }

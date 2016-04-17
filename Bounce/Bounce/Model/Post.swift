@@ -10,21 +10,24 @@ import UIKit
 
 class Post: NSObject {
     
+    //Uploaded Properties
     dynamic var postMessage: String?
     dynamic var postImageData: NSData?
-    dynamic var postPlace: Place?
     dynamic var postKey: String = ""
     dynamic var postID: String = ""
     dynamic var postPlaceName: String = ""
     dynamic var postLatitude: Double = 0
     dynamic var postLongitude: Double = 0
     dynamic var hasImage: Bool = false
-    dynamic var postCreationDate: NSDate = NSDate()
     dynamic var postScore = 0
     dynamic var postShareSetting: String = ""
     dynamic var postUserID: String = ""
     dynamic var postEntityId: String? //Kinvey entity _id
     dynamic var postImageFileInfo: String?
+    
+    //Properties on device
+    dynamic var postPlace: Place?
+
     
     class var sharedInstance: Post {
         struct Singleton {

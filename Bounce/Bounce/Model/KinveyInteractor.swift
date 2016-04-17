@@ -10,7 +10,9 @@ import UIKit
 
 class KinveyInteractor: NSObject {
     
-    func upLoadPostImage(post: Post) {
+    
+    //This uploads the image first, then calls the method below to upload the object
+    func uploadPost(post: Post) {
         if let PID = post.postImageData {
             KCSFileStore.uploadData(PID, options: nil, completionBlock: { (uploadInfo, error) in
                 if let receivedUploadInfo = uploadInfo {
