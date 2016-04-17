@@ -12,11 +12,12 @@ class KinveyInteractor: NSObject {
     
     
     //This uploads the image first, then calls the method below to upload the object
-    func uploadPost(post: Post) {
+    func uploadPostImageThenObject(post: Post) {
         if let PID = post.postImageData {
             KCSFileStore.uploadData(PID, options: nil, completionBlock: { (uploadInfo, error) in
                 if let receivedUploadInfo = uploadInfo {
                     self.upLoadPostObject(receivedUploadInfo,post: post)
+                    
                 }
                 
                 }, progressBlock: { (objects, percentComplete) in
@@ -26,6 +27,8 @@ class KinveyInteractor: NSObject {
     }
     
     private func upLoadPostObject(imageInfo: KCSFile, post: Post) {
+        
+        post.postImageFileInfo = imageInfo.fileId
         let collection = KCSCollection(fromString: BOUNCECLASSNAME, ofClass: Post.self)
         let updateStore = KCSLinkedAppdataStore.storeWithOptions([KCSStoreKeyResource: collection])
         updateStore.saveObject(

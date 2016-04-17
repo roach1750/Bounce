@@ -130,18 +130,36 @@ class PostVC: UIViewController, UITextViewDelegate {
     func createPost(shareSetting: String){
         
         let newPost = Post()
+        
+        //Message
         newPost.postMessage = postTextView.text
+        
+        //Image
         if let image = postImageView.image {
             newPost.postImageData = UIImagePNGRepresentation(image)
+            newPost.postHasImage = true
         }
-        let postPlace = LocationFetcher.sharedInstance.selectedPlace
-        newPost.postLatitude = postPlace!.latitude
-        newPost.postLongitude = postPlace!.longitude
         
+        //Place Name and Location
+        if let postPlace = LocationFetcher.sharedInstance.selectedPlace {
+            newPost.postPlaceName = postPlace.name
+            newPost.postLocation = CLLocation(latitude: postPlace.latitude, longitude: postPlace.longitude)
+        }
+        
+        //Score
+        newPost.postScore = 0
+        
+        //Share Setting
         newPost.postShareSetting = shareSetting
         
+        //User's Properties
+        newPost.postUploaderFacebookUserID = KCSUser.activeUser().getValueForAttribute("Facebook ID") as! String
+        newPost.postUploaderKinveyUserName = KCSUser.activeUser().username
+        newPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
+        
+        
         let uploader = KinveyInteractor()
-        uploader.uploadPost(newPost)
+        uploader.uploadPostImageThenObject(newPost)
         
         Post.sharedInstance.postImageData = nil
         

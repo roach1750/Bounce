@@ -12,18 +12,29 @@ class Post: NSObject {
     
     //Uploaded Properties
     dynamic var postMessage: String?
+    
     dynamic var postImageData: NSData?
-    dynamic var postKey: String = ""
-    dynamic var postID: String = ""
+    dynamic var postHasImage: Bool = false
+    
+    dynamic var postLocation: CLLocation?
     dynamic var postPlaceName: String = ""
-    dynamic var postLatitude: Double = 0
-    dynamic var postLongitude: Double = 0
-    dynamic var hasImage: Bool = false
+    
     dynamic var postScore = 0
+    
     dynamic var postShareSetting: String = ""
-    dynamic var postUserID: String = ""
-    dynamic var postEntityId: String? //Kinvey entity _id
+    
+    
+    //FB User who uploaded post properties
+    dynamic var postUploaderFacebookUserID: String = ""
+    dynamic var postUploaderKinveyUserID: String = ""
+    dynamic var postUploaderKinveyUserName: String = ""
+
+    
+    //Assigned Properties
+    dynamic var postUniqueId: String? //Kinvey entity _id
     dynamic var postImageFileInfo: String?
+    
+    
     
     //Properties on device
     dynamic var postPlace: Place?
@@ -38,16 +49,27 @@ class Post: NSObject {
     
     override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
         return [
-            BOUNCEKINVEYID : KCSEntityKeyId, //the required _id field
-            BOUNCECOMMENTKEY : "postMessage",
-            BOUNCEIMAGEKEY : "postImageData",
-            BOUNCEKEY : "postKey",
-            BOUNCEID : "postID",
-            BOUNCELOCATIONNAME : "postPlaceName",
-            BOUNCEPOSTGEOLOCATION : "PostLocation",
-            BOUNCESHARESETTING : "postShareSetting",
-            BOUNCEUSERIDKEY : "postUserID",
-            BOUNCEKINVEYIMAGEFILEID : "postImageFileInfo"
+            
+            
+            
+            "postMessage" : BOUNCECOMMENTKEY,
+            "postImageFileInfo" : BOUNCEKINVEYIMAGEFILEIDKEY,
+            "postHasImage" : BOUNCEHASIMAGEKEY,
+            "postLocation" : BOUNCEPOSTGEOLOCATIONKEY,
+            "postPlaceName" : BOUNCELOCATIONNAMEKEY,
+            "postScore" : BOUNCESCOREKEY,
+            "postShareSetting" : BOUNCESHARESETTINGKEY,
+            
+            
+            "postUploaderFacebookUserID" : BOUNCEPOSTUPLOADERFACEBOOKUSERID,
+            "postUploaderKinveyUserID" : BOUNCEPOSTUPLOADERKINVEYUSERID,
+            "postUploaderKinveyUserName" : BOUNCEPOSTUPLOADERKINVEYUSERNAME,
+            
+            
+            "postUniqueId" : KCSEntityKeyId, //the required _id field
+            
+        
+            
         ]
     }
     

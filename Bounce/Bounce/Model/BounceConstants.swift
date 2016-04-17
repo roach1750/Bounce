@@ -8,33 +8,43 @@
 
 import UIKit
 
+
+//Post object properties
 let BOUNCECLASSNAME  =  "BouncePost"
 let BOUNCECOMMENTKEY  =  "comment"
-let BOUNCEPOSTGEOLOCATION  =  "location"
-let BOUNCEPLACEKEY =  "locationID"
-let BOUNCELOCATIONNAME  =  "placeName"
+let BOUNCEPOSTGEOLOCATIONKEY  =  "location"
+let BOUNCELOCATIONNAMEKEY  =  "placeName"
 let BOUNCEIMAGEKEY  =  "imageFile"
-let BOUNCEPOSTSUCCEDEDNOTIFICATION  =  "postSucceded"
-let BOUNCECREATIONDATEKEY  =  "createdAt"
+let BOUNCEHASIMAGEKEY  =  "hasImage"
 let BOUNCESCOREKEY  =  "score"
-let BOUNCEKEY  =  "key"
-let BOUNCELOCATIONIDENTIFIER =  "locationID"
-let BOUNCEID =  "objectId"
-let BOUNCESHARESETTING =  "shareSetting"
-let BOUNCEUSERIDKEY =  "FBUserID"
+let BOUNCEPOSTERIDKEY =  "FBUserID"
+
+//Share Settings
+let BOUNCESHARESETTINGKEY =  "shareSetting"
 let BOUNCEFRIENDSONLYSHARESETTING = "friendsOnly"
 let BOUNCEEVERYONESHARESETTING = "everyone"
-let BOUNCEKINVEYID = "Kinvey ID"
-let BOUNCEKINVEYIMAGEFILEID = "Kinvey Image Info"
+
+//Metadata
+let BOUNCEKINVEYIDKEY = "Kinvey ID"
+let BOUNCEKINVEYIMAGEFILEIDKEY = "Kinvey Image Info"
+
+//Uploader Properites
+let BOUNCEPOSTUPLOADERFACEBOOKUSERID = "Facebook User ID"
+let BOUNCEPOSTUPLOADERKINVEYUSERID = "Kinvey User ID"
+let BOUNCEPOSTUPLOADERKINVEYUSERNAME = "Kinvey User Name"
 
 
+
+
+
+
+//NSNotifications
 let BOUNCEANNOTATIONSREADYNOTIFICATION  =  "annotationsReady"
 let BOUNCETABLEDATAREADYNOTIFICATION  =  "tableDataReady"
 let BOUNCETABLEDATARELOADCOMPLETE =  "tableReloadComplete"
 let BOUNCEUSERLOGGEDIN =  "userLoggedIn"
-
-
 let BOUNCEIMAGEPROCESSEDNOTIFICATION = "imageReady"
+let BOUNCEPOSTSUCCEDEDNOTIFICATION  =  "postSucceded"
 
 
 

@@ -106,7 +106,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.postCommentLabel.text = currentPost.postMessage
             
             //Image
-            if currentPost.hasImage {
+            if currentPost.postHasImage {
                 if let imageData = currentPost.postImageData {
                     let image = UIImage(data: imageData)
                     let IC = ImageConfigurer()
@@ -147,11 +147,11 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func getIdentifierForCell(post: Post) -> String {
         
-        if post.hasImage == true && post.postMessage != nil{
+        if post.postHasImage == true && post.postMessage != nil{
             tableView.estimatedRowHeight = 515.0
             return "commentAndPhoto"
         }
-        else if post.hasImage == true {
+        else if post.postHasImage == true {
             tableView.estimatedRowHeight = 415.0
             return "photoOnly"
         }
