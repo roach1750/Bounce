@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Parse
-import Bolts
 import FBSDKCoreKit
 
 @UIApplicationMain

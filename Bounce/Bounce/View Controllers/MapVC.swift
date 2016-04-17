@@ -53,6 +53,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
 //        let fetcher = ParseFetcher()
 //        fetcher.fetchData()
+        let fetcher = KinveyInteractor()
+        fetcher.query()
     }
     
     @IBAction func infoButtonPressed(sender: UIBarButtonItem) {

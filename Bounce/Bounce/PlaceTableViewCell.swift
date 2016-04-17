@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import Parse
-import ParseUI
+
 
 class PlaceTableViewCell: UITableViewCell {
 
     @IBOutlet weak var postCommentLabel: UILabel!
     
-    @IBOutlet weak var postImageView: PFImageView!
+    @IBOutlet weak var postImageView: UIImageView!
     
     @IBOutlet weak var postCreationDate: UILabel!
     

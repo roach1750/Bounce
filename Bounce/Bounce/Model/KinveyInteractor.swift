@@ -47,4 +47,62 @@ class KinveyInteractor: NSObject {
         })
     }
     
+    
+    
+    var data: [Post]?
+    
+    func query() {
+        
+        data = [Post]()
+        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCECLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self
+            ])
+        store.queryWithQuery(
+            KCSQuery(),
+            withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
+                print("Fetched \(objectsOrNil.count) objects")
+                if objectsOrNil.count > 0 {
+                    for object in objectsOrNil{
+                        
+                        let newPost = Post()
+                        newPost.postMessage = object[BOUNCECOMMENTKEY] as? String
+                        newPost.postImageFileInfo = object[BOUNCEKINVEYIMAGEFILEIDKEY] as? String
+                        newPost.postLocation = object[KCSEntityKeyGeolocation] as? CLLocation
+                        newPost.postPlaceName = object[BOUNCELOCATIONNAMEKEY] as? String
+//                        newPost.postScore = object[BOUNCESCOREKEY] as! Int
+                        newPost.postShareSetting = object[BOUNCESHARESETTINGKEY] as? String
+                        newPost.postUploaderFacebookUserID = object[BOUNCEPOSTUPLOADERFACEBOOKUSERID] as? String
+                        newPost.postUploaderKinveyUserID = object[BOUNCEPOSTUPLOADERKINVEYUSERID] as? String
+                        newPost.postUploaderKinveyUserName = object[BOUNCEPOSTUPLOADERKINVEYUSERNAME] as? String
+                        
+                        self.fetchImageForPost(newPost)
+                        
+                    }
+                }
+            },
+            withProgressBlock: { (objects, percentComplete) in
+        })
+        
+    }
+    
+    func fetchImageForPost(post: Post) {
+        KCSFileStore.downloadData(
+            post.postImageFileInfo,
+            completionBlock: { (downloadedResources: [AnyObject]!, error: NSError!) -> Void in
+                if error == nil {
+                    let file = downloadedResources[0] as! KCSFile
+                    let fileData = file.data
+                    post.postHasImage = true
+                    post.postImageData = fileData
+                    
+                    self.data!.append(post)
+                    print("fetching")
+                } else {
+                    NSLog("Got an error: %@", error)
+                }
+            },
+            progressBlock: { (objects, percentComplete) in
+                print(percentComplete)
+        })
+        print("fetching done")
+    }
 }

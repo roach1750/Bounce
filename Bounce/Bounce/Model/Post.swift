@@ -17,17 +17,17 @@ class Post: NSObject {
     dynamic var postHasImage: Bool = false
     
     dynamic var postLocation: CLLocation?
-    dynamic var postPlaceName: String = ""
+    dynamic var postPlaceName: String?
     
     dynamic var postScore = 0
     
-    dynamic var postShareSetting: String = ""
+    dynamic var postShareSetting: String?
     
     
     //FB User who uploaded post properties
-    dynamic var postUploaderFacebookUserID: String = ""
-    dynamic var postUploaderKinveyUserID: String = ""
-    dynamic var postUploaderKinveyUserName: String = ""
+    dynamic var postUploaderFacebookUserID: String?
+    dynamic var postUploaderKinveyUserID: String?
+    dynamic var postUploaderKinveyUserName: String?
 
     
     //Assigned Properties

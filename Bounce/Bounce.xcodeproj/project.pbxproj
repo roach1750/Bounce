@@ -616,7 +616,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.Bounce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Bounce-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = Header.h;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -638,7 +638,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.Bounce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Bounce-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = Header.h;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

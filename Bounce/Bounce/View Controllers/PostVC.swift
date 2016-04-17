@@ -153,7 +153,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         newPost.postShareSetting = shareSetting
         
         //User's Properties
-        newPost.postUploaderFacebookUserID = KCSUser.activeUser().getValueForAttribute("Facebook ID") as! String
+        newPost.postUploaderFacebookUserID = KCSUser.activeUser().getValueForAttribute("Facebook ID") as? String
         newPost.postUploaderKinveyUserName = KCSUser.activeUser().username
         newPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
         
