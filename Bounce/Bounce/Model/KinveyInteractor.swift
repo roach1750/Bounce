@@ -10,6 +10,12 @@ import UIKit
 
 class KinveyInteractor: NSObject {
     
+    class var sharedInstance: KinveyInteractor {
+        struct Singleton {
+            static let instance = KinveyInteractor()
+        }
+        return Singleton.instance
+    }
     
     //This uploads the image first, then calls the method below to upload the object
     func uploadPostImageThenObject(post: Post) {
@@ -66,15 +72,17 @@ class KinveyInteractor: NSObject {
                 print("Fetched \(objectsOrNil.count) objects")
                 if objectsOrNil.count > 0 {
                     for object in objectsOrNil{
-                        
                         let newPost = object as! Post
-                        print(newPost.postScore)
-                        self.fetchImageForPost(newPost)
-                        
+                        self.data!.append(newPost)
+                        print(self.data)
+                        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
+
                     }
                 }
             },
             withProgressBlock: { (objects, percentComplete) in
+
+
         })
     }
     
@@ -90,7 +98,6 @@ class KinveyInteractor: NSObject {
                     post.postHasImage = true
                     post.postImageData = fileData
                     
-                    self.data!.append(post)
                     print("fetched Image for post")
                 } else {
                     NSLog("Got an error: %@", error)

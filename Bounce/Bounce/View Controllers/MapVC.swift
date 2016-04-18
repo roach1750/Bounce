@@ -18,8 +18,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var shareSettingToolbar: UIToolbar!
     @IBOutlet weak var fetchButton: UIBarButtonItem!
     @IBOutlet weak var composeButton: UIBarButtonItem!
-        
     
+    //constants
+    var fetcher = KinveyInteractor()
+
     
     //Variables
     var selectedPlace: Place?
@@ -30,8 +32,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         super.viewDidLoad()
         configureNavBar()
         requestLocationData()
-
         configureViewColors()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MapVC.createAnnotations), name: BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
     }
     
     func configureViewColors() {
@@ -52,7 +54,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
 
-        let fetcher = KinveyInteractor()
+        fetcher = KinveyInteractor()
         fetcher.query()
     }
     
@@ -67,7 +69,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
         self.performSegueWithIdentifier("showSettingsSegue", sender: self)
-
     }
     
     
@@ -79,21 +80,23 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func configureMapView(){
         mapView.showsUserLocation = true
         mapView.delegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MapVC.createAnnotations), name: BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
         
     }
     
     func createAnnotations() {
         mapView.removeAnnotations(mapView.annotations)
-//        let dm = DataModel()
-////        if let objects = dm.fetchPlacesForShareSetting(currentShareSetting()) {
-////            for place in objects {
-////                let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
-////                let annotation = BounceAnnotation(title: place.name, subtitle: String(place.score), coordinate: coordinate, place: place)
-////                mapView.addAnnotation(annotation)
-////                
-////            }
-////        }
+        
+        
+        print(fetcher.data?.count)
+        
+        if let objects = fetcher.data {
+            for post in objects {
+                let coordinate = CLLocationCoordinate2D(latitude: (post.postLocation?.coordinate.latitude)!, longitude: (post.postLocation?.coordinate.longitude)!)
+                let annotation = BounceAnnotation(title: post.postPlaceName, subtitle: String("Missing the score"), coordinate: coordinate, place: nil)
+                mapView.addAnnotation(annotation)
+                
+            }
+        }
     }
     
     func currentShareSetting() -> String {

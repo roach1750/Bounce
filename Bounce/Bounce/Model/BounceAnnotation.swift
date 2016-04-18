@@ -17,7 +17,7 @@ class BounceAnnotation: NSObject, MKAnnotation
     let place: Place?
     
     
-    init(title: String?, subtitle:String?, coordinate: CLLocationCoordinate2D, place: Place)
+    init(title: String?, subtitle:String?, coordinate: CLLocationCoordinate2D, place: Place?)
     {
         self.title = title
         self.subtitle = subtitle
