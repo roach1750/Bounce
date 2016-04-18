@@ -54,6 +54,10 @@ class KinveyInteractor: NSObject {
     func query() {
         
         data = [Post]()
+        
+        
+        //Future: need to specifiy query type based on share settings and location
+        
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCECLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self
             ])
         store.queryWithQuery(
@@ -63,17 +67,8 @@ class KinveyInteractor: NSObject {
                 if objectsOrNil.count > 0 {
                     for object in objectsOrNil{
                         
-                        let newPost = Post()
-                        newPost.postMessage = object[BOUNCECOMMENTKEY] as? String
-                        newPost.postImageFileInfo = object[BOUNCEKINVEYIMAGEFILEIDKEY] as? String
-                        newPost.postLocation = object[KCSEntityKeyGeolocation] as? CLLocation
-                        newPost.postPlaceName = object[BOUNCELOCATIONNAMEKEY] as? String
-//                        newPost.postScore = object[BOUNCESCOREKEY] as! Int
-                        newPost.postShareSetting = object[BOUNCESHARESETTINGKEY] as? String
-                        newPost.postUploaderFacebookUserID = object[BOUNCEPOSTUPLOADERFACEBOOKUSERID] as? String
-                        newPost.postUploaderKinveyUserID = object[BOUNCEPOSTUPLOADERKINVEYUSERID] as? String
-                        newPost.postUploaderKinveyUserName = object[BOUNCEPOSTUPLOADERKINVEYUSERNAME] as? String
-                        
+                        let newPost = object as! Post
+                        print(newPost.postScore)
                         self.fetchImageForPost(newPost)
                         
                     }
@@ -81,10 +76,11 @@ class KinveyInteractor: NSObject {
             },
             withProgressBlock: { (objects, percentComplete) in
         })
-        
     }
     
+    
     func fetchImageForPost(post: Post) {
+        
         KCSFileStore.downloadData(
             post.postImageFileInfo,
             completionBlock: { (downloadedResources: [AnyObject]!, error: NSError!) -> Void in
@@ -95,14 +91,13 @@ class KinveyInteractor: NSObject {
                     post.postImageData = fileData
                     
                     self.data!.append(post)
-                    print("fetching")
+                    print("fetched Image for post")
                 } else {
                     NSLog("Got an error: %@", error)
                 }
             },
             progressBlock: { (objects, percentComplete) in
-                print(percentComplete)
+                print("Image Download: \(percentComplete * 100)%")
         })
-        print("fetching done")
     }
 }

@@ -51,8 +51,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
-//        let fetcher = ParseFetcher()
-//        fetcher.fetchData()
+
         let fetcher = KinveyInteractor()
         fetcher.query()
     }
@@ -188,7 +187,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             mapView.setRegion(region, animated: true)
             locationManager!.stopUpdatingLocation()
             locationManager = nil
-            fetchButtonTapped(UIBarButtonItem())
         }
     }
     

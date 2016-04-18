@@ -48,7 +48,7 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
             self.continueButton.setTitle("Let's Bounce!", forState: .Normal)
             self.continueButton.enabled = true
             self.continueButton.alpha = 1.0
-        
+            continueButton.sendActionsForControlEvents(.TouchUpInside)
         }
         else {
             print("Not Login")

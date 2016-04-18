@@ -19,9 +19,4 @@ class Place: NSObject {
     dynamic var key: String = ""
     dynamic var score = 0
 
-
-    
-    
-    
-    
 }
