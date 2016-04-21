@@ -50,8 +50,6 @@ class Post: NSObject {
     override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
         return [
             
-            
-            
             "postMessage" : BOUNCECOMMENTKEY,
             "postImageFileInfo" : BOUNCEKINVEYIMAGEFILEIDKEY,
             "postHasImage" : BOUNCEHASIMAGEKEY,
@@ -59,7 +57,6 @@ class Post: NSObject {
             "postPlaceName" : BOUNCELOCATIONNAMEKEY,
             "postScore" : BOUNCESCOREKEY,
             "postShareSetting" : BOUNCESHARESETTINGKEY,
-            
             
             "postUploaderFacebookUserID" : BOUNCEPOSTUPLOADERFACEBOOKUSERID,
             "postUploaderKinveyUserID" : BOUNCEPOSTUPLOADERKINVEYUSERID,

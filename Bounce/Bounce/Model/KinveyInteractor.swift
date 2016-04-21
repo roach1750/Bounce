@@ -60,8 +60,6 @@ class KinveyInteractor: NSObject {
     func query() {
         
         data = [Post]()
-        
-        
         //Future: need to specifiy query type based on share settings and location
         
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCECLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self
