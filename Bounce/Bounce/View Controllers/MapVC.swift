@@ -121,7 +121,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let bounceAnnotation = annotation as! BounceAnnotation
         let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotationIdentifier")
         if let place = bounceAnnotation.place {
-            let score = place.score
+            let score = place.placeScore
             if score <= BOUNCEDARKBLUESCORE {
                 pinAnnotationView.pinTintColor = BOUNCEDARKBLUE
             }

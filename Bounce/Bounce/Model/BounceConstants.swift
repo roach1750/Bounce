@@ -10,13 +10,15 @@ import UIKit
 
 
 //Post object properties
-let BOUNCECLASSNAME  =  "BouncePost"
+let BOUNCEPOSTCLASSNAME  =  "BouncePost"
 let BOUNCECOMMENTKEY  =  "comment"
 let BOUNCEPOSTGEOLOCATIONKEY  =  "location"
 let BOUNCELOCATIONNAMEKEY  =  "placeName"
 let BOUNCEIMAGEKEY  =  "imageFile"
 let BOUNCEHASIMAGEKEY  =  "hasImage"
 let BOUNCESCOREKEY  =  "score"
+let BOUNCEKEY =  "Bounce Key"
+
 let BOUNCEPOSTERIDKEY =  "FBUserID"
 
 //Share Settings
@@ -32,6 +34,11 @@ let BOUNCEKINVEYIMAGEFILEIDKEY = "Kinvey Image Info"
 let BOUNCEPOSTUPLOADERFACEBOOKUSERID = "Facebook User ID"
 let BOUNCEPOSTUPLOADERKINVEYUSERID = "Kinvey User ID"
 let BOUNCEPOSTUPLOADERKINVEYUSERNAME = "Kinvey User Name"
+
+
+//PlACE SPECIFIC OBJECT PROPERTIES
+let BOUNCEPLACECLASSNAME  =  "BouncePlace"
+
 
 
 

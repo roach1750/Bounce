@@ -10,13 +10,42 @@ import UIKit
 
 class Place: NSObject {
     
-    dynamic var name:String = "";
-    dynamic var latitude:Double = 0;
-    dynamic var longitude:Double = 0;
+    dynamic var placeName:String?
+    dynamic var placeLocation: CLLocation?
     
     var distanceFromUser: Double?
     var posts = [Post]()
-    dynamic var key: String = ""
-    dynamic var score = 0
+    
+    dynamic var placeBounceKey: String?
+    dynamic var placeScore = 0
+
+
+
+
+    override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
+        return [
+            "placeName": BOUNCELOCATIONNAMEKEY,
+            "placeLocation": BOUNCEPOSTGEOLOCATIONKEY,
+            "placeBounceKey": BOUNCEKEY,
+            "placeScore" : BOUNCESCOREKEY
+        ]
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

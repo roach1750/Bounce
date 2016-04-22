@@ -33,7 +33,7 @@ class NearbyPlacesTVC: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("placeCell", forIndexPath: indexPath)
         if let placesArray = LocationFetcher.sharedInstance.placeArray {
             let place = placesArray[indexPath.row]
-            cell.textLabel?.text = place.name
+            cell.textLabel?.text = place.placeName
             
             let roundedDistance = 50 * Int(round(place.distanceFromUser! / 50.0))
             cell.detailTextLabel?.text = String(roundedDistance) + " feet away"

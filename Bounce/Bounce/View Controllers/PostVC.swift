@@ -77,7 +77,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     //Do I need to put a spinner here? or what happens if the person reloads?
     func configureLocationButton(){
         if let place = LocationFetcher.sharedInstance.selectedPlace {
-            locationButton.setTitle(place.name, forState: UIControlState.Normal)
+            locationButton.setTitle(place.placeName, forState: UIControlState.Normal)
         }
     }
     
@@ -140,10 +140,11 @@ class PostVC: UIViewController, UITextViewDelegate {
             newPost.postHasImage = true
         }
         
-        //Place Name and Location
+        //Place Name, Location and Key
         if let postPlace = LocationFetcher.sharedInstance.selectedPlace {
-            newPost.postPlaceName = postPlace.name
-            newPost.postLocation = CLLocation(latitude: postPlace.latitude, longitude: postPlace.longitude)
+            newPost.postPlaceName = postPlace.placeName
+            newPost.postLocation = postPlace.placeLocation
+            newPost.postBounceKey = postPlace.placeName! + "," + String(postPlace.placeLocation?.coordinate.latitude) + "," + String(postPlace.placeLocation?.coordinate.longitude)
         }
         
         //Score
@@ -152,6 +153,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         //Share Setting
         newPost.postShareSetting = shareSetting
         
+        
         //User's Properties
         newPost.postUploaderFacebookUserID = KCSUser.activeUser().getValueForAttribute("Facebook ID") as? String
         newPost.postUploaderKinveyUserName = KCSUser.activeUser().username
@@ -159,7 +161,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         
         
         let uploader = KinveyInteractor()
-        uploader.uploadPostImageThenObject(newPost)
+        uploader.uploadPost(newPost)
         
         Post.sharedInstance.postImageData = nil
         

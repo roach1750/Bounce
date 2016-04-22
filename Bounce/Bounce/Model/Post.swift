@@ -23,6 +23,8 @@ class Post: NSObject {
     
     dynamic var postShareSetting: String?
     
+    dynamic var postBounceKey: String?
+
     
     //FB User who uploaded post properties
     dynamic var postUploaderFacebookUserID: String?
@@ -57,6 +59,8 @@ class Post: NSObject {
             "postPlaceName" : BOUNCELOCATIONNAMEKEY,
             "postScore" : BOUNCESCOREKEY,
             "postShareSetting" : BOUNCESHARESETTINGKEY,
+            "postBounceKey" : BOUNCEKEY,
+            
             
             "postUploaderFacebookUserID" : BOUNCEPOSTUPLOADERFACEBOOKUSERID,
             "postUploaderKinveyUserID" : BOUNCEPOSTUPLOADERKINVEYUSERID,
