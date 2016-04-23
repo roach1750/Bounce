@@ -20,7 +20,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var composeButton: UIBarButtonItem!
     
     //constants
-    var fetcher = KinveyInteractor()
+    var fetcher = KinveyFetcher()
 
     
     //Variables
@@ -54,8 +54,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
 
-        fetcher = KinveyInteractor()
-        fetcher.query()
+        fetcher = KinveyFetcher()
+        fetcher.queryForAllPlaces()
     }
     
     @IBAction func infoButtonPressed(sender: UIBarButtonItem) {
@@ -87,12 +87,12 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         mapView.removeAnnotations(mapView.annotations)
         
         
-        print(fetcher.data?.count)
+        print(fetcher.allPlacesData?.count)
         
-        if let objects = fetcher.data {
-            for post in objects {
-                let coordinate = CLLocationCoordinate2D(latitude: (post.postLocation?.coordinate.latitude)!, longitude: (post.postLocation?.coordinate.longitude)!)
-                let annotation = BounceAnnotation(title: post.postPlaceName, subtitle: String("Missing the score"), coordinate: coordinate, place: nil)
+        if let objects = fetcher.allPlacesData {
+            for place in objects {
+                let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
+                let annotation = BounceAnnotation(title: place.placeName, subtitle: String("Missing the score"), coordinate: coordinate, place: place)
                 mapView.addAnnotation(annotation)
                 
             }
@@ -154,15 +154,13 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     
     func mapView(MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-
-        
-//        if control == annotationView.rightCalloutAccessoryView {
-//            let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
+        if control == annotationView.rightCalloutAccessoryView {
+            let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
 //            let key = "\(String(annoation.title!))" + "," + "\(String(annoation.coordinate.latitude))" + "," + "\(String(annoation.coordinate.longitude))"
-////            let dm = DataModel()
-////            selectedPlace = dm.fetchPlaceWithKey(key)
-//            performSegueWithIdentifier("showPosts", sender: self)
-//        }
+//            let dm = DataModel()
+            selectedPlace = annoation.place
+            performSegueWithIdentifier("showPosts", sender: self)
+        }
     }
     
     //MARK: - Location Manager

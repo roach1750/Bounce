@@ -1,5 +1,5 @@
 //
-//  KinveyInteractor.swift
+//  KinveyUploader.swift
 //  Bounce
 //
 //  Created by Andrew Roach on 4/11/16.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class KinveyInteractor: NSObject {
+class KinveyUploader: NSObject {
     
-    class var sharedInstance: KinveyInteractor {
+    class var sharedInstance: KinveyUploader {
         struct Singleton {
-            static let instance = KinveyInteractor()
+            static let instance = KinveyUploader()
         }
         return Singleton.instance
     }
@@ -117,55 +117,9 @@ class KinveyInteractor: NSObject {
     }
     
     
-    
-    var data: [Post]?
-    
-    func query() {
-        
-        data = [Post]()
-        //Future: need to specifiy query type based on share settings and location
-        
-        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self
-            ])
-        store.queryWithQuery(
-            KCSQuery(),
-            withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
-                print("Fetched \(objectsOrNil.count) objects")
-                if objectsOrNil.count > 0 {
-                    for object in objectsOrNil{
-                        let newPost = object as! Post
-                        self.data!.append(newPost)
-                        print(self.data)
-                        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
-                        
-                    }
-                }
-            },
-            withProgressBlock: { (objects, percentComplete) in
-                
-                
-        })
-    }
+
     
     
-    func fetchImageForPost(post: Post) {
-        
-        KCSFileStore.downloadData(
-            post.postImageFileInfo,
-            completionBlock: { (downloadedResources: [AnyObject]!, error: NSError!) -> Void in
-                if error == nil {
-                    let file = downloadedResources[0] as! KCSFile
-                    let fileData = file.data
-                    post.postHasImage = true
-                    post.postImageData = fileData
-                    
-                    print("fetched Image for post")
-                } else {
-                    NSLog("Got an error: %@", error)
-                }
-            },
-            progressBlock: { (objects, percentComplete) in
-                print("Image Download: \(percentComplete * 100)%")
-        })
-    }
+    
+    
 }

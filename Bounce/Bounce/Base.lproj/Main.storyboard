@@ -465,7 +465,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="639.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G8m-ax-61C" customClass="PFImageView">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G8m-ax-61C">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="G8m-ax-61C" secondAttribute="height" multiplier="1:1" id="azt-0w-5df"/>
@@ -650,7 +650,7 @@
                                                         <action selector="plusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="WBW-6f-5Lb"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-K5-QGh" customClass="PFImageView">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-K5-QGh">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="W5Y-K5-QGh" secondAttribute="height" multiplier="1:1" id="xWp-7Y-3gR"/>

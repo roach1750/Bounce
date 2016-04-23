@@ -20,8 +20,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var place: Place? {
         didSet {
             self.title = place?.placeName
-//            let dm = DataModel()
-//            posts = dm.fetchPostsForPlaceWithShareSetting(BOUNCEFRIENDSONLYSHARESETTING, place: place!)
+            let kF = KinveyFetcher.sharedInstance
+            kF.fetchPostsForPlace(place!)
         }
     }
     
@@ -48,6 +48,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func reloadTable() {
+        posts = KinveyFetcher.sharedInstance.postsData
         tableView.reloadData()
     }
     
@@ -65,8 +66,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func pullToRefresh() {
-//        let pf = ParseFetcher()
-//        pf.fetchPostForPlace(place!)
+        //        let pf = ParseFetcher()
+        //        pf.fetchPostForPlace(place!)
     }
     
     func refreshComplete() {
@@ -90,9 +91,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     func getDataForTable(shareSetting: String) {
-//        let dm = DataModel()
-//        posts = dm.fetchPostsForPlaceWithShareSetting(shareSetting, place: place!)
-//        reloadTable()
+        //        let dm = DataModel()
+        //        posts = dm.fetchPostsForPlaceWithShareSetting(shareSetting, place: place!)
+        //        reloadTable()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -116,14 +117,14 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     
                 }
                 else {
-//                    let dm = DataModel()
-//                    dm.downloadImageForPost(currentPost)
-//                    cell.postImageView?.image = UIImage(named: "CameraImage")
+                    //                    let dm = DataModel()
+                    //                    dm.downloadImageForPost(currentPost)
+                    //                    cell.postImageView?.image = UIImage(named: "CameraImage")
                 }
             }
             
             //Creation Date
-//            cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
+            //            cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
             
             //Score
             cell.postScoreLabel.text = String(currentPost.postScore)
@@ -195,52 +196,52 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBAction func plusButtonPressed(sender: UIButton) {
         
-//        let point = sender.convertPoint(CGPointZero, toView: tableView)
-//        let indexPath = tableView.indexPathForRowAtPoint(point)
-//        if let currentPost = place?.posts[(indexPath?.row)!] {
-////            let dm = DataModel()
-////            dm.incrementScoreForObject(currentPost, amount: 1)
-//            let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
-//            let currentScore = Int(cell!.postScoreLabel.text!)
-//            let newScore = currentScore! + 1
-//            cell?.postScoreLabel.text = String(newScore)
-//        }
+        //        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        //        let indexPath = tableView.indexPathForRowAtPoint(point)
+        //        if let currentPost = place?.posts[(indexPath?.row)!] {
+        ////            let dm = DataModel()
+        ////            dm.incrementScoreForObject(currentPost, amount: 1)
+        //            let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
+        //            let currentScore = Int(cell!.postScoreLabel.text!)
+        //            let newScore = currentScore! + 1
+        //            cell?.postScoreLabel.text = String(newScore)
+        //        }
     }
     
     
     @IBAction func minusButtonPressed(sender: UIButton) {
-//        let point = sender.convertPoint(CGPointZero, toView: tableView)
-//        let indexPath = tableView.indexPathForRowAtPoint(point)
-//        if let currentPost = place?.posts[(indexPath?.row)!] {
-////            let dm = DataModel()
-////            dm.incrementScoreForObject(currentPost, amount: -1)
-//            let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
-//            let currentScore = Int(cell!.postScoreLabel.text!)
-//            let newScore = currentScore! - 1
-//            cell?.postScoreLabel.text = String(newScore)
-//            
-//        }
+        //        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        //        let indexPath = tableView.indexPathForRowAtPoint(point)
+        //        if let currentPost = place?.posts[(indexPath?.row)!] {
+        ////            let dm = DataModel()
+        ////            dm.incrementScoreForObject(currentPost, amount: -1)
+        //            let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
+        //            let currentScore = Int(cell!.postScoreLabel.text!)
+        //            let newScore = currentScore! - 1
+        //            cell?.postScoreLabel.text = String(newScore)
+        //
+        //        }
     }
     
     
     @IBAction func moreButtonPressed(sender: UIButton) {
         
-//        let point = sender.convertPoint(CGPointZero, toView: tableView)
-//        let indexPath = tableView.indexPathForRowAtPoint(point)
-//        if let currentPost = place?.posts[(indexPath?.row)!] {
-//            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-//            let firstAction = UIAlertAction(title: "Report", style: .Destructive) { (alert: UIAlertAction!) -> Void in
-////                let dm = DataModel()
-////                dm.reportPost(currentPost)
-//            }
-//            let secondAction = UIAlertAction(title: "Cancel", style: .Cancel) { (alert: UIAlertAction!) -> Void in
-//            }
-//            
-//            alert.addAction(firstAction)
-//            alert.addAction(secondAction)
-//            presentViewController(alert, animated: true, completion:nil)
-//            
-//        }
+        //        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        //        let indexPath = tableView.indexPathForRowAtPoint(point)
+        //        if let currentPost = place?.posts[(indexPath?.row)!] {
+        //            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        //            let firstAction = UIAlertAction(title: "Report", style: .Destructive) { (alert: UIAlertAction!) -> Void in
+        ////                let dm = DataModel()
+        ////                dm.reportPost(currentPost)
+        //            }
+        //            let secondAction = UIAlertAction(title: "Cancel", style: .Cancel) { (alert: UIAlertAction!) -> Void in
+        //            }
+        //
+        //            alert.addAction(firstAction)
+        //            alert.addAction(secondAction)
+        //            presentViewController(alert, animated: true, completion:nil)
+        //
+        //        }
         
         
     }
@@ -252,8 +253,10 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //MARK: Tableview customization
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        //        print("There are \(posts!.count) rows and the frame is: \(tableView.frame)")
-        return (posts?.count)!
+        if let allPost = posts {
+            return allPost.count
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

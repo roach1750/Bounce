@@ -12,7 +12,7 @@
 		21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21092A981C4B39FA0087BDE9 /* CameraVC.swift */; };
 		2114B42A1C59890F0002C930 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2114B4291C59890F0002C930 /* PlaceTableViewCell.swift */; };
 		2114B42E1C5E69590002C930 /* ImageConfigurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2114B42D1C5E69590002C930 /* ImageConfigurer.swift */; };
-		212DE0E01CBC750200FEE5C4 /* KinveyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0DF1CBC750200FEE5C4 /* KinveyInteractor.swift */; };
+		212DE0E01CBC750200FEE5C4 /* KinveyUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */; };
 		212DE0E61CC29E4400FEE5C4 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0E51CC29E4400FEE5C4 /* SettingsVC.swift */; };
 		214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A31C7254D200FB9B99 /* FBLoginVC.swift */; };
 		21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */; };
@@ -22,6 +22,7 @@
 		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
 		21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FDF1C4EFF5600048B54 /* BounceConstants.swift */; };
 		21AC73A11C51964800C81D68 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC73A01C51964800C81D68 /* DataModel.swift */; };
+		21D420181CC9B629003E9B0E /* KinveyFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D420171CC9B629003E9B0E /* KinveyFetcher.swift */; };
 		21EC4E441C820090002C3572 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EC4E431C820090002C3572 /* Extensions.swift */; };
 		21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED251C487CEE006F294F /* AppDelegate.swift */; };
 		21FFED2B1C487CEE006F294F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21FFED291C487CEE006F294F /* Main.storyboard */; };
@@ -75,7 +76,7 @@
 		2114B4291C59890F0002C930 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		2114B42D1C5E69590002C930 /* ImageConfigurer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConfigurer.swift; path = Model/ImageConfigurer.swift; sourceTree = "<group>"; };
 		211BC37B1C665DCD005A17AB /* Arlington.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Arlington.gpx; sourceTree = "<group>"; };
-		212DE0DF1CBC750200FEE5C4 /* KinveyInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KinveyInteractor.swift; path = Model/KinveyInteractor.swift; sourceTree = "<group>"; };
+		212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KinveyUploader.swift; path = Model/KinveyUploader.swift; sourceTree = "<group>"; };
 		212DE0E21CBDD19400FEE5C4 /* Bounce-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bounce-Bridging-Header.h"; sourceTree = "<group>"; };
 		212DE0E51CC29E4400FEE5C4 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsVC.swift; path = "View Controllers/SettingsVC.swift"; sourceTree = "<group>"; };
 		214329A31C7254D200FB9B99 /* FBLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBLoginVC.swift; path = "View Controllers/FBLoginVC.swift"; sourceTree = "<group>"; };
@@ -86,6 +87,7 @@
 		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
 		21970FDF1C4EFF5600048B54 /* BounceConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceConstants.swift; path = Model/BounceConstants.swift; sourceTree = "<group>"; };
 		21AC73A01C51964800C81D68 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataModel.swift; path = Model/DataModel.swift; sourceTree = "<group>"; };
+		21D420171CC9B629003E9B0E /* KinveyFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KinveyFetcher.swift; path = Model/KinveyFetcher.swift; sourceTree = "<group>"; };
 		21EC4E431C820090002C3572 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Model/Extensions.swift; sourceTree = "<group>"; };
 		21FFED221C487CEE006F294F /* Bounce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bounce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21FFED251C487CEE006F294F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -224,7 +226,8 @@
 				21970FDF1C4EFF5600048B54 /* BounceConstants.swift */,
 				21FFED631C4AAB78006F294F /* Post.swift */,
 				21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */,
-				212DE0DF1CBC750200FEE5C4 /* KinveyInteractor.swift */,
+				212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */,
+				21D420171CC9B629003E9B0E /* KinveyFetcher.swift */,
 				21970FC31C4DA76E00048B54 /* Place.swift */,
 				21AC73A01C51964800C81D68 /* DataModel.swift */,
 				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
@@ -449,9 +452,10 @@
 				210641811C585DDF00DFF326 /* PlaceVC.swift in Sources */,
 				21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */,
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
-				212DE0E01CBC750200FEE5C4 /* KinveyInteractor.swift in Sources */,
+				212DE0E01CBC750200FEE5C4 /* KinveyUploader.swift in Sources */,
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
 				21EC4E441C820090002C3572 /* Extensions.swift in Sources */,
+				21D420181CC9B629003E9B0E /* KinveyFetcher.swift in Sources */,
 				21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */,
 				21AC73A11C51964800C81D68 /* DataModel.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,

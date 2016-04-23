@@ -160,7 +160,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         newPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
         
         
-        let uploader = KinveyInteractor()
+        let uploader = KinveyUploader()
         uploader.uploadPost(newPost)
         
         Post.sharedInstance.postImageData = nil
