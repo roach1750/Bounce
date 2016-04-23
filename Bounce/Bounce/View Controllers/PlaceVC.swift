@@ -108,6 +108,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
             //Image
             if currentPost.postHasImage {
+                //If there is already an image downloaded:
                 if let imageData = currentPost.postImageData {
                     let image = UIImage(data: imageData)
                     let IC = ImageConfigurer()
@@ -117,9 +118,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     
                 }
                 else {
-                    //                    let dm = DataModel()
-                    //                    dm.downloadImageForPost(currentPost)
-                    //                    cell.postImageView?.image = UIImage(named: "CameraImage")
+                    //There isn't an image downloaded yet
+                    cell.postImageView.image = UIImage(named: "cameraImage")
+                    KinveyFetcher.sharedInstance.fetchImageForPost(currentPost)
                 }
             }
             

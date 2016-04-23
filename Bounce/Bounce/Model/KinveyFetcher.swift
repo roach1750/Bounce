@@ -85,7 +85,8 @@ class KinveyFetcher: NSObject {
                     let fileData = file.data
                     post.postHasImage = true
                     post.postImageData = fileData
-                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+
                     print("fetched Image for post")
                 } else {
                     NSLog("Got an error: %@", error)

@@ -61,11 +61,9 @@ class Post: NSObject {
             "postShareSetting" : BOUNCESHARESETTINGKEY,
             "postBounceKey" : BOUNCEKEY,
             
-            
             "postUploaderFacebookUserID" : BOUNCEPOSTUPLOADERFACEBOOKUSERID,
             "postUploaderKinveyUserID" : BOUNCEPOSTUPLOADERKINVEYUSERID,
             "postUploaderKinveyUserName" : BOUNCEPOSTUPLOADERKINVEYUSERNAME,
-            
             
             "postUniqueId" : KCSEntityKeyId, //the required _id field
             
