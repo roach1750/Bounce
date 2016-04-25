@@ -26,6 +26,7 @@ class KinveyFetcher: NSObject {
         
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
             ])
+        
         store.queryWithQuery(
             KCSQuery(),
             withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
@@ -41,6 +42,8 @@ class KinveyFetcher: NSObject {
             },
             withProgressBlock: { (objects, percentComplete) in
         })
+
+
         
         
     }
