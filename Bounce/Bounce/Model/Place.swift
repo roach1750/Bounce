@@ -1,27 +1,23 @@
 //
 //  Place.swift
-//  Bounce
+//  
 //
-//  Created by Andrew Roach on 1/18/16.
-//  Copyright © 2016 Andrew Roach. All rights reserved.
+//  Created by Andrew Roach on 4/24/16.
+//
 //
 
-import UIKit
+import Foundation
+import CoreData
 
-class Place: NSObject {
-    
-    dynamic var placeName:String?
-    dynamic var placeLocation: CLLocation?
+
+class Place: NSManagedObject {
+
+// Insert code here to add functionality to your managed object subclass
     
     var distanceFromUser: Double?
-    var posts = [Post]()
+    dynamic var placeLocation: CLLocation?
+
     
-    dynamic var placeBounceKey: String?
-    dynamic var placeScore = 0
-
-
-
-
     override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
         return [
             "placeName": BOUNCELOCATIONNAMEKEY,
@@ -30,22 +26,8 @@ class Place: NSObject {
             "placeScore" : BOUNCESCOREKEY
         ]
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
 
 }

@@ -15,7 +15,8 @@ class PostVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var locationButton: UIButton!
     
     var postImageDeleteButton: UIButton!
-    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +35,18 @@ class PostVC: UIViewController, UITextViewDelegate {
 
     
     func restoreDataIfApplicable(){
-        if Post.sharedInstance.postImageData != nil {
+
+        if appDelegate.tempPostImageData != nil {
             let IC = ImageConfigurer()
-            postImageView.image = IC.rotateImage90Degress(UIImage(data: Post.sharedInstance.postImageData!)!)
+            postImageView.image = IC.rotateImage90Degress(UIImage(data: appDelegate.tempPostImageData!)!)
             addDeleteImageButton()
 
         }
         else {
             postImageView.image = UIImage(named: "cameraImage")
         }
-        if Post.sharedInstance.postMessage != nil {
-            postTextView.text = Post.sharedInstance.postMessage!
+        if appDelegate.tempPostMessage != nil {
+            postTextView.text = appDelegate.tempPostMessage!
         }
     }
     
@@ -63,13 +65,15 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     func deleteImagePressed(){
         removeDeleteImageButton()
-        Post.sharedInstance.postImageData = nil
+        
+        appDelegate.tempPostImageData = nil
+        
         postImageView.image = UIImage(named: "cameraImage")
     }
     
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
-        Post.sharedInstance.postImageData = nil
-        Post.sharedInstance.postMessage = nil
+        appDelegate.tempPostImageData = nil
+        appDelegate.tempPostMessage = nil
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -77,7 +81,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     //Do I need to put a spinner here? or what happens if the person reloads?
     func configureLocationButton(){
         if let place = LocationFetcher.sharedInstance.selectedPlace {
-            locationButton.setTitle(place.placeName, forState: UIControlState.Normal)
+            locationButton.setTitle(place.name, forState: UIControlState.Normal)
         }
     }
     
@@ -129,41 +133,17 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     func createPost(shareSetting: String){
         
-        let newPost = Post()
-        
-        //Message
-        newPost.postMessage = postTextView.text
-        
-        //Image
-        if let image = postImageView.image {
-            newPost.postImageData = UIImagePNGRepresentation(image)
-            newPost.postHasImage = true
-        }
-        
-        //Place Name, Location and Key
-        if let postPlace = LocationFetcher.sharedInstance.selectedPlace {
-            newPost.postPlaceName = postPlace.placeName
-            newPost.postLocation = postPlace.placeLocation
-            newPost.postBounceKey = postPlace.placeName! + "," + String(postPlace.placeLocation?.coordinate.latitude) + "," + String(postPlace.placeLocation?.coordinate.longitude)
-        }
-        
-        //Score
-        newPost.postScore = 0
-        
-        //Share Setting
-        newPost.postShareSetting = shareSetting
-        
-        
-        //User's Properties
-        newPost.postUploaderFacebookUserID = KCSUser.activeUser().getValueForAttribute("Facebook ID") as? String
-        newPost.postUploaderKinveyUserName = KCSUser.activeUser().username
-        newPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
-        
         
         let uploader = KinveyUploader()
-        uploader.uploadPost(newPost)
         
-        Post.sharedInstance.postImageData = nil
+        if let image = postImageView.image, selectedPlace = LocationFetcher.sharedInstance.selectedPlace {
+
+            let imageData = UIImagePNGRepresentation(image)
+            
+            uploader.createPostThenUpload(postTextView.text, image: imageData!, shareSetting: shareSetting, selectedPlace: selectedPlace)
+        }
+        
+        appDelegate.tempPostImageData = nil
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

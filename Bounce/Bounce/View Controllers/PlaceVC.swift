@@ -107,7 +107,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.postCommentLabel.text = currentPost.postMessage
             
             //Image
-            if currentPost.postHasImage {
+            if  ((currentPost.postHasImage?.boolValue) != nil) {
                 //If there is already an image downloaded:
                 if let imageData = currentPost.postImageData {
                     let image = UIImage(data: imageData)
@@ -197,8 +197,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBAction func plusButtonPressed(sender: UIButton) {
         
-        //        let point = sender.convertPoint(CGPointZero, toView: tableView)
-        //        let indexPath = tableView.indexPathForRowAtPoint(point)
+//                let point = sender.convertPoint(CGPointZero, toView: tableView)
+//                let indexPath = tableView.indexPathForRowAtPoint(point)
         //        if let currentPost = place?.posts[(indexPath?.row)!] {
         ////            let dm = DataModel()
         ////            dm.incrementScoreForObject(currentPost, amount: 1)

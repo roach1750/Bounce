@@ -89,7 +89,10 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     
     @IBAction func cancelButtonPressed(sender: UIButton) {
-        Post.sharedInstance.postImageData = nil
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.tempPostImageData = nil
+        appDelegate.tempPostMessage = nil
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     

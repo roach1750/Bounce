@@ -24,7 +24,8 @@ class ImageConfigurer: NSObject {
         let rotatedImage = rotateImage90Degress(croppedImage)
 //        let filteredImage = addSepiaToneToImage(rotatedImage)
         image = rotatedImage
-        Post.sharedInstance.postImageData = UIImagePNGRepresentation(image!)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.tempPostImageData = UIImagePNGRepresentation(image!)
         dispatch_async(dispatch_get_main_queue()) {
             NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEPROCESSEDNOTIFICATION, object: nil, userInfo: nil)
         }

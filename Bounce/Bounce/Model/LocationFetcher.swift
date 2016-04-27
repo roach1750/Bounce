@@ -20,9 +20,9 @@ class LocationFetcher: NSObject {
         return Singleton.instance
     }
     
-    var selectedPlace: Place?
+    var selectedPlace: FourSquarePlace?
     
-    var placeArray: [Place]?
+    var placeArray: [FourSquarePlace]?
     
     var currentLocation: CLLocation? {
         didSet {
@@ -55,22 +55,22 @@ class LocationFetcher: NSObject {
                     //configure JSON
                     do{
                         let resultsJSON = JSON(data: data!)
-                        self.placeArray = [Place]()
+                        self.placeArray = [FourSquarePlace]()
                         self.selectedPlace = nil
                         for i in 0..<resultsJSON["response"]["venues"].count {
-                            let currentPlace = Place()
-                            currentPlace.placeName = resultsJSON["response"]["venues"][i]["name"].string!
+                            let place = FourSquarePlace()
+                            place.name = resultsJSON["response"]["venues"][i]["name"].string!
                             let latitude = resultsJSON["response"]["venues"][i]["location"]["lat"].double!
                             let longitude = resultsJSON["response"]["venues"][i]["location"]["lng"].double!
-                            currentPlace.placeLocation = CLLocation(latitude: latitude, longitude: longitude)
+                            place.location = CLLocation(latitude: latitude, longitude: longitude)
                             
                             
 
                             let point = CGPointMake(CGFloat(latitude), CGFloat(longitude))
                             let currentLocationPoint = CGPointMake(CGFloat((self.currentLocation?.coordinate.latitude)!), CGFloat((self.currentLocation?.coordinate.longitude)!))
-                            currentPlace.distanceFromUser = self.distanceBetweenPoints(point, point2: currentLocationPoint)
+                            place.distanceFromUser = self.distanceBetweenPoints(point, point2: currentLocationPoint)
                             // print(currentPlace.description)
-                            self.placeArray?.append(currentPlace)
+                            self.placeArray?.append(place)
                         }
                         self.placeArray?.sortInPlace({$0.distanceFromUser < $1.distanceFromUser})
                         

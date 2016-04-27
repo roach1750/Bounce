@@ -14,11 +14,16 @@
 		2114B42E1C5E69590002C930 /* ImageConfigurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2114B42D1C5E69590002C930 /* ImageConfigurer.swift */; };
 		212DE0E01CBC750200FEE5C4 /* KinveyUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */; };
 		212DE0E61CC29E4400FEE5C4 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0E51CC29E4400FEE5C4 /* SettingsVC.swift */; };
+		213482D11CCDA5C700CAAD93 /* Data Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 213482CF1CCDA5C700CAAD93 /* Data Model.xcdatamodeld */; };
+		213482EE1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482EA1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift */; };
+		213482EF1CCDAA0300CAAD93 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482EB1CCDAA0300CAAD93 /* Post.swift */; };
+		213482F01CCDAA0300CAAD93 /* Place+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482EC1CCDAA0300CAAD93 /* Place+CoreDataProperties.swift */; };
+		213482F11CCDAA0300CAAD93 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482ED1CCDAA0300CAAD93 /* Place.swift */; };
 		214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A31C7254D200FB9B99 /* FBLoginVC.swift */; };
 		21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */; };
+		2143AC011CD00B9C008BBF2D /* FourSquarePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2143AC001CD00B9C008BBF2D /* FourSquarePlace.swift */; };
 		2168A82D1CADD77F009E76E5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2168A82C1CADD77F009E76E5 /* MapKit.framework */; };
 		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
-		21970FC41C4DA76E00048B54 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC31C4DA76E00048B54 /* Place.swift */; };
 		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
 		21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FDF1C4EFF5600048B54 /* BounceConstants.swift */; };
 		21AC73A11C51964800C81D68 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC73A01C51964800C81D68 /* DataModel.swift */; };
@@ -34,7 +39,6 @@
 		21FFED5B1C488617006F294F /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED5A1C488617006F294F /* MapVC.swift */; };
 		21FFED601C4AA325006F294F /* Proposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED5F1C4AA325006F294F /* Proposer.swift */; };
 		21FFED621C4AAAC4006F294F /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED611C4AAAC4006F294F /* PostVC.swift */; };
-		21FFED641C4AAB78006F294F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFED631C4AAB78006F294F /* Post.swift */; };
 		B839EE697D26F21A34A08746 /* Pods_Bounce.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD79F3CDCD91F6F39D4A0271 /* Pods_Bounce.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,11 +83,16 @@
 		212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KinveyUploader.swift; path = Model/KinveyUploader.swift; sourceTree = "<group>"; };
 		212DE0E21CBDD19400FEE5C4 /* Bounce-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bounce-Bridging-Header.h"; sourceTree = "<group>"; };
 		212DE0E51CC29E4400FEE5C4 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsVC.swift; path = "View Controllers/SettingsVC.swift"; sourceTree = "<group>"; };
+		213482D01CCDA5C700CAAD93 /* Data Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Data Model.xcdatamodel"; sourceTree = "<group>"; };
+		213482EA1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Post+CoreDataProperties.swift"; path = "Model/Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		213482EB1CCDAA0300CAAD93 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Model/Post.swift; sourceTree = "<group>"; };
+		213482EC1CCDAA0300CAAD93 /* Place+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Place+CoreDataProperties.swift"; path = "Model/Place+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		213482ED1CCDAA0300CAAD93 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
 		214329A31C7254D200FB9B99 /* FBLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBLoginVC.swift; path = "View Controllers/FBLoginVC.swift"; sourceTree = "<group>"; };
 		21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserFetcher.swift; path = Model/UserFetcher.swift; sourceTree = "<group>"; };
+		2143AC001CD00B9C008BBF2D /* FourSquarePlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FourSquarePlace.swift; path = Model/FourSquarePlace.swift; sourceTree = "<group>"; };
 		2168A82C1CADD77F009E76E5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		21970FC31C4DA76E00048B54 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
 		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
 		21970FDF1C4EFF5600048B54 /* BounceConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceConstants.swift; path = Model/BounceConstants.swift; sourceTree = "<group>"; };
 		21AC73A01C51964800C81D68 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataModel.swift; path = Model/DataModel.swift; sourceTree = "<group>"; };
@@ -105,7 +114,6 @@
 		21FFED5A1C488617006F294F /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapVC.swift; path = "View Controllers/MapVC.swift"; sourceTree = "<group>"; };
 		21FFED5F1C4AA325006F294F /* Proposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Proposer.swift; sourceTree = "<group>"; };
 		21FFED611C4AAAC4006F294F /* PostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostVC.swift; path = "View Controllers/PostVC.swift"; sourceTree = "<group>"; };
-		21FFED631C4AAB78006F294F /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Model/Post.swift; sourceTree = "<group>"; };
 		987CB5985C4580F3B8979254 /* Pods-Bounce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bounce.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bounce/Pods-Bounce.release.xcconfig"; sourceTree = "<group>"; };
 		FD79F3CDCD91F6F39D4A0271 /* Pods_Bounce.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bounce.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -223,13 +231,17 @@
 		21FFED551C487F62006F294F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				213482CF1CCDA5C700CAAD93 /* Data Model.xcdatamodeld */,
+				213482EA1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift */,
+				213482EB1CCDAA0300CAAD93 /* Post.swift */,
+				213482EC1CCDAA0300CAAD93 /* Place+CoreDataProperties.swift */,
+				213482ED1CCDAA0300CAAD93 /* Place.swift */,
 				21970FDF1C4EFF5600048B54 /* BounceConstants.swift */,
-				21FFED631C4AAB78006F294F /* Post.swift */,
 				21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */,
 				212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */,
 				21D420171CC9B629003E9B0E /* KinveyFetcher.swift */,
-				21970FC31C4DA76E00048B54 /* Place.swift */,
 				21AC73A01C51964800C81D68 /* DataModel.swift */,
+				2143AC001CD00B9C008BBF2D /* FourSquarePlace.swift */,
 				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
 				212DE0E11CBDD17800FEE5C4 /* Helpers */,
 				21970FC21C4DA44D00048B54 /* 3rd Party Models */,
@@ -447,26 +459,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				21FFED621C4AAAC4006F294F /* PostVC.swift in Sources */,
+				213482F01CCDAA0300CAAD93 /* Place+CoreDataProperties.swift in Sources */,
 				21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */,
 				214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */,
 				210641811C585DDF00DFF326 /* PlaceVC.swift in Sources */,
 				21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */,
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
 				212DE0E01CBC750200FEE5C4 /* KinveyUploader.swift in Sources */,
+				213482EE1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift in Sources */,
+				213482D11CCDA5C700CAAD93 /* Data Model.xcdatamodeld in Sources */,
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
 				21EC4E441C820090002C3572 /* Extensions.swift in Sources */,
 				21D420181CC9B629003E9B0E /* KinveyFetcher.swift in Sources */,
+				213482EF1CCDAA0300CAAD93 /* Post.swift in Sources */,
 				21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */,
 				21AC73A11C51964800C81D68 /* DataModel.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
 				2106417F1C56E41E00DFF326 /* BounceAnnotation.swift in Sources */,
 				21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */,
+				213482F11CCDAA0300CAAD93 /* Place.swift in Sources */,
+				2143AC011CD00B9C008BBF2D /* FourSquarePlace.swift in Sources */,
 				2114B42E1C5E69590002C930 /* ImageConfigurer.swift in Sources */,
 				2114B42A1C59890F0002C930 /* PlaceTableViewCell.swift in Sources */,
 				21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */,
-				21FFED641C4AAB78006F294F /* Post.swift in Sources */,
 				21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */,
-				21970FC41C4DA76E00048B54 /* Place.swift in Sources */,
 				212DE0E61CC29E4400FEE5C4 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -737,6 +753,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		213482CF1CCDA5C700CAAD93 /* Data Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				213482D01CCDA5C700CAAD93 /* Data Model.xcdatamodel */,
+			);
+			currentVersion = 213482D01CCDA5C700CAAD93 /* Data Model.xcdatamodel */;
+			name = "Data Model.xcdatamodeld";
+			path = "Model/Data Model.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 21FFED1A1C487CEE006F294F /* Project object */;
 }
