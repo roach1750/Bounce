@@ -20,5 +20,7 @@ extension Place {
     @NSManaged var placeBounceKey: String?
     @NSManaged var placeScore: NSNumber?
     @NSManaged var posts: NSOrderedSet?
+    @NSManaged var entityId: String?
+
 
 }
