@@ -45,8 +45,7 @@ class KinveyUploader: NSObject {
         
 
         checkIfPlaceIsExistingForPost(coreDataPost)
-//        uploadPostImageThenObject(coreDataPost)
-//        uploadPlaceForPost(coreDataPost)
+
 
     }
     
@@ -63,7 +62,7 @@ class KinveyUploader: NSObject {
             }
             else {
                 print("Place for post is existing, uploading post")
-//                self.uploadPostImageThenObject(post)
+                self.uploadPostImageThenObject(post)
             }
             
             },

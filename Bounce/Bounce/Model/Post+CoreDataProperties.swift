@@ -29,5 +29,6 @@ extension Post {
     @NSManaged var postUniqueId: String?
     @NSManaged var postImageFileInfo: String?
     @NSManaged var postPlace: Place?
+    @NSManaged var entityId: String?
 
 }

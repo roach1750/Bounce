@@ -10,6 +10,7 @@
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="postPlace" inverseEntity="Post" syncable="YES"/>
     </entity>
     <entity name="Post" representedClassName=".Post" syncable="YES">
+        <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="postBounceKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="postHasImage" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="postImageData" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -28,6 +29,6 @@
     </entity>
     <elements>
         <element name="Place" positionX="-209" positionY="45" width="137" height="150"/>
-        <element name="Post" positionX="216" positionY="48" width="207" height="268"/>
+        <element name="Post" positionX="216" positionY="48" width="207" height="285"/>
     </elements>
 </model>
