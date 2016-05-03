@@ -24,9 +24,9 @@ class KinveyFetcher: NSObject {
     
     var allPlacesData: [Place]?
     
+    
     func queryForAllPlaces() {
         allPlacesData = [Place]()
-        dateOfMostRecentPostInDataBase()
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
             ])
         
@@ -48,37 +48,89 @@ class KinveyFetcher: NSObject {
         
     }
     
+    
+
+    
+/////////////////////////////////////////////////POST SECTION////////////////////////////////////////////////
+    
+    func fetchPostsForPlace(place: Place) {
+        self.fetchPostFromKinveyForPlace(place)
+    }
+    
     //
     // Downloads the post from Kinvey withImages
     //
-    func fetchPostsForPlace(place: Place) {
+    private func fetchPostFromKinveyForPlace(place: Place) {
         postsData = [Post]()
-        
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
+        let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
+        if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
+            let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
+            mainQuery.addQuery(dateRangeQuery)
+        }
         
-        let query = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
-        
-        store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
+        store.queryWithQuery(mainQuery, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
+            print("Kinvey Downloaded \(objectsOrNil.count) posts")
             if objectsOrNil.count > 0 {
                 for object in objectsOrNil{
                     let newPost = object as! Post
                     self.postsData!.append(newPost)
                     self.savePostToCoreDataWithoutImage(newPost)
                 }
-                self.fetchAllPostFromCoreDataBase()
-//                print("there are \(objectsOrNil.count) posts for this place")
-                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
-                
             }
             else {
-                print(errorOrNil)
+                if let error = errorOrNil {
+                    print(error)
+                }
             }
-            
+            self.fetchPostFromCoreDataForPlace(place)
+
             },
                              
                              withProgressBlock: { (objects, percentComplete) in
         })
     }
+    
+    
+    
+    //
+    // Fetches all post stored in core data for a place
+    //
+    private func fetchPostFromCoreDataForPlace(place: Place) {
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
+        let predicate = NSPredicate(format: "postBounceKey == %@", place.placeBounceKey!)
+        fetchRequest.predicate = predicate
+        fetchRequest.entity = entityDescription
+        
+        do {
+            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+            print("Core Data Fetched\(result.count) posts")
+            for object in result {
+                let newPost = object as! Post
+                self.postsData!.append(newPost)
+            }
+            sortData()
+            
+            
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+    }
+    
+    //Sorts the post by most recent then sends notification that they're ready to be displayed
+    
+    private func sortData() {
+        self.postsData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
+
+        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+
+    }
+    
+    
+    
+    
     
     //
     // Saves a post to core data
@@ -97,7 +149,7 @@ class KinveyFetcher: NSObject {
     //
     // Fetch the date of the most recent post in the data base in order to decide what needs to be update from Kinvey
     //
-    func dateOfMostRecentPostInDataBase() {
+    func dateOfMostRecentPostInDataBase() -> NSDate? {
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postCreationDate", ascending: false)]
@@ -105,38 +157,24 @@ class KinveyFetcher: NSObject {
         fetchRequest.entity = entityDescription
         do {
             let result = try self.managedObjectContext.executeFetchRequest(fetchRequest) as? [Post]
-            let dateToReturn = result![0].postCreationDate
-            print(dateToReturn);
+            if result?.count > 0 {
+                let dateToReturn = result![0].postCreationDate
+                print("Most Recent Post in Core Data was created at: \(dateToReturn)")
+                return dateToReturn
+            }
             
         } catch {
             let fetchError = error as NSError
             print(fetchError)
         }
-
-    }
-    
-    
-    
-    
-    //
-    // Fetch all post from from core data
-    //
-    func fetchAllPostFromCoreDataBase() -> [Post]?{
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
-        fetchRequest.entity = entityDescription
-        
-        do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-            print(result.count)
-            print(result)
-            
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
+        print("There are no recent Post in Core Data")
         return nil
     }
+    
+    
+    
+    
+
     
     
     func fetchImageForPost(post: Post) {

@@ -86,9 +86,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func createAnnotations() {
         mapView.removeAnnotations(mapView.annotations)
         
-        
-        print(fetcher.allPlacesData?.count)
-        
         if let objects = fetcher.allPlacesData {
             for place in objects {
                 let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
