@@ -76,6 +76,7 @@ class KinveyFetcher: NSObject {
                     let newPost = object as! Post
                     self.postsData!.append(newPost)
                     self.savePostToCoreDataWithoutImage(newPost)
+                    self.fetchImageForPost(newPost)
                 }
             }
             else {
@@ -170,13 +171,7 @@ class KinveyFetcher: NSObject {
         print("There are no recent Post in Core Data")
         return nil
     }
-    
-    
-    
-    
 
-    
-    
     func fetchImageForPost(post: Post) {
         
         KCSFileStore.downloadData(
@@ -188,7 +183,7 @@ class KinveyFetcher: NSObject {
                     post.postHasImage = true
                     post.postImageData = fileData
                     NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
-                    
+                    self.saveImageToCoreDataForPost(post)
                     print("fetched Image for post")
                 } else {
                     NSLog("Got an error: %@", error)
@@ -197,5 +192,28 @@ class KinveyFetcher: NSObject {
             progressBlock: { (objects, percentComplete) in
                 print("Image Download: \(percentComplete * 100)%")
         })
+    }
+    
+    func saveImageToCoreDataForPost(post: Post) {
+        let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Post")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
+            fetchedEntities.first?.postHasImage = post.postHasImage
+            fetchedEntities.first?.postImageData = post.postImageData
+
+
+        } catch {
+            // Do something in response to error condition
+        }
+        
+        do {
+            try self.managedObjectContext.save()
+        } catch {
+            // Do something in response to error condition
+        }
     }
 }
