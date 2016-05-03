@@ -231,12 +231,12 @@
 		21FFED551C487F62006F294F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				21970FDF1C4EFF5600048B54 /* BounceConstants.swift */,
 				213482CF1CCDA5C700CAAD93 /* Data Model.xcdatamodeld */,
 				213482EA1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift */,
 				213482EB1CCDAA0300CAAD93 /* Post.swift */,
 				213482EC1CCDAA0300CAAD93 /* Place+CoreDataProperties.swift */,
 				213482ED1CCDAA0300CAAD93 /* Place.swift */,
-				21970FDF1C4EFF5600048B54 /* BounceConstants.swift */,
 				21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */,
 				212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */,
 				21D420171CC9B629003E9B0E /* KinveyFetcher.swift */,

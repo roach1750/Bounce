@@ -36,13 +36,13 @@ class KinveyUploader: NSObject {
         coreDataPost.postHasImage = true
         coreDataPost.postPlaceName = selectedPlace.name
         coreDataPost.postLocation = selectedPlace.location
-        coreDataPost.postBounceKey = selectedPlace.name! + "," + String(selectedPlace.location?.coordinate.latitude) + "," + String(selectedPlace.location?.coordinate.longitude)
+        coreDataPost.postBounceKey = selectedPlace.name! + "," + String(selectedPlace.location!.coordinate.latitude) + "," + String(selectedPlace.location!.coordinate.longitude)
         coreDataPost.postScore = 0
         coreDataPost.postShareSetting = shareSetting
         coreDataPost.postUploaderFacebookUserID = KCSUser.activeUser().getValueForAttribute("Facebook ID") as? String
         coreDataPost.postUploaderKinveyUserName = KCSUser.activeUser().username
         coreDataPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
-        
+        coreDataPost.postCreationDate = NSDate()
 
         checkIfPlaceIsExistingForPost(coreDataPost)
 

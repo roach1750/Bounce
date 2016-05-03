@@ -120,15 +120,16 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 else {
                     //There isn't an image downloaded yet
                     cell.postImageView.image = UIImage(named: "cameraImage")
-                    KinveyFetcher.sharedInstance.fetchImageForPost(currentPost)
+//                    KinveyFetcher.sharedInstance.fetchImageForPost(currentPost)
                 }
             }
             
             //Creation Date
             //            cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
+            cell.postCreationDate.text = "error"
             
             //Score
-            cell.postScoreLabel.text = String(currentPost.postScore)
+            cell.postScoreLabel.text = String(currentPost.postScore!)
             
             
             cell.layoutMargins = UIEdgeInsetsZero
