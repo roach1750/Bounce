@@ -34,7 +34,6 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     func beginCameraSession(){
-        //remove old inputs, if necessary
         captureSession = AVCaptureSession()
         
         //pick camera
@@ -64,7 +63,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 previewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.Portrait
                 previewLayer.frame = cameraPreviewImageView.bounds
                 previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-                captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+                captureSession.sessionPreset = AVCaptureSessionPresetHigh
                 self.cameraPreviewImageView.layer.addSublayer(previewLayer)
                 captureSession.startRunning()
                 addSwitchCameraButton()

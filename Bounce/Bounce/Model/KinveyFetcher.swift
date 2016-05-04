@@ -109,7 +109,10 @@ class KinveyFetcher: NSObject {
             print("Core Data Fetched\(result.count) posts")
             for object in result {
                 let newPost = object as! Post
-                self.postsData!.append(newPost)
+                if !(self.postsData?.contains(newPost))! {
+
+                    self.postsData!.append(newPost)
+                }
             }
             sortData()
             
@@ -190,7 +193,7 @@ class KinveyFetcher: NSObject {
                 }
             },
             progressBlock: { (objects, percentComplete) in
-                print("Image Download: \(percentComplete * 100)%")
+//                print("Image Download: \(percentComplete * 100)%")
         })
     }
     
@@ -204,16 +207,14 @@ class KinveyFetcher: NSObject {
             let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
             fetchedEntities.first?.postHasImage = post.postHasImage
             fetchedEntities.first?.postImageData = post.postImageData
-
+            
 
         } catch {
-            // Do something in response to error condition
         }
         
         do {
             try self.managedObjectContext.save()
         } catch {
-            // Do something in response to error condition
         }
     }
 }
