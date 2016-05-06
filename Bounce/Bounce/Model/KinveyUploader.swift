@@ -114,6 +114,7 @@ class KinveyUploader: NSObject {
     
     //This uploads the image first, then calls the method below to upload the object
     private func uploadPostImageThenObject(post: Post) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         print("uploading Image for Post")
         NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADBEGANNOTIFICATION, object: nil, userInfo: nil)
         if let PID = post.postImageData {
@@ -137,6 +138,8 @@ class KinveyUploader: NSObject {
         post.postImageFileInfo = imageInfo.fileId
         let collection = KCSCollection(fromString: BOUNCEPOSTCLASSNAME, ofClass: Post.self)
         let updateStore = KCSLinkedAppdataStore.storeWithOptions([KCSStoreKeyResource: collection])
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+
         updateStore.saveObject(
             post,
             withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
