@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class PostVC: UIViewController, UITextViewDelegate {
     
@@ -16,16 +17,16 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     var postImageDeleteButton: UIButton!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForKeyboardNotifications()
         configureTextview()
         configureLocationButton()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.showProgressIndicator(_:)), name: BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.updateProgressIndicator(_:)), name: BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.showProgressIndicator), name: BOUNCEIMAGEUPLOADBEGANNOTIFICATION, object: nil)
         
-
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -35,24 +36,36 @@ class PostVC: UIViewController, UITextViewDelegate {
         configureLocationButton()
     }
     
-    func showProgressIndicator(notification: NSNotification) {
-        
+    var loadingNotification: MBProgressHUD = MBProgressHUD()
+
+    
+    func showProgressIndicator() {
+        loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        loadingNotification.labelText = "Uploading"
+        loadingNotification.mode = MBProgressHUDMode.AnnularDeterminate
+        loadingNotification.dimBackground = true
+    }
+    
+    func updateProgressIndicator(notification: NSNotification) {
         if let info = notification.userInfo as? Dictionary<String,Double> {
-            print(info["progress"]!)
-            if info["progress"]! == 1.0 {
+            let percentComplete = info["progress"]!
+            loadingNotification.progress = Float(percentComplete)
+            if percentComplete == 1.0 {
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
+            
         }
     }
     
     
     func restoreDataIfApplicable(){
-
+        
         if appDelegate.tempPostImageData != nil {
             let IC = ImageConfigurer()
             postImageView.image = IC.rotateImage90Degress(UIImage(data: appDelegate.tempPostImageData!)!)
             addDeleteImageButton()
-
+            
         }
         else {
             postImageView.image = UIImage(named: "cameraImage")
@@ -113,13 +126,13 @@ class PostVC: UIViewController, UITextViewDelegate {
         let EveryoneAction = UIAlertAction(title: "Everyone", style: .Default) { (action) in
             self.createPost(BOUNCEEVERYONESHARESETTING)
         }
-
+        
         alertController.addAction(friendsOnlyAction)
         alertController.addAction(EveryoneAction)
         alertController.addAction(cancelAction)
         
         self.presentViewController(alertController, animated: true) {
-        
+            
         }
         
         
@@ -127,7 +140,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     
     
-
+    
     @IBAction func goToCameraView(sender: UITapGestureRecognizer) {
         let camera: PrivateResource = .Camera
         
@@ -137,9 +150,9 @@ class PostVC: UIViewController, UITextViewDelegate {
             }, rejected: {
                 print("no camera permissions")
         })
-    
+        
     }
-
+    
     
     //MARK: Create Post
     
@@ -149,7 +162,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         let uploader = KinveyUploader()
         
         if let image = postImageView.image, selectedPlace = LocationFetcher.sharedInstance.selectedPlace {
-
+            
             let imageData = UIImagePNGRepresentation(image)
             
             uploader.createPostThenUpload(postTextView.text, image: imageData!, shareSetting: shareSetting, selectedPlace: selectedPlace)
@@ -161,7 +174,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     
     
-    //MARK: Post Textview Stuff: 
+    //MARK: Post Textview Stuff:
     func configureTextview(){
         postTextView.returnKeyType = UIReturnKeyType.Done
     }
@@ -193,13 +206,13 @@ class PostVC: UIViewController, UITextViewDelegate {
     func keyboardWillChangeState(notification: NSNotification) {
         let keyboardBeginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
         let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue
-//        print("Begin Frame: \(keyboardBeginFrame!)")
-//        print("End Frame: \(keyboardEndFrame!)")
+        //        print("Begin Frame: \(keyboardBeginFrame!)")
+        //        print("End Frame: \(keyboardEndFrame!)")
         
         let keyboardHeight = keyboardEndFrame!.size.height
         let viewHeight = view.frame.size.height
         
-        //The keyboard is about to show, we need to: 
+        //The keyboard is about to show, we need to:
         // 1: Move postTextView up
         // 2: Scale the image
         // 3: Move the Image up
@@ -227,12 +240,12 @@ class PostVC: UIViewController, UITextViewDelegate {
                 self.postTextView.transform = CGAffineTransformIdentity
             })
         }
-       
-    
+        
+        
     }
     
     
-
+    
     
     
 }

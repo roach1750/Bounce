@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '78B05250A453546DB5A5418C'
+               BlueprintIdentifier = '90BCCF50B21E35CE62BAAAEA'
                BlueprintName = 'Pods-Bounce'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_Bounce.framework'>

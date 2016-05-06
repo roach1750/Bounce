@@ -9,6 +9,7 @@
 #ifndef Header_h
 #define Header_h
 #import <KinveyKit/KinveyKit.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 
 
 #endif /* Header_h */

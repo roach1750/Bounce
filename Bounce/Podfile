@@ -11,6 +11,8 @@ pod 'FBSDKShareKit'
 
 pod 'KinveyKit'
 
+pod 'MBProgressHUD', '~> 0.9.2'
+
 end
 
 target 'BounceTests' do
