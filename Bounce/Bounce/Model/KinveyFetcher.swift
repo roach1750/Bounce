@@ -26,9 +26,12 @@ class KinveyFetcher: NSObject {
     
     
     func queryForAllPlaces() {
+        
         allPlacesData = [Place]()
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
             ])
+        
+//        let query = configurePlaceQuery()
         
         store.queryWithQuery(
             KCSQuery(),
@@ -48,7 +51,20 @@ class KinveyFetcher: NSObject {
         
     }
     
-    
+//    func configurePlaceQuery() -> KCSQuery {
+//        
+//        //Friends Only Query
+//        let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
+//        let friendsOnlyQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, usingConditional: .KCSIn, forValue: facebookFriendIDs)
+//        
+//        //Everyone Query
+//        let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEEVERYONESHARESETTING)
+//        
+//        everyoneQuery.addQuery(friendsOnlyQuery)
+//        
+//        return everyoneQuery
+//    }
+//    
 
     
 /////////////////////////////////////////////////POST SECTION////////////////////////////////////////////////

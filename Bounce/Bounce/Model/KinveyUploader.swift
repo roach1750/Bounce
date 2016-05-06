@@ -92,7 +92,7 @@ class KinveyUploader: NSObject {
                 }
             },
             withProgressBlock: { (objects, percentComplete) in
-                print(percentComplete)
+//                print(percentComplete)
         })
     }
     
@@ -123,7 +123,10 @@ class KinveyUploader: NSObject {
                 }
                 
                 }, progressBlock: { (objects, percentComplete) in
-                    print(percentComplete)
+                    
+                    let progressDictionary = ["progress" : percentComplete]
+                    NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION, object: nil, userInfo: progressDictionary)
+//                    print(percentComplete)
             })
         }
     }
@@ -145,7 +148,7 @@ class KinveyUploader: NSObject {
                 }
             },
             withProgressBlock: { (objects, percentComplete) in
-                print(percentComplete)
+//                print(percentComplete)
         })
     }
     

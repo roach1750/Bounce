@@ -153,8 +153,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func mapView(MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == annotationView.rightCalloutAccessoryView {
             let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
-//            let key = "\(String(annoation.title!))" + "," + "\(String(annoation.coordinate.latitude))" + "," + "\(String(annoation.coordinate.longitude))"
-//            let dm = DataModel()
             selectedPlace = annoation.place
             performSegueWithIdentifier("showPosts", sender: self)
         }

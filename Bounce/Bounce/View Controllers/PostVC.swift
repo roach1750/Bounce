@@ -23,6 +23,9 @@ class PostVC: UIViewController, UITextViewDelegate {
         registerForKeyboardNotifications()
         configureTextview()
         configureLocationButton()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.showProgressIndicator(_:)), name: BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION, object: nil)
+        
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -32,7 +35,16 @@ class PostVC: UIViewController, UITextViewDelegate {
         configureLocationButton()
     }
     
-
+    func showProgressIndicator(notification: NSNotification) {
+        
+        if let info = notification.userInfo as? Dictionary<String,Double> {
+            print(info["progress"]!)
+            if info["progress"]! == 1.0 {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+    }
+    
     
     func restoreDataIfApplicable(){
 
@@ -145,7 +157,6 @@ class PostVC: UIViewController, UITextViewDelegate {
         
         appDelegate.tempPostImageData = nil
         
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
