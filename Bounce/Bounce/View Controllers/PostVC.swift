@@ -26,6 +26,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         configureLocationButton()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.updateProgressIndicator(_:)), name: BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.showProgressIndicator), name: BOUNCEIMAGEUPLOADBEGANNOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.removeProgressIndicator), name: BOUNCEIMAGEUPLOADCOMPLETENOTIFICATION, object: nil)
         
     }
     
@@ -37,7 +38,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     }
     
     var loadingNotification: MBProgressHUD = MBProgressHUD()
-
+    
     
     func showProgressIndicator() {
         loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -50,12 +51,13 @@ class PostVC: UIViewController, UITextViewDelegate {
         if let info = notification.userInfo as? Dictionary<String,Double> {
             let percentComplete = info["progress"]!
             loadingNotification.progress = Float(percentComplete)
-            if percentComplete == 1.0 {
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-            
+            print(percentComplete)            
         }
+    }
+    
+    func removeProgressIndicator() {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     

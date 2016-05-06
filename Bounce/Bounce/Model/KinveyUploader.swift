@@ -19,9 +19,9 @@ class KinveyUploader: NSObject {
     }
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-
     
-
+    
+    
     
     func createPostThenUpload(message: String, image: NSData, shareSetting: String, selectedPlace: FourSquarePlace ) {
         
@@ -43,10 +43,10 @@ class KinveyUploader: NSObject {
         coreDataPost.postUploaderKinveyUserName = KCSUser.activeUser().username
         coreDataPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
         coreDataPost.postCreationDate = NSDate()
-
+        
         checkIfPlaceIsExistingForPost(coreDataPost)
-
-
+        
+        
     }
     
     
@@ -69,7 +69,7 @@ class KinveyUploader: NSObject {
                              
                              withProgressBlock: { (objects, percentComplete) in
                                 print("Query for existing Place: \(percentComplete * 100) %")
-
+                                
         })
     }
     
@@ -84,15 +84,15 @@ class KinveyUploader: NSObject {
             withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError?) -> Void in
                 if errorOrNil != nil {
                     //save failed
-//                    print("Save failed, with error: %@", errorOrNil?.localizedFailureReason)
+                    //                    print("Save failed, with error: %@", errorOrNil?.localizedFailureReason)
                 } else {
                     //save was successful
-//                    print("Successfully saved Place (id='%@').", (objectsOrNil[0] as! NSObject).kinveyObjectId())
+                    //                    print("Successfully saved Place (id='%@').", (objectsOrNil[0] as! NSObject).kinveyObjectId())
                     self.uploadPostImageThenObject(post)
                 }
             },
             withProgressBlock: { (objects, percentComplete) in
-//                print(percentComplete)
+                //                print(percentComplete)
         })
     }
     
@@ -122,12 +122,12 @@ class KinveyUploader: NSObject {
                     self.upLoadPostObject(receivedUploadInfo,post: post)
                     
                 }
-                
+                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADCOMPLETENOTIFICATION, object: nil, userInfo: nil)
                 }, progressBlock: { (objects, percentComplete) in
                     
                     let progressDictionary = ["progress" : percentComplete]
                     NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION, object: nil, userInfo: progressDictionary)
-//                    print(percentComplete)
+                    //                    print(percentComplete)
             })
         }
     }
@@ -145,16 +145,18 @@ class KinveyUploader: NSObject {
                     print("Save failed, with error: %@", errorOrNil.localizedFailureReason)
                 } else {
                     //save was successful
+                    
                     print("Successfully saved event (id='%@').", (objectsOrNil[0] as! NSObject).kinveyObjectId())
                 }
+                
             },
             withProgressBlock: { (objects, percentComplete) in
-//                print(percentComplete)
+                //                print(percentComplete)
         })
     }
     
     
-
+    
     
     
     
