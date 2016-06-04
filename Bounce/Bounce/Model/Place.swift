@@ -26,7 +26,8 @@ class Place: NSManagedObject {
             "placeName": BOUNCELOCATIONNAMEKEY,
             "placeLocation": BOUNCEPOSTGEOLOCATIONKEY,
             "placeBounceKey": BOUNCEKEY,
-            "placeScore" : BOUNCESCOREKEY
+            "placeScore" : BOUNCESCOREKEY,
+            "placeAuthors" :BOUNCEAUTHORSKEY
         ]
     }
     

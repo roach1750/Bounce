@@ -38,6 +38,7 @@ class KinveyFetcher: NSObject {
                 if objectsOrNil.count > 0 {
                     for object in objectsOrNil{
                         let newPlace = object as! Place
+                        print(newPlace)
                         self.allPlacesData!.append(newPlace)
                     }
                     NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
@@ -75,6 +76,7 @@ class KinveyFetcher: NSObject {
     private func fetchPostFromKinveyForPlace(place: Place) {
         postsData = [Post]()
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
+        print(place)
         let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
         if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
             let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)

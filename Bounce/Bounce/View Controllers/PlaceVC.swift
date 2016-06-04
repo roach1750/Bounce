@@ -196,7 +196,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: Score Buttons
     
-    @IBAction func plusButtonPressed(sender: UIButton) {
+    @IBAction func scoreButtonPressed(sender: UIButton) {
         
         let buttonTitle = sender.currentTitle
         let increment: Int
@@ -211,62 +211,13 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let indexPath = tableView.indexPathForRowAtPoint(point)
         let currentPost = posts![(indexPath?.row)!]
         
-        KCSCustomEndpoints.callEndpoint(
-            "incrementScore",
-            params: ["increment":increment,"_id": currentPost.postUniqueId!],
-            completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
-                if results != nil {
-                    print("Incremental Success")
-                } else {
-                    print("Incremental Error: \(error)")
-                }
-            }
-        )
+        let kUP = KinveyUploader()
+        kUP.changeScoreForPost(currentPost,increment: increment)
         
 
     }
     
-    
-    @IBAction func minusButtonPressed(sender: UIButton) {
-        //        let point = sender.convertPoint(CGPointZero, toView: tableView)
-        //        let indexPath = tableView.indexPathForRowAtPoint(point)
-        //        if let currentPost = place?.posts[(indexPath?.row)!] {
-        ////            let dm = DataModel()
-        ////            dm.incrementScoreForObject(currentPost, amount: -1)
-        //            let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
-        //            let currentScore = Int(cell!.postScoreLabel.text!)
-        //            let newScore = currentScore! - 1
-        //            cell?.postScoreLabel.text = String(newScore)
-        //
-        //        }
-    }
-    
-    
-    @IBAction func moreButtonPressed(sender: UIButton) {
-        
-        //        let point = sender.convertPoint(CGPointZero, toView: tableView)
-        //        let indexPath = tableView.indexPathForRowAtPoint(point)
-        //        if let currentPost = place?.posts[(indexPath?.row)!] {
-        //            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        //            let firstAction = UIAlertAction(title: "Report", style: .Destructive) { (alert: UIAlertAction!) -> Void in
-        ////                let dm = DataModel()
-        ////                dm.reportPost(currentPost)
-        //            }
-        //            let secondAction = UIAlertAction(title: "Cancel", style: .Cancel) { (alert: UIAlertAction!) -> Void in
-        //            }
-        //
-        //            alert.addAction(firstAction)
-        //            alert.addAction(secondAction)
-        //            presentViewController(alert, animated: true, completion:nil)
-        //
-        //        }
-        
-        
-    }
-    
-    
-    
-    
+
     
     //MARK: Tableview customization
     

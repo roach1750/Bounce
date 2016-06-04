@@ -18,6 +18,7 @@ let BOUNCEIMAGEKEY  =  "imageFile"
 let BOUNCEHASIMAGEKEY  =  "hasImage"
 let BOUNCESCOREKEY  =  "score"
 let BOUNCEKEY =  "Bounce Key"
+let BOUNCEAUTHORSKEY =  "Authors"
 
 let BOUNCEPOSTERIDKEY =  "FBUserID"
 

@@ -493,7 +493,7 @@
                                                         <rect key="frame" x="255" y="460" width="30" height="44"/>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="minusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="Rkn-Nn-s85"/>
+                                                        <action selector="scoreButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="sWK-Ij-c07"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oZ-xw-hut">
@@ -506,7 +506,7 @@
                                                         <rect key="frame" x="315" y="460" width="30" height="44"/>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="plusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="qHV-BQ-VkC"/>
+                                                        <action selector="scoreButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="dfb-sD-cCR"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 minutes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spA-uX-RsV">
@@ -622,7 +622,7 @@
                                                         <rect key="frame" x="255" y="460" width="30" height="44"/>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="minusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="51j-bb-v4X"/>
+                                                        <action selector="scoreButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="Vcu-ox-pfl"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 minutes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4DA-4i-gEl">
@@ -647,7 +647,7 @@
                                                         <rect key="frame" x="315" y="460" width="30" height="44"/>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="plusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="WBW-6f-5Lb"/>
+                                                        <action selector="scoreButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="uHv-iF-lxD"/>
                                                     </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W5Y-K5-QGh">
@@ -755,7 +755,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="plusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="7Cd-6t-bYD"/>
+                                                        <action selector="scoreButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="lVc-Tm-uoa"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5pG-cY-it7">
@@ -765,7 +765,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="minusButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="n8J-Lf-v5U"/>
+                                                        <action selector="scoreButtonPressed:" destination="xKU-Dn-mW3" eventType="touchUpInside" id="Qsr-CP-L1T"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
