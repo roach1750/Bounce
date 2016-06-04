@@ -16,6 +16,7 @@ class Place: NSManagedObject {
     
     var distanceFromUser: Double?
     dynamic var placeLocation: CLLocation?
+    dynamic var placeAuthors: [String]?
 
 
     

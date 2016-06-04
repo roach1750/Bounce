@@ -35,7 +35,6 @@ class Post: NSManagedObject {
             
             "postCreationDate" : BOUNCEPOSTCREATIONDATEKEY,
 
-            
             "postUniqueId" : KCSEntityKeyId, //the required _id field
         ]
     }

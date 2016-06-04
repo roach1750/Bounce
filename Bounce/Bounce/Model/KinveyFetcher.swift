@@ -30,9 +30,7 @@ class KinveyFetcher: NSObject {
         allPlacesData = [Place]()
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
             ])
-        
 //        let query = configurePlaceQuery()
-        
         store.queryWithQuery(
             KCSQuery(),
             withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
@@ -43,12 +41,10 @@ class KinveyFetcher: NSObject {
                         self.allPlacesData!.append(newPlace)
                     }
                     NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
-                    
                 }
             },
             withProgressBlock: { (objects, percentComplete) in
         })
-        
     }
     
 //    func configurePlaceQuery() -> KCSQuery {

@@ -44,71 +44,72 @@ class KinveyUploader: NSObject {
         coreDataPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
         coreDataPost.postCreationDate = NSDate()
         
-        checkIfPlaceIsExistingForPost(coreDataPost)
+        uploadPostImageThenObject(coreDataPost)
         
         
     }
     
     
     
-    private func checkIfPlaceIsExistingForPost(post:Post) {
-        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self])
-        let query = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: post.postBounceKey)
-        store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
-            print("place query done")
-            if objectsOrNil.count == 0 {
-                print("Place for post is not existing, uploading place")
-                self.uploadPlaceForPost(post)
-            }
-            else {
-                print("Place for post is existing, uploading post")
-                self.uploadPostImageThenObject(post)
-            }
-            
-            },
-                             
-                             withProgressBlock: { (objects, percentComplete) in
-                                print("Query for existing Place: \(percentComplete * 100) %")
-                                
-        })
-    }
-    
-    
-    private func uploadPlaceForPost(post:Post) {
-        
-        let placeToUpload = convertPostToPlace(post)
-        let collection = KCSCollection(fromString: BOUNCEPLACECLASSNAME, ofClass: Place.self)
-        let updateStore = KCSLinkedAppdataStore.storeWithOptions([KCSStoreKeyResource: collection])
-        updateStore.saveObject(
-            placeToUpload,
-            withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError?) -> Void in
-                if errorOrNil != nil {
-                    //save failed
-                    //                    print("Save failed, with error: %@", errorOrNil?.localizedFailureReason)
-                } else {
-                    //save was successful
-                    //                    print("Successfully saved Place (id='%@').", (objectsOrNil[0] as! NSObject).kinveyObjectId())
-                    self.uploadPostImageThenObject(post)
-                }
-            },
-            withProgressBlock: { (objects, percentComplete) in
-                //                print(percentComplete)
-        })
-    }
-    
-    
-    
-    private func convertPostToPlace(post: Post) -> Place {
-        print("Converting post to Place")
-        let entity = NSEntityDescription.entityForName("Place", inManagedObjectContext: self.managedObjectContext)
-        let placeToReturn = Place(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext)
-        placeToReturn.placeName = post.postPlaceName
-        placeToReturn.placeLocation = post.postLocation
-        placeToReturn.placeScore = 0
-        placeToReturn.placeBounceKey = post.postBounceKey
-        print("Done post to Place")
-        return placeToReturn
-    }
+//    private func checkIfPlaceIsExistingForPost(post:Post) {
+//        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self])
+//        let query = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: post.postBounceKey)
+//        store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
+//            print("place query done")
+//            if objectsOrNil.count == 0 {
+//                print("Place for post is not existing, uploading place")
+//                self.uploadPlaceForPost(post)
+//            }
+//            else {
+//                print("Place for post is existing, uploading post")
+//                self.uploadPostImageThenObject(post)
+//            }
+//            
+//            },
+//                             
+//                             withProgressBlock: { (objects, percentComplete) in
+//                                print("Query for existing Place: \(percentComplete * 100) %")
+//                                
+//        })
+//    }
+//    
+//
+//    private func uploadPlaceForPost(post:Post) {
+//        
+//        let placeToUpload = convertPostToPlace(post)
+//        let collection = KCSCollection(fromString: BOUNCEPLACECLASSNAME, ofClass: Place.self)
+//        let updateStore = KCSLinkedAppdataStore.storeWithOptions([KCSStoreKeyResource: collection])
+//        updateStore.saveObject(
+//            placeToUpload,
+//            withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError?) -> Void in
+//                if errorOrNil != nil {
+//                    //save failed
+//                    //                    print("Save failed, with error: %@", errorOrNil?.localizedFailureReason)
+//                } else {
+//                    //save was successful
+//                    //                    print("Successfully saved Place (id='%@').", (objectsOrNil[0] as! NSObject).kinveyObjectId())
+//                    self.uploadPostImageThenObject(post)
+//                }
+//            },
+//            withProgressBlock: { (objects, percentComplete) in
+//                //                print(percentComplete)
+//        })
+//    }
+//    
+//    
+//    
+//    private func convertPostToPlace(post: Post) -> Place {
+//        print("Converting post to Place")
+//        let entity = NSEntityDescription.entityForName("Place", inManagedObjectContext: self.managedObjectContext)
+//        let placeToReturn = Place(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext)
+//        placeToReturn.placeName = post.postPlaceName
+//        placeToReturn.placeLocation = post.postLocation
+//        placeToReturn.placeScore = 0
+//        placeToReturn.placeBounceKey = post.postBounceKey
+//        print("Done post to Place")
+//        
+//        return placeToReturn
+//    }
     
     
     

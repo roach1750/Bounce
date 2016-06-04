@@ -120,7 +120,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 else {
                     //There isn't an image downloaded yet
                     cell.postImageView.image = UIImage(named: "cameraImage")
-//                    KinveyFetcher.sharedInstance.fetchImageForPost(currentPost)
+                    //                    KinveyFetcher.sharedInstance.fetchImageForPost(currentPost)
                 }
             }
             
@@ -198,16 +198,32 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBAction func plusButtonPressed(sender: UIButton) {
         
-//                let point = sender.convertPoint(CGPointZero, toView: tableView)
-//                let indexPath = tableView.indexPathForRowAtPoint(point)
-        //        if let currentPost = place?.posts[(indexPath?.row)!] {
-        ////            let dm = DataModel()
-        ////            dm.incrementScoreForObject(currentPost, amount: 1)
-        //            let cell = tableView.cellForRowAtIndexPath(indexPath!) as? PlaceTableViewCell
-        //            let currentScore = Int(cell!.postScoreLabel.text!)
-        //            let newScore = currentScore! + 1
-        //            cell?.postScoreLabel.text = String(newScore)
-        //        }
+        let buttonTitle = sender.currentTitle
+        let increment: Int
+        
+        switch(buttonTitle!) {
+        case "+" : increment = 1
+        case "-" : increment = -1
+        default: increment = 0
+        }
+        
+        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        let currentPost = posts![(indexPath?.row)!]
+        
+        KCSCustomEndpoints.callEndpoint(
+            "incrementScore",
+            params: ["increment":increment,"_id": currentPost.postUniqueId!],
+            completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
+                if results != nil {
+                    print("Incremental Success")
+                } else {
+                    print("Incremental Error: \(error)")
+                }
+            }
+        )
+        
+
     }
     
     
