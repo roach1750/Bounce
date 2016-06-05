@@ -43,7 +43,6 @@ class KinveyUploader: NSObject {
     //This uploads the image first, then calls the method below to upload the object
     private func uploadPostImageThenObject(post: Post) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        print("uploading Image for Post")
         NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADBEGANNOTIFICATION, object: nil, userInfo: nil)
         if let PID = post.postImageData {
             KCSFileStore.uploadData(PID, options: nil, completionBlock: { (uploadInfo, error) in
@@ -73,7 +72,7 @@ class KinveyUploader: NSObject {
             withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
                 if errorOrNil != nil {
                     //save failed
-                    print("Save failed, with error: %@", errorOrNil.localizedFailureReason)
+                    print("Uploading Object: Save failed, with error: %@", errorOrNil.description)
                 } else {
                     //save was successful
                     

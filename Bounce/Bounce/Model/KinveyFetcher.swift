@@ -147,6 +147,23 @@ class KinveyFetcher: NSObject {
     }
     
     
+    //
+    // fetches the lastest score value from Kinvey for a post
+    //
+    
+    func fetchScoreForPost(post: Post) {
+            KCSCustomEndpoints.callEndpoint(
+                "fetchScoreForPost",
+                params: ["_id": post.postUniqueId!],
+                completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
+                    if results != nil {
+                        print("Incremental Success")
+                    } else {
+                        print("Incremental Error: \(error)")
+                    }
+                }
+            )
+    }
     
     
     

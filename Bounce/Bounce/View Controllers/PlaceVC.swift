@@ -217,6 +217,12 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let currentPost = posts![indexPath.row]
+        let kF = KinveyFetcher()
+        kF.fetchScoreForPost(currentPost)
+    }
+    
 
     
     //MARK: Tableview customization

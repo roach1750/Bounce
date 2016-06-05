@@ -17,8 +17,8 @@ let BOUNCELOCATIONNAMEKEY  =  "placeName"
 let BOUNCEIMAGEKEY  =  "imageFile"
 let BOUNCEHASIMAGEKEY  =  "hasImage"
 let BOUNCESCOREKEY  =  "score"
-let BOUNCEKEY =  "Bounce Key"
-let BOUNCEAUTHORSKEY =  "Authors"
+let BOUNCEKEY =  "bounceKey"
+let BOUNCEAUTHORSKEY =  "authors"
 
 let BOUNCEPOSTERIDKEY =  "FBUserID"
 
