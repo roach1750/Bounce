@@ -30,38 +30,42 @@ class KinveyFetcher: NSObject {
         allPlacesData = [Place]()
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
             ])
-//        let query = configurePlaceQuery()
+        let query = configurePlaceQuery()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true;
         store.queryWithQuery(
-            KCSQuery(),
+            query,
             withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
                 print("Fetched \(objectsOrNil.count) Place objects")
                 if objectsOrNil.count > 0 {
                     for object in objectsOrNil{
                         let newPlace = object as! Place
-                        print(newPlace)
                         self.allPlacesData!.append(newPlace)
                     }
                     NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
                 }
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false;
+
             },
             withProgressBlock: { (objects, percentComplete) in
         })
     }
     
-//    func configurePlaceQuery() -> KCSQuery {
-//        
-//        //Friends Only Query
-//        let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
-//        let friendsOnlyQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, usingConditional: .KCSIn, forValue: facebookFriendIDs)
-//        
-//        //Everyone Query
-//        let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEEVERYONESHARESETTING)
-//        
-//        everyoneQuery.addQuery(friendsOnlyQuery)
-//        
-//        return everyoneQuery
-//    }
-//    
+    //
+    // This method will download a place if either of the following are true:
+    // 1. There is any data in the everyone authors array
+    // 2. The users or a friend's facebook ID is in the friends only authors array
+    // These two are combine with an OR
+    //
+    func configurePlaceQuery() -> KCSQuery {
+        //Everyone Query
+        let everyoneQuery = KCSQuery(onField: BOUNCEPLACEEVERYONEAUTHORS, usingConditional: .KCSNotEqual, forValue: [])
+        //Friends Only Query
+        let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
+        let friendsOnlyQuery = KCSQuery(onField: BOUNCEPLACEFRIENDONLYAUTHORS, usingConditional: .KCSIn, forValue: facebookFriendIDs)
+        //combine and return
+        return everyoneQuery.queryByJoiningQuery(friendsOnlyQuery, usingOperator: .KCSOr)
+    }
+    
 
     
 /////////////////////////////////////////////////POST SECTION////////////////////////////////////////////////
@@ -76,14 +80,9 @@ class KinveyFetcher: NSObject {
     private func fetchPostFromKinveyForPlace(place: Place) {
         postsData = [Post]()
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
-        print(place)
-        let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
-        if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
-            let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
-            mainQuery.addQuery(dateRangeQuery)
-        }
+        let query = configurePostQueryWithPlace(place)
         
-        store.queryWithQuery(mainQuery, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
+        store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
             print("Kinvey Downloaded \(objectsOrNil.count) posts")
             if objectsOrNil.count > 0 {
                 for object in objectsOrNil{
@@ -106,7 +105,35 @@ class KinveyFetcher: NSObject {
         })
     }
     
-    
+    func configurePostQueryWithPlace(place:Place) -> KCSQuery {
+        let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
+        
+        if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
+            let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
+            mainQuery.queryByJoiningQuery(dateRangeQuery, usingOperator: .KCSAnd)
+        }
+        
+        //Get a post from anyone who has the setting set to everyone
+        let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withRegex: BOUNCEEVERYONESHARESETTING)
+        
+        //If the share setting is to friends only, make sure this person is a friend
+        let friendsOnlyShareSettingQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withRegex: BOUNCEFRIENDSONLYSHARESETTING)
+        let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
+        print(facebookFriendIDs)
+        let matchingFriendsQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, usingConditional: .KCSIn, forValue: facebookFriendIDs)
+        
+        matchingFriendsQuery.queryByJoiningQuery(friendsOnlyShareSettingQuery, usingOperator: .KCSAnd)
+        
+        //Combine the matching friends query with the everyone query with an Or Operator
+        matchingFriendsQuery.queryByJoiningQuery(everyoneQuery, usingOperator: .KCSOr)
+        
+
+        //Combine with the main query using an And Operator
+        mainQuery.queryByJoiningQuery(matchingFriendsQuery, usingOperator: .KCSAnd)
+        
+        return mainQuery
+
+    }
     
     //
     // Fetches all post stored in core data for a place
@@ -157,9 +184,9 @@ class KinveyFetcher: NSObject {
                 params: ["_id": post.postUniqueId!],
                 completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
                     if results != nil {
-                        print("Incremental Success")
+                        print("Refreshed Score Success")
                     } else {
-                        print("Incremental Error: \(error)")
+                        print("Refreshed Score Error: \(error)")
                     }
                 }
             )
