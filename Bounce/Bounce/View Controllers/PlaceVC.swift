@@ -48,7 +48,15 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func reloadTable() {
-        posts = KinveyFetcher.sharedInstance.postsData
+        switch shareSettingSegmentedControl.selectedSegmentIndex {
+        case 0:
+            posts = KinveyFetcher.sharedInstance.friendsOnlyPostData
+            print(posts)
+        case 1:
+            posts = KinveyFetcher.sharedInstance.everyonePostData
+        default:
+            return
+        }
         tableView.reloadData()
     }
     
@@ -62,7 +70,6 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(PlaceVC.pullToRefresh), forControlEvents: .ValueChanged)
         tableView.addSubview(refreshControl)
-        
     }
     
     func pullToRefresh() {
@@ -79,10 +86,10 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
         switch (sender.selectedSegmentIndex) {
         case 0:
-            getDataForTable(BOUNCEFRIENDSONLYSHARESETTING)
+            getDataForTable()
             break
         case 1:
-            getDataForTable(BOUNCEEVERYONESHARESETTING)
+            getDataForTable()
             break
         default:
             break
@@ -90,10 +97,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     
-    func getDataForTable(shareSetting: String) {
-        //        let dm = DataModel()
-        //        posts = dm.fetchPostsForPlaceWithShareSetting(shareSetting, place: place!)
-        //        reloadTable()
+    func getDataForTable() {
+        let kF = KinveyFetcher.sharedInstance
+        kF.fetchPostsForPlace(place!)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

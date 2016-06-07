@@ -20,9 +20,32 @@ class KinveyFetcher: NSObject {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     
-    var postsData: [Post]?
+    var friendsOnlyPostData: [Post]?
+    var everyonePostData: [Post]?
+
     
     var allPlacesData: [Place]?
+    
+    
+    func deleteAllPostFromCoreDatabase() {
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
+        fetchRequest.entity = entityDescription
+        
+        do {
+            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+            print("Core Data Deleted \(result.count) posts")
+            for object in result {
+                let newPost = object as! Post
+                managedObjectContext.deleteObject(newPost)
+            }
+                        
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+
+    }
     
     
     func queryForAllPlaces() {
@@ -78,7 +101,14 @@ class KinveyFetcher: NSObject {
     // Downloads the post from Kinvey withImages
     //
     private func fetchPostFromKinveyForPlace(place: Place) {
-        postsData = [Post]()
+        if everyonePostData == nil {
+            everyonePostData = [Post]()
+        }
+        if friendsOnlyPostData == nil {
+            friendsOnlyPostData = [Post]()
+        }
+        
+        
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
         let query = configurePostQueryWithPlace(place)
         
@@ -87,7 +117,10 @@ class KinveyFetcher: NSObject {
             if objectsOrNil.count > 0 {
                 for object in objectsOrNil{
                     let newPost = object as! Post
-                    self.postsData!.append(newPost)
+                    if newPost.postShareSetting == BOUNCEFRIENDSONLYSHARESETTING {
+                        self.friendsOnlyPostData?.append(newPost)
+                    }
+                    self.everyonePostData?.append(newPost)
                     self.savePostToCoreDataWithoutImage(newPost)
                     self.fetchImageForPost(newPost)
                 }
@@ -109,9 +142,17 @@ class KinveyFetcher: NSObject {
         let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
         
         if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
+            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
+            print("Most Recent post's date in DB in time interval: \(mostRecentPostInDBDate.timeIntervalSince1970) ")
+            
             let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
+            mainQuery.addQuery(dateRangeQuery)
             mainQuery.queryByJoiningQuery(dateRangeQuery, usingOperator: .KCSAnd)
+
+            
         }
+        
+
         
         //Get a post from anyone who has the setting set to everyone
         let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withRegex: BOUNCEEVERYONESHARESETTING)
@@ -119,21 +160,45 @@ class KinveyFetcher: NSObject {
         //If the share setting is to friends only, make sure this person is a friend
         let friendsOnlyShareSettingQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withRegex: BOUNCEFRIENDSONLYSHARESETTING)
         let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
-        print(facebookFriendIDs)
+//        print(facebookFriendIDs)
         let matchingFriendsQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, usingConditional: .KCSIn, forValue: facebookFriendIDs)
         
-        matchingFriendsQuery.queryByJoiningQuery(friendsOnlyShareSettingQuery, usingOperator: .KCSAnd)
+        matchingFriendsQuery.addQuery(friendsOnlyShareSettingQuery)
         
         //Combine the matching friends query with the everyone query with an Or Operator
         matchingFriendsQuery.queryByJoiningQuery(everyoneQuery, usingOperator: .KCSOr)
         
-
         //Combine with the main query using an And Operator
         mainQuery.queryByJoiningQuery(matchingFriendsQuery, usingOperator: .KCSAnd)
-        
         return mainQuery
-
     }
+    
+    
+    //
+    // Fetch the date of the most recent post in the data base in order to decide what needs to be update from Kinvey
+    //
+    func dateOfMostRecentPostInDataBase() -> NSDate? {
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postCreationDate", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        fetchRequest.entity = entityDescription
+        do {
+            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest) as? [Post]
+            if result?.count > 0 {
+                let dateToReturn = result![0].postCreationDate
+                return dateToReturn
+            }
+            
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+        print("There are no recent Post in Core Data")
+        return nil
+    }
+    
+    
     
     //
     // Fetches all post stored in core data for a place
@@ -147,12 +212,16 @@ class KinveyFetcher: NSObject {
         
         do {
             let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-            print("Core Data Fetched\(result.count) posts")
+            print("Core Data Fetched \(result.count) posts")
             for object in result {
                 let newPost = object as! Post
-                if !(self.postsData?.contains(newPost))! {
+                print("Downloaded Post Creation Date is: \(newPost.postCreationDate!)")
+                if !(self.everyonePostData?.contains(newPost))! {
+                    self.everyonePostData!.append(newPost)
+                }
+                if !(self.friendsOnlyPostData?.contains(newPost))! && newPost.postShareSetting! == BOUNCEFRIENDSONLYSHARESETTING {
+                    self.friendsOnlyPostData!.append(newPost)
 
-                    self.postsData!.append(newPost)
                 }
             }
             sortData()
@@ -167,7 +236,8 @@ class KinveyFetcher: NSObject {
     //Sorts the post by most recent then sends notification that they're ready to be displayed
     
     private func sortData() {
-        self.postsData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
+        self.friendsOnlyPostData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
+        self.everyonePostData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
 
         NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
 
@@ -207,31 +277,7 @@ class KinveyFetcher: NSObject {
     }
     
     
-    
-    //
-    // Fetch the date of the most recent post in the data base in order to decide what needs to be update from Kinvey
-    //
-    func dateOfMostRecentPostInDataBase() -> NSDate? {
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postCreationDate", ascending: false)]
-        fetchRequest.fetchLimit = 1
-        fetchRequest.entity = entityDescription
-        do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest) as? [Post]
-            if result?.count > 0 {
-                let dateToReturn = result![0].postCreationDate
-                print("Most Recent Post in Core Data was created at: \(dateToReturn)")
-                return dateToReturn
-            }
-            
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
-        print("There are no recent Post in Core Data")
-        return nil
-    }
+
 
     func fetchImageForPost(post: Post) {
         

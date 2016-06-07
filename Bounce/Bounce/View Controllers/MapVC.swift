@@ -64,9 +64,14 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         print("User ID: \(KCSUser.activeUser().userId)")
         print("Facebook ID: \(KCSUser.activeUser().getValueForAttribute("Facebook ID"))")
         print("Facebook Friends: \(KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs"))")
-
         
     }
+    
+    @IBAction func deleteCoreDatabase(sender: UIBarButtonItem) {
+        let kF = KinveyFetcher()
+        kF.deleteAllPostFromCoreDatabase()
+    }
+    
     @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
         self.performSegueWithIdentifier("showSettingsSegue", sender: self)
     }

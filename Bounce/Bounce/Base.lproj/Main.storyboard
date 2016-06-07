@@ -122,11 +122,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Bounce" id="g4o-mE-pLO">
-                        <barButtonItem key="leftBarButtonItem" title="Fetch" id="sft-Yo-B7n">
-                            <connections>
-                                <action selector="fetchButtonTapped:" destination="BYZ-38-t0r" id="A7Z-ol-7jV"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem title="Fetch" id="sft-Yo-B7n">
+                                <connections>
+                                    <action selector="fetchButtonTapped:" destination="BYZ-38-t0r" id="A7Z-ol-7jV"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="stop" id="E8W-DK-yKz">
+                                <connections>
+                                    <action selector="deleteCoreDatabase:" destination="BYZ-38-t0r" id="Qnv-sm-nYU"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="compose" id="2C3-ai-Fpl" userLabel="New Post">
                                 <connections>
