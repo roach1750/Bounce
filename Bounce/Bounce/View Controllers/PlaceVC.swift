@@ -51,7 +51,6 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         switch shareSettingSegmentedControl.selectedSegmentIndex {
         case 0:
             posts = KinveyFetcher.sharedInstance.friendsOnlyPostData
-            print(posts)
         case 1:
             posts = KinveyFetcher.sharedInstance.everyonePostData
         default:

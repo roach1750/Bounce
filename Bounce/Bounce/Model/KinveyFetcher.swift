@@ -107,15 +107,15 @@ class KinveyFetcher: NSObject {
         if friendsOnlyPostData == nil {
             friendsOnlyPostData = [Post]()
         }
-        
+        self.fetchPostFromCoreDataForPlace(place)
         
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
         let query = configurePostQueryWithPlace(place)
         
         store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
-            print("Kinvey Downloaded \(objectsOrNil.count) posts")
-            if objectsOrNil.count > 0 {
-                for object in objectsOrNil{
+            if let downloadedData = objectsOrNil {
+                print("Kinvey Downloaded \(downloadedData.count) posts")
+                for object in downloadedData{
                     let newPost = object as! Post
                     if newPost.postShareSetting == BOUNCEFRIENDSONLYSHARESETTING {
                         self.friendsOnlyPostData?.append(newPost)
@@ -127,10 +127,9 @@ class KinveyFetcher: NSObject {
             }
             else {
                 if let error = errorOrNil {
-                    print(error)
+                    print("Error from downloading posts data only: \(error)")
                 }
             }
-            self.fetchPostFromCoreDataForPlace(place)
 
             },
                              
@@ -142,35 +141,32 @@ class KinveyFetcher: NSObject {
         let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
         
         if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
-            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
-            print("Most Recent post's date in DB in time interval: \(mostRecentPostInDBDate.timeIntervalSince1970) ")
-            
+//            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
             let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
             mainQuery.addQuery(dateRangeQuery)
             mainQuery.queryByJoiningQuery(dateRangeQuery, usingOperator: .KCSAnd)
-
-            
         }
         
-
+        //TODO: need to add location to main query
         
         //Get a post from anyone who has the setting set to everyone
-        let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withRegex: BOUNCEEVERYONESHARESETTING)
+        let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEEVERYONESHARESETTING)
+        
         
         //If the share setting is to friends only, make sure this person is a friend
-        let friendsOnlyShareSettingQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withRegex: BOUNCEFRIENDSONLYSHARESETTING)
+        let friendsOnlyQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEFRIENDSONLYSHARESETTING)
         let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
-//        print(facebookFriendIDs)
         let matchingFriendsQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, usingConditional: .KCSIn, forValue: facebookFriendIDs)
+        friendsOnlyQuery.addQuery(matchingFriendsQuery)
         
-        matchingFriendsQuery.addQuery(friendsOnlyShareSettingQuery)
         
-        //Combine the matching friends query with the everyone query with an Or Operator
-        matchingFriendsQuery.queryByJoiningQuery(everyoneQuery, usingOperator: .KCSOr)
-        
-        //Combine with the main query using an And Operator
-        mainQuery.queryByJoiningQuery(matchingFriendsQuery, usingOperator: .KCSAnd)
-        return mainQuery
+        let combineEveryoneQuery = everyoneQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
+        let combineFriendsQuery = friendsOnlyQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
+
+        let queryToReturn = combineFriendsQuery.queryByJoiningQuery(combineEveryoneQuery, usingOperator: .KCSOr)
+    
+        return queryToReturn
+    
     }
     
     
@@ -215,7 +211,6 @@ class KinveyFetcher: NSObject {
             print("Core Data Fetched \(result.count) posts")
             for object in result {
                 let newPost = object as! Post
-                print("Downloaded Post Creation Date is: \(newPost.postCreationDate!)")
                 if !(self.everyonePostData?.contains(newPost))! {
                     self.everyonePostData!.append(newPost)
                 }
@@ -236,9 +231,12 @@ class KinveyFetcher: NSObject {
     //Sorts the post by most recent then sends notification that they're ready to be displayed
     
     private func sortData() {
-        self.friendsOnlyPostData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
-        self.everyonePostData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
-
+        if friendsOnlyPostData?.count > 0 {
+            self.friendsOnlyPostData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
+        }
+        if everyonePostData?.count > 0 {
+            self.everyonePostData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
+        }
         NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
 
     }
@@ -293,7 +291,7 @@ class KinveyFetcher: NSObject {
                     self.saveImageToCoreDataForPost(post)
                     print("fetched Image for post")
                 } else {
-                    NSLog("Got an error: %@", error)
+                    print("Error from fetching post image \(error)")
                 }
             },
             progressBlock: { (objects, percentComplete) in

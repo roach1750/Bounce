@@ -70,6 +70,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBAction func deleteCoreDatabase(sender: UIBarButtonItem) {
         let kF = KinveyFetcher()
         kF.deleteAllPostFromCoreDatabase()
+        mapView.removeAnnotations(mapView.annotations)
     }
     
     @IBAction func settingsButtonPressed(sender: UIBarButtonItem) {
