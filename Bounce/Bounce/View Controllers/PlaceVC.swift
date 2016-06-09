@@ -83,16 +83,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
-        switch (sender.selectedSegmentIndex) {
-        case 0:
-            getDataForTable()
-            break
-        case 1:
-            getDataForTable()
-            break
-        default:
-            break
-        }
+        reloadTable()
     }
     
     
@@ -154,12 +145,12 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func getIdentifierForCell(post: Post) -> String {
-        
-        if post.postHasImage == true && post.postMessage != nil{
+
+        if post.postHasImage == NSNumber(bool: true) && post.postMessage != nil{
             tableView.estimatedRowHeight = 515.0
             return "commentAndPhoto"
         }
-        else if post.postHasImage == true {
+        else if post.postHasImage == NSNumber(bool: true) {
             tableView.estimatedRowHeight = 415.0
             return "photoOnly"
         }

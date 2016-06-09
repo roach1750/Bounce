@@ -27,26 +27,7 @@ class KinveyFetcher: NSObject {
     var allPlacesData: [Place]?
     
     
-    func deleteAllPostFromCoreDatabase() {
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
-        fetchRequest.entity = entityDescription
-        
-        do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-            print("Core Data Deleted \(result.count) posts")
-            for object in result {
-                let newPost = object as! Post
-                managedObjectContext.deleteObject(newPost)
-            }
-                        
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
 
-    }
-    
     
     func queryForAllPlaces() {
         
@@ -97,51 +78,12 @@ class KinveyFetcher: NSObject {
         self.fetchPostFromKinveyForPlace(place)
     }
     
-    //
-    // Downloads the post from Kinvey withImages
-    //
-    private func fetchPostFromKinveyForPlace(place: Place) {
-        if everyonePostData == nil {
-            everyonePostData = [Post]()
-        }
-        if friendsOnlyPostData == nil {
-            friendsOnlyPostData = [Post]()
-        }
-        self.fetchPostFromCoreDataForPlace(place)
-        
-        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
-        let query = configurePostQueryWithPlace(place)
-        
-        store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
-            if let downloadedData = objectsOrNil {
-                print("Kinvey Downloaded \(downloadedData.count) posts")
-                for object in downloadedData{
-                    let newPost = object as! Post
-                    if newPost.postShareSetting == BOUNCEFRIENDSONLYSHARESETTING {
-                        self.friendsOnlyPostData?.append(newPost)
-                    }
-                    self.everyonePostData?.append(newPost)
-                    self.savePostToCoreDataWithoutImage(newPost)
-                    self.fetchImageForPost(newPost)
-                }
-            }
-            else {
-                if let error = errorOrNil {
-                    print("Error from downloading posts data only: \(error)")
-                }
-            }
-
-            },
-                             
-                             withProgressBlock: { (objects, percentComplete) in
-        })
-    }
     
     func configurePostQueryWithPlace(place:Place) -> KCSQuery {
         let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
         
         if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
-//            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
+            //            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
             let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
             mainQuery.addQuery(dateRangeQuery)
             mainQuery.queryByJoiningQuery(dateRangeQuery, usingOperator: .KCSAnd)
@@ -160,13 +102,12 @@ class KinveyFetcher: NSObject {
         
         let combineEveryoneQuery = everyoneQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
         let combineFriendsQuery = friendsOnlyQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
-
+        
         let queryToReturn = combineFriendsQuery.queryByJoiningQuery(combineEveryoneQuery, usingOperator: .KCSOr)
-    
+        
         return queryToReturn
-    
+        
     }
-    
     
     //
     // Fetch the date of the most recent post in the data base in order to decide what needs to be update from Kinvey
@@ -188,57 +129,96 @@ class KinveyFetcher: NSObject {
             let fetchError = error as NSError
             print(fetchError)
         }
+
         print("There are no recent Post in Core Data")
         return nil
     }
     
-    
-    
     //
-    // Fetches all post stored in core data for a place
+    // Downloads the post from Kinvey withImages
     //
-    private func fetchPostFromCoreDataForPlace(place: Place) {
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
-        let predicate = NSPredicate(format: "postBounceKey == %@", place.placeBounceKey!)
-        fetchRequest.predicate = predicate
-        fetchRequest.entity = entityDescription
+    private func fetchPostFromKinveyForPlace(place: Place) {
+        everyonePostData = everyonePostData == nil ? [Post]() : everyonePostData
+        friendsOnlyPostData = friendsOnlyPostData == nil ? [Post]() : friendsOnlyPostData
         
-        do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-            print("Core Data Fetched \(result.count) posts")
-            for object in result {
-                let newPost = object as! Post
-                if !(self.everyonePostData?.contains(newPost))! {
-                    self.everyonePostData!.append(newPost)
+        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
+        let query = configurePostQueryWithPlace(place)
+        store.queryWithQuery(query, withCompletionBlock: { (downloadedData: [AnyObject]!, errorOrNil: NSError!) -> Void in
+            
+                if let error = errorOrNil {
+                    print("Error from downloading posts data only: \(error)")
                 }
-                if !(self.friendsOnlyPostData?.contains(newPost))! && newPost.postShareSetting! == BOUNCEFRIENDSONLYSHARESETTING {
-                    self.friendsOnlyPostData!.append(newPost)
-
-                }
+                else {
+                    print("Fetch \(downloadedData.count) objects from Kinvey")
+                    self.handleDownloadedData(downloadedData as! [Post])
             }
-            sortData()
-            
-            
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
+            },
+            withProgressBlock: { (objects, percentComplete) in
+        })
     }
-    
-    //Sorts the post by most recent then sends notification that they're ready to be displayed
-    
-    private func sortData() {
-        if friendsOnlyPostData?.count > 0 {
-            self.friendsOnlyPostData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
-        }
-        if everyonePostData?.count > 0 {
-            self.everyonePostData!.sortInPlace({ $0.postCreationDate!.compare($1.postCreationDate!) == NSComparisonResult.OrderedDescending })
-        }
-        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
 
+
+    
+    func countCoreData(){
+        managedObjectContext.performBlock { 
+            let count = self.managedObjectContext.countForFetchRequest(NSFetchRequest(entityName:"Post"), error: nil)
+            print(count)
+        }
     }
     
+    func handleDownloadedData(data:[Post]) {
+        managedObjectContext.performBlockAndWait {
+            for newPost in data  {
+                //create new, unique post
+                _ = Post.postWithPostInfo(newPost, inManagedObjectContext: self.managedObjectContext)
+            }
+            do {
+                try self.managedObjectContext.save()
+                self.fetchDataFromDataBase()
+            }
+            catch let error {
+                print(error)
+            }
+        }
+    }
+    
+    func fetchDataFromDataBase() {
+        managedObjectContext.performBlockAndWait {
+            let fetchRequest = NSFetchRequest(entityName: "Post")
+            let sortDescriptor = NSSortDescriptor(
+                key: "postCreationDate",
+                ascending: true,
+                selector: #selector(NSString.localizedStandardCompare(_:))
+            )
+            fetchRequest.sortDescriptors = [sortDescriptor]
+            
+            do {
+                let queryResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+                self.everyonePostData = queryResults as? [Post]
+                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
+    func deleteAllPostFromCoreDatabase() {
+        let fetchRequest = NSFetchRequest(entityName: "Post")
+        do {
+            let queryResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+            print("Deleted \(queryResults.count) objects")
+            for result in (queryResults as? [Post])! {
+                managedObjectContext.deleteObject(result)
+            }
+            
+        } catch let error {
+            print(error)
+        }
+        
+    }
+    
+
+
     
     //
     // fetches the lastest score value from Kinvey for a post
@@ -260,18 +240,7 @@ class KinveyFetcher: NSObject {
     
     
     
-    //
-    // Saves a post to core data
-    //
-    func savePostToCoreDataWithoutImage(post:Post) {
-        do {
-            try post.managedObjectContext?.save()
-        } catch {
-            let saveError = error as NSError
-            print("\(saveError), \(saveError.userInfo)")
-        }
-    }
-    
+
     
 
 
@@ -286,7 +255,7 @@ class KinveyFetcher: NSObject {
                     post.postHasImage = true
                     post.postImageData = fileData
                     NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
-                    self.saveImageToCoreDataForPost(post)
+//                    self.saveImageToCoreDataForPost(post)
                     print("fetched Image for post")
                 } else {
                     print("Error from fetching post image \(error)")
@@ -297,24 +266,28 @@ class KinveyFetcher: NSObject {
         })
     }
     
-    func saveImageToCoreDataForPost(post: Post) {
-        let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
-        
-        let fetchRequest = NSFetchRequest(entityName: "Post")
-        fetchRequest.predicate = predicate
-        
-        do {
-            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
-            fetchedEntities.first?.postHasImage = post.postHasImage
-            fetchedEntities.first?.postImageData = post.postImageData
-            
+//    func saveImageToCoreDataForPost(post: Post) {
+//        let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
+//        
+//        let fetchRequest = NSFetchRequest(entityName: "Post")
+//        fetchRequest.predicate = predicate
+//        
+//        do {
+//            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
+//            fetchedEntities.first?.postHasImage = post.postHasImage
+//            fetchedEntities.first?.postImageData = post.postImageData
+//            
+//
+//        } catch {
+//        }
+//        
+//        do {
+//            try self.managedObjectContext.save()
+//        } catch {
+//        }
+//        sortData()
+//    }
+    
+    
 
-        } catch {
-        }
-        
-        do {
-            try self.managedObjectContext.save()
-        } catch {
-        }
-    }
 }

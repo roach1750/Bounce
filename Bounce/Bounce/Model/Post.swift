@@ -15,7 +15,38 @@ class Post: NSManagedObject {
 // Insert code here to add functionality to your managed object subclass
 
     dynamic var postLocation: CLLocation?
+    
+    
+    class func postWithPostInfo(post: Post, inManagedObjectContext context: NSManagedObjectContext) -> Post?
+    {
+        let request = NSFetchRequest(entityName: "Post")
+        request.predicate = NSPredicate(format: "postUniqueId = %@", post.postUniqueId!)
+        
+        if let existingPost = (try? context.executeFetchRequest(request))?.first as? Post {
+            return existingPost
+        } else if let newPost = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: context) as? Post{
+            newPost.postMessage = post.postMessage
+            newPost.postImageFileInfo = post.postImageFileInfo
+            newPost.postHasImage = post.postHasImage
+            newPost.postLocation = post.postLocation
+            newPost.postPlaceName = post.postPlaceName
+            newPost.postScore = post.postScore
+            newPost.postShareSetting = post.postShareSetting
+            newPost.postBounceKey = post.postBounceKey
+            newPost.postUploaderFacebookUserID = post.postUploaderFacebookUserID
+            newPost.postUploaderKinveyUserID = post.postUploaderKinveyUserID
+            newPost.postUploaderKinveyUserName = post.postUploaderKinveyUserName
+            newPost.postCreationDate = post.postCreationDate
+            newPost.postUniqueId = post.postUniqueId
+        }
+        
 
+        
+        
+        return nil
+    }
+    
+    //Kinvey Stuff
 
     override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
         return [
