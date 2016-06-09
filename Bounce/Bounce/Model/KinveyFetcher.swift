@@ -171,6 +171,7 @@ class KinveyFetcher: NSObject {
             for newPost in data  {
                 //create new, unique post
                 _ = Post.postWithPostInfo(newPost, inManagedObjectContext: self.managedObjectContext)
+                self.fetchImageForPost(newPost)
             }
             do {
                 try self.managedObjectContext.save()
@@ -255,7 +256,7 @@ class KinveyFetcher: NSObject {
                     post.postHasImage = true
                     post.postImageData = fileData
                     NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
-//                    self.saveImageToCoreDataForPost(post)
+                    self.saveImageToCoreDataForPost(post)
                     print("fetched Image for post")
                 } else {
                     print("Error from fetching post image \(error)")
@@ -266,27 +267,26 @@ class KinveyFetcher: NSObject {
         })
     }
     
-//    func saveImageToCoreDataForPost(post: Post) {
-//        let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
-//        
-//        let fetchRequest = NSFetchRequest(entityName: "Post")
-//        fetchRequest.predicate = predicate
-//        
-//        do {
-//            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
-//            fetchedEntities.first?.postHasImage = post.postHasImage
-//            fetchedEntities.first?.postImageData = post.postImageData
-//            
-//
-//        } catch {
-//        }
-//        
-//        do {
-//            try self.managedObjectContext.save()
-//        } catch {
-//        }
-//        sortData()
-//    }
+    func saveImageToCoreDataForPost(post: Post) {
+        let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Post")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
+            fetchedEntities.first?.postHasImage = post.postHasImage
+            fetchedEntities.first?.postImageData = post.postImageData
+            
+
+        } catch {
+        }
+        
+        do {
+            try self.managedObjectContext.save()
+        } catch {
+        }
+    }
     
     
 
