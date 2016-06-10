@@ -30,7 +30,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         configureTableView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.reloadTable), name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.refreshComplete), name: BOUNCETABLEDATARELOADCOMPLETE, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.refreshComplete), name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
         configureViewColors()
         super.viewDidLoad()
     }
@@ -72,13 +72,17 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func pullToRefresh() {
-        //        let pf = ParseFetcher()
-        //        pf.fetchPostForPlace(place!)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        let kF = KinveyFetcher()
+        kF.fetchPostsForPlace(place!)
+
     }
     
     func refreshComplete() {
         refreshControl.endRefreshing()
         reloadTable()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+
     }
     
     
@@ -121,8 +125,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
             
             //Creation Date
-            //            cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate.timeIntervalSinceNow))
-            cell.postCreationDate.text = "error"
+            cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate!.timeIntervalSinceNow))
             
             //Score
             cell.postScoreLabel.text = String(currentPost.postScore!)
@@ -226,6 +229,15 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if let allPost = posts {
             return allPost.count
+        }
+        else {
+            let noDataLabel: UILabel = UILabel(frame: CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height))
+            noDataLabel.text = "No Post for this place...Pull to refresh"
+            noDataLabel.textColor = UIColor.blackColor()
+            noDataLabel.textAlignment = .Center
+            tableView.backgroundView = noDataLabel
+            tableView.separatorStyle = .None
+
         }
         return 0
     }

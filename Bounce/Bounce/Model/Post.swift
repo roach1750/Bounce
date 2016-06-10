@@ -39,12 +39,13 @@ class Post: NSManagedObject {
             newPost.postCreationDate = post.postCreationDate
             newPost.postUniqueId = post.postUniqueId
         }
-        
-
-        
-        
         return nil
     }
+    
+    
+    
+    
+    
     
     //Kinvey Stuff
 
