@@ -92,7 +92,16 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func createAnnotations() {
         mapView.removeAnnotations(mapView.annotations)
         
-        if let objects = fetcher.allPlacesData {
+        var data: [Place]?
+        if currentShareSetting() == BOUNCEFRIENDSONLYSHARESETTING {
+            data = fetcher.friendsOnlyPlaceData!
+        }
+        else {
+            data = fetcher.everyonePlaceData!
+
+        }
+        
+        if let objects = data {
             for place in objects {
                 let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
                 let annotation = BounceAnnotation(title: place.placeName, subtitle: String("Missing the score"), coordinate: coordinate, place: place)

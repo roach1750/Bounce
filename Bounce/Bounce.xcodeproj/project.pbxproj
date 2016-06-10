@@ -17,7 +17,6 @@
 		213482D11CCDA5C700CAAD93 /* Data Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 213482CF1CCDA5C700CAAD93 /* Data Model.xcdatamodeld */; };
 		213482EE1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482EA1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift */; };
 		213482EF1CCDAA0300CAAD93 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482EB1CCDAA0300CAAD93 /* Post.swift */; };
-		213482F01CCDAA0300CAAD93 /* Place+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482EC1CCDAA0300CAAD93 /* Place+CoreDataProperties.swift */; };
 		213482F11CCDAA0300CAAD93 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482ED1CCDAA0300CAAD93 /* Place.swift */; };
 		214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A31C7254D200FB9B99 /* FBLoginVC.swift */; };
 		21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */; };
@@ -86,7 +85,6 @@
 		213482D01CCDA5C700CAAD93 /* Data Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Data Model.xcdatamodel"; sourceTree = "<group>"; };
 		213482EA1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Post+CoreDataProperties.swift"; path = "Model/Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		213482EB1CCDAA0300CAAD93 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Model/Post.swift; sourceTree = "<group>"; };
-		213482EC1CCDAA0300CAAD93 /* Place+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Place+CoreDataProperties.swift"; path = "Model/Place+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		213482ED1CCDAA0300CAAD93 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = Model/Place.swift; sourceTree = "<group>"; };
 		214329A31C7254D200FB9B99 /* FBLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBLoginVC.swift; path = "View Controllers/FBLoginVC.swift"; sourceTree = "<group>"; };
 		21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserFetcher.swift; path = Model/UserFetcher.swift; sourceTree = "<group>"; };
@@ -235,7 +233,6 @@
 				213482CF1CCDA5C700CAAD93 /* Data Model.xcdatamodeld */,
 				213482EA1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift */,
 				213482EB1CCDAA0300CAAD93 /* Post.swift */,
-				213482EC1CCDAA0300CAAD93 /* Place+CoreDataProperties.swift */,
 				213482ED1CCDAA0300CAAD93 /* Place.swift */,
 				21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */,
 				212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */,
@@ -459,7 +456,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				21FFED621C4AAAC4006F294F /* PostVC.swift in Sources */,
-				213482F01CCDAA0300CAAD93 /* Place+CoreDataProperties.swift in Sources */,
 				21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */,
 				214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */,
 				210641811C585DDF00DFF326 /* PlaceVC.swift in Sources */,

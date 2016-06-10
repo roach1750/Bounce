@@ -10,14 +10,19 @@ import Foundation
 import CoreData
 
 
-class Place: NSManagedObject {
+class Place: NSObject {
 
 // Insert code here to add functionality to your managed object subclass
     
     var distanceFromUser: Double?
+    
     dynamic var placeLocation: CLLocation?
-    dynamic var placeAuthors: [String]?
-
+    dynamic var friendsOnlyAuthors: [String]?
+    dynamic var everyoneAuthors: [String]?
+    dynamic var placeName: String?
+    dynamic var placeBounceKey: String?
+    dynamic var placeScore: NSNumber?
+    dynamic var entityId: String?
 
     
     override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
@@ -27,45 +32,59 @@ class Place: NSManagedObject {
             "placeLocation": BOUNCEPOSTGEOLOCATIONKEY,
             "placeBounceKey": BOUNCEKEY,
             "placeScore" : BOUNCESCOREKEY,
-            "placeAuthors" :BOUNCEAUTHORSKEY
+            "friendsOnlyAuthors" : BOUNCEFRIENDSONLYAUTHORSKEY,
+            "everyoneAuthors" : BOUNCEEVERYONEAUTHORSKEY,
         ]
     }
     
-    internal override static func kinveyObjectBuilderOptions() -> [NSObject : AnyObject]! {
-        return [
-            KCS_USE_DESIGNATED_INITIALIZER_MAPPING_KEY : true,
-            KCS_REFERENCE_MAP_KEY : [ "place" : Place.self ]
-        ]
+    
+    
+    
+    override var description: String {
+        get {
+            return "entityId: \(entityId) \n" + "placeName: \(placeName) \n" + "placeLocation: \(placeLocation) \n" + "placeBounceKey: \(placeBounceKey) \n" + "placeScore: \(placeScore) \n" + "friendsOnlyAuthors: \(friendsOnlyAuthors) \n" + "everyoneAuthors: \(everyoneAuthors)"
+        }
     }
     
-    internal override static func kinveyDesignatedInitializer(jsonDocument: [NSObject : AnyObject]!) -> AnyObject! {
-        let existingID = jsonDocument[KCSEntityKeyId] as? String
-        var obj: Place? = nil
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entityForName("Place", inManagedObjectContext: context)!
-        if existingID != nil {
-            let request = NSFetchRequest()
-            request.entity = entity
-            let predicate = NSPredicate(format: "entityId = %@", existingID!)
-            request.predicate = predicate
-
-            
-            do {
-                let results = try context.executeFetchRequest(request)
-                if results.count > 0 {
-                    obj = results.first as? Place
-                }
-            } catch {
-                print("error fetching results")
-            }
-            
-        }
-        if obj == nil {
-            //fall back to creating a new if one if there is an error, or if it is new
-            obj = Place(entity: entity, insertIntoManagedObjectContext: context)
-        }
-        return obj
-    }
+    
+    
+    /// Below is kinvey core data methods, this many be useful for the future...don't delete for now
+    
+//    internal override static func kinveyObjectBuilderOptions() -> [NSObject : AnyObject]! {
+//        return [
+//            KCS_USE_DESIGNATED_INITIALIZER_MAPPING_KEY : true,
+//            KCS_REFERENCE_MAP_KEY : [ "place" : Place.self ]
+//        ]
+//    }
+//    
+//    internal override static func kinveyDesignatedInitializer(jsonDocument: [NSObject : AnyObject]!) -> AnyObject! {
+//        let existingID = jsonDocument[KCSEntityKeyId] as? String
+//        var obj: Place? = nil
+//        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+//        let entity = NSEntityDescription.entityForName("Place", inManagedObjectContext: context)!
+//        if existingID != nil {
+//            let request = NSFetchRequest()
+//            request.entity = entity
+//            let predicate = NSPredicate(format: "entityId = %@", existingID!)
+//            request.predicate = predicate
+//
+//            
+//            do {
+//                let results = try context.executeFetchRequest(request)
+//                if results.count > 0 {
+//                    obj = results.first as? Place
+//                }
+//            } catch {
+//                print("error fetching results")
+//            }
+//            
+//        }
+//        if obj == nil {
+//            //fall back to creating a new if one if there is an error, or if it is new
+//            obj = Place(entity: entity, insertIntoManagedObjectContext: context)
+//        }
+//        return obj
+//    }
     
 
 }

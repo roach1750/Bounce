@@ -22,16 +22,18 @@ class KinveyFetcher: NSObject {
     
     var friendsOnlyPostData: [Post]?
     var everyonePostData: [Post]?
-
-    
-    var allPlacesData: [Place]?
     
     
-
+    var friendsOnlyPlaceData: [Place]?
+    var everyonePlaceData: [Place]?
+    
+    
     
     func queryForAllPlaces() {
         
-        allPlacesData = [Place]()
+        friendsOnlyPlaceData = [Place]()
+        everyonePlaceData = [Place]()
+        
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
             ])
         let query = configurePlaceQuery()
@@ -40,15 +42,9 @@ class KinveyFetcher: NSObject {
             query,
             withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
                 print("Fetched \(objectsOrNil.count) Place objects")
-                if objectsOrNil.count > 0 {
-                    for object in objectsOrNil{
-                        let newPlace = object as! Place
-                        self.allPlacesData!.append(newPlace)
-                    }
-                    NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
-                }
+                self.sortPlaceData(objectsOrNil)
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false;
-
+                
             },
             withProgressBlock: { (objects, percentComplete) in
         })
@@ -70,9 +66,30 @@ class KinveyFetcher: NSObject {
         return everyoneQuery.queryByJoiningQuery(friendsOnlyQuery, usingOperator: .KCSOr)
     }
     
-
+    func sortPlaceData(data:[AnyObject]) {
+        if data.count > 0 {
+            for object in data{
+                let newPlace = object as! Place
+                let currentUserFBFriends = KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as? [String]
+                if let fOAS = newPlace.friendsOnlyAuthors {
+                    for fOA in fOAS {
+                        if currentUserFBFriends!.contains(fOA) {
+                            friendsOnlyPlaceData?.append(newPlace)
+                            break
+                        }
+                    }
+                }
+                everyonePlaceData?.append(newPlace)
+                
+                
+            }
+            NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
+        }
+    }
     
-/////////////////////////////////////////////////POST SECTION////////////////////////////////////////////////
+    
+    
+    /////////////////////////////////////////////////POST SECTION////////////////////////////////////////////////
     
     func fetchPostsForPlace(place: Place) {
         self.fetchPostFromKinveyForPlace(place)
@@ -129,7 +146,7 @@ class KinveyFetcher: NSObject {
             let fetchError = error as NSError
             print(fetchError)
         }
-
+        
         print("There are no recent Post in Core Data")
         return nil
     }
@@ -145,22 +162,22 @@ class KinveyFetcher: NSObject {
         let query = configurePostQueryWithPlace(place)
         store.queryWithQuery(query, withCompletionBlock: { (downloadedData: [AnyObject]!, errorOrNil: NSError!) -> Void in
             
-                if let error = errorOrNil {
-                    print("Error from downloading posts data only: \(error)")
-                }
-                else {
-                    print("Fetch \(downloadedData.count) objects from Kinvey")
-                    self.handleDownloadedData(downloadedData as! [Post])
+            if let error = errorOrNil {
+                print("Error from downloading posts data only: \(error)")
+            }
+            else {
+                print("Fetch \(downloadedData.count) objects from Kinvey")
+                self.handleDownloadedData(downloadedData as! [Post])
             }
             },
-            withProgressBlock: { (objects, percentComplete) in
+                             withProgressBlock: { (objects, percentComplete) in
         })
     }
-
-
+    
+    
     
     func countCoreData(){
-        managedObjectContext.performBlock { 
+        managedObjectContext.performBlock {
             let count = self.managedObjectContext.countForFetchRequest(NSFetchRequest(entityName:"Post"), error: nil)
             print(count)
         }
@@ -218,33 +235,33 @@ class KinveyFetcher: NSObject {
         
     }
     
-
-
+    
+    
     
     //
     // fetches the lastest score value from Kinvey for a post
     //
     
     func fetchScoreForPost(post: Post) {
-            KCSCustomEndpoints.callEndpoint(
-                "fetchScoreForPost",
-                params: ["_id": post.postUniqueId!],
-                completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
-                    if results != nil {
-                        print("Refreshed Score Success")
-                    } else {
-                        print("Refreshed Score Error: \(error)")
-                    }
+        KCSCustomEndpoints.callEndpoint(
+            "fetchScoreForPost",
+            params: ["_id": post.postUniqueId!],
+            completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
+                if results != nil {
+                    print("Refreshed Score Success")
+                } else {
+                    print("Refreshed Score Error: \(error)")
                 }
-            )
+            }
+        )
     }
     
     
     
-
     
-
-
+    
+    
+    
     func fetchImageForPost(post: Post) {
         
         KCSFileStore.downloadData(
@@ -263,7 +280,7 @@ class KinveyFetcher: NSObject {
                 }
             },
             progressBlock: { (objects, percentComplete) in
-//                print("Image Download: \(percentComplete * 100)%")
+                //                print("Image Download: \(percentComplete * 100)%")
         })
     }
     
@@ -278,7 +295,7 @@ class KinveyFetcher: NSObject {
             fetchedEntities.first?.postHasImage = post.postHasImage
             fetchedEntities.first?.postImageData = post.postImageData
             
-
+            
         } catch {
         }
         
@@ -289,5 +306,5 @@ class KinveyFetcher: NSObject {
     }
     
     
-
+    
 }

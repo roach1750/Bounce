@@ -18,7 +18,9 @@ let BOUNCEIMAGEKEY  =  "imageFile"
 let BOUNCEHASIMAGEKEY  =  "hasImage"
 let BOUNCESCOREKEY  =  "score"
 let BOUNCEKEY =  "bounceKey"
-let BOUNCEAUTHORSKEY =  "authors"
+let BOUNCEFRIENDSONLYAUTHORSKEY =  "friendOnlyAuthors"
+let BOUNCEEVERYONEAUTHORSKEY =  "everyoneAuthors"
+
 
 let BOUNCEPOSTERIDKEY =  "FBUserID"
 
