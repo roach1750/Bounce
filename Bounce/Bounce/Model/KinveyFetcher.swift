@@ -63,7 +63,8 @@ class KinveyFetcher: NSObject {
         let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
         let friendsOnlyQuery = KCSQuery(onField: BOUNCEPLACEFRIENDONLYAUTHORS, usingConditional: .KCSIn, forValue: facebookFriendIDs)
         //combine and return
-        return everyoneQuery.queryByJoiningQuery(friendsOnlyQuery, usingOperator: .KCSOr)
+        let combineQuery = everyoneQuery.queryByJoiningQuery(friendsOnlyQuery, usingOperator: .KCSOr)
+        return combineQuery
     }
     
     func sortPlaceData(data:[AnyObject]) {
@@ -80,9 +81,7 @@ class KinveyFetcher: NSObject {
                     }
                 }
                 everyonePlaceData?.append(newPlace)
-                
-                
-            }
+                }
             NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
         }
     }
@@ -248,7 +247,8 @@ class KinveyFetcher: NSObject {
             params: ["_id": post.postUniqueId!],
             completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
                 if results != nil {
-                    print("Refreshed Score Success")
+                    
+                    print("Refreshed Score Success results are: \(results["postScore"])")
                 } else {
                     print("Refreshed Score Error: \(error)")
                 }

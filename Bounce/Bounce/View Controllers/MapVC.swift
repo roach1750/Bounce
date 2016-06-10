@@ -94,10 +94,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         
         var data: [Place]?
         if currentShareSetting() == BOUNCEFRIENDSONLYSHARESETTING {
-            data = fetcher.friendsOnlyPlaceData!
+            data = fetcher.friendsOnlyPlaceData
         }
         else {
-            data = fetcher.everyonePlaceData!
+            data = fetcher.everyonePlaceData
 
         }
         
