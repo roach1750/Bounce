@@ -211,7 +211,13 @@ class KinveyFetcher: NSObject {
             
             do {
                 let queryResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+                for post in queryResults as! [Post] {
+                    if post.postShareSetting == BOUNCEFRIENDSONLYSHARESETTING {
+                        self.friendsOnlyPostData?.append(post)
+                    }
+                }
                 self.everyonePostData = queryResults as? [Post]
+                
                 NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
             } catch let error {
                 print(error)
@@ -238,17 +244,27 @@ class KinveyFetcher: NSObject {
     
     
     //
-    // fetches the lastest score value from Kinvey for a post
+    // fetches the lastest score value from Kinvey for a post, this should be called as a loop? 
     //
     
     func fetchScoreForPost(post: Post) {
+        fetchDataFromDataBase()
+        sleep(1)
+        var dataToUpload = [String]()
+        print(everyonePostData?.count)
+        for post in self.everyonePostData! {
+            dataToUpload.append(post.postUniqueId!)
+        }
+
+        print(dataToUpload)
         KCSCustomEndpoints.callEndpoint(
             "fetchScoreForPost",
-            params: ["_id": post.postUniqueId!],
+            params: ["_id": dataToUpload],
             completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
                 if results != nil {
                     
-                    print("Refreshed Score Success results are: \(results["postScore"])")
+                    print("Refreshed Score Success results are: \(results)")
+//                    self.updateScoreForPostInDataBase(post, score: results["postScore"] as! Int)
                 } else {
                     print("Refreshed Score Error: \(error)")
                 }
@@ -257,7 +273,25 @@ class KinveyFetcher: NSObject {
     }
     
     
-    
+    func updateScoreForPostInDataBase(post: Post, score:Int) {
+        let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Post")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
+            fetchedEntities.first?.postScore = score
+            NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+            
+        } catch {
+        }
+        
+        do {
+            try self.managedObjectContext.save()
+        } catch {
+        }
+    }
     
     
     
@@ -294,7 +328,6 @@ class KinveyFetcher: NSObject {
             let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
             fetchedEntities.first?.postHasImage = post.postHasImage
             fetchedEntities.first?.postImageData = post.postImageData
-            
             
         } catch {
         }
