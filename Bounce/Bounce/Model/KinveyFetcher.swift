@@ -249,7 +249,6 @@ class KinveyFetcher: NSObject {
         for postObject in everyonePostData! {
             existingObjectIDs.append(postObject.postUniqueId!)
         }
-        print("Existing Object IDs are: \(existingObjectIDs)")
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self
             ])
         store.loadObjectWithID(

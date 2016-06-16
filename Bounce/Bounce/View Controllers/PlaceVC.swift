@@ -222,7 +222,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //MARK: Tableview customization
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
         if let allPost = posts {
+            tableView.backgroundView = nil
             return allPost.count
         }
         else {
