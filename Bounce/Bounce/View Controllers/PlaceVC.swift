@@ -16,12 +16,13 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var shareSettingSegmentedControl: UISegmentedControl!
     
     var refreshControl: UIRefreshControl!
+    let kinveyFetcher = KinveyFetcher.sharedInstance
+    
     
     var place: Place? {
         didSet {
             self.title = place?.placeName
-            let kF = KinveyFetcher.sharedInstance
-            kF.fetchPostsForPlace(place!)
+            kinveyFetcher.fetchPostsForPlace(place!)
         }
     }
     
@@ -50,9 +51,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func reloadTable() {
         switch shareSettingSegmentedControl.selectedSegmentIndex {
         case 0:
-            posts = KinveyFetcher.sharedInstance.friendsOnlyPostData
+            posts = kinveyFetcher.friendsOnlyPostData
         case 1:
-            posts = KinveyFetcher.sharedInstance.everyonePostData
+            posts = kinveyFetcher.everyonePostData
         default:
             return
         }
@@ -73,8 +74,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func pullToRefresh() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        let kF = KinveyFetcher()
-        kF.fetchPostsForPlace(place!)
+        kinveyFetcher.fetchUpdatedPostsForPlace(place!)
 
     }
     
@@ -92,8 +92,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     func getDataForTable() {
-        let kF = KinveyFetcher.sharedInstance
-        kF.fetchPostsForPlace(place!)
+        kinveyFetcher.fetchPostsForPlace(place!)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -216,11 +215,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let currentPost = posts![indexPath.row]
-        let kF = KinveyFetcher()
-        kF.fetchScoreForPost(currentPost)
-    }
+
     
 
     

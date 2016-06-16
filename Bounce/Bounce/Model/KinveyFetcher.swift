@@ -120,9 +120,7 @@ class KinveyFetcher: NSObject {
         let combineFriendsQuery = friendsOnlyQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
         
         let queryToReturn = combineFriendsQuery.queryByJoiningQuery(combineEveryoneQuery, usingOperator: .KCSOr)
-        
         return queryToReturn
-        
     }
     
     //
@@ -160,7 +158,6 @@ class KinveyFetcher: NSObject {
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
         let query = configurePostQueryWithPlace(place)
         store.queryWithQuery(query, withCompletionBlock: { (downloadedData: [AnyObject]!, errorOrNil: NSError!) -> Void in
-            
             if let error = errorOrNil {
                 print("Error from downloading posts data only: \(error)")
             }
@@ -244,56 +241,53 @@ class KinveyFetcher: NSObject {
     
     
     //
-    // fetches the lastest score value from Kinvey for a post, this should be called as a loop? 
+    // downlods all objects that are existing based on the existing object IDs
     //
     
-    func fetchScoreForPost(post: Post) {
-        fetchDataFromDataBase()
-        sleep(1)
-        var dataToUpload = [String]()
-        print(everyonePostData?.count)
-        for post in self.everyonePostData! {
-            dataToUpload.append(post.postUniqueId!)
+    func fetchUpdatedPostsForPlace(place: Place) {
+        var existingObjectIDs = [String]()
+        for postObject in everyonePostData! {
+            existingObjectIDs.append(postObject.postUniqueId!)
         }
-
-        print(dataToUpload)
-        KCSCustomEndpoints.callEndpoint(
-            "fetchScoreForPost",
-            params: ["_id": dataToUpload],
-            completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
-                if results != nil {
-                    
-                    print("Refreshed Score Success results are: \(results)")
-//                    self.updateScoreForPostInDataBase(post, score: results["postScore"] as! Int)
+        print("Existing Object IDs are: \(existingObjectIDs)")
+        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self
+            ])
+        store.loadObjectWithID(
+            existingObjectIDs,
+            withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
+                if errorOrNil == nil {
+                    print("Downloaded \(objectsOrNil.count) posts to update")
+                    self.saveUpdateDataToCoreData(objectsOrNil as! [Post])
                 } else {
-                    print("Refreshed Score Error: \(error)")
+                    NSLog("error occurred: %@", errorOrNil)
                 }
-            }
+            },
+            withProgressBlock: nil
         )
     }
     
-    
-    func updateScoreForPostInDataBase(post: Post, score:Int) {
-        let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
+    func saveUpdateDataToCoreData(data:[Post]) {
         
         let fetchRequest = NSFetchRequest(entityName: "Post")
-        fetchRequest.predicate = predicate
-        
-        do {
-            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
-            fetchedEntities.first?.postScore = score
-            NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+        for post in data {
+            let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
+            fetchRequest.predicate = predicate
             
-        } catch {
+            do {
+                let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
+                fetchedEntities.first?.postScore = post.postScore
+                
+            } catch {
+            }
+            
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+            }
         }
-        
-        do {
-            try self.managedObjectContext.save()
-        } catch {
-        }
+        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+
     }
-    
-    
     
     
     func fetchImageForPost(post: Post) {
