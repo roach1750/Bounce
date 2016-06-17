@@ -46,7 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
-
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        print(paths[0])
         
         
         

@@ -15,7 +15,7 @@ class Post: NSManagedObject {
 // Insert code here to add functionality to your managed object subclass
 
     dynamic var postLocation: CLLocation?
-    
+
     
     class func postWithPostInfo(post: Post, inManagedObjectContext context: NSManagedObjectContext) -> Post?
     {
@@ -42,8 +42,15 @@ class Post: NSManagedObject {
         return nil
     }
     
-    
-    
+
+//    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+//        print("CoreData Object Initalized")
+//        print(entity.propertiesByName["postUniqueId"])
+//        
+//        super.init(entity: entity, insertIntoManagedObjectContext: nil)
+//    }
+//
+//    
     
     
     
@@ -51,7 +58,6 @@ class Post: NSManagedObject {
 
     override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
         return [
-            
             "postMessage" : BOUNCECOMMENTKEY,
             "postImageFileInfo" : BOUNCEKINVEYIMAGEFILEIDKEY,
             "postHasImage" : BOUNCEHASIMAGEKEY,
@@ -60,13 +66,10 @@ class Post: NSManagedObject {
             "postScore" : BOUNCESCOREKEY,
             "postShareSetting" : BOUNCESHARESETTINGKEY,
             "postBounceKey" : BOUNCEKEY,
-            
             "postUploaderFacebookUserID" : BOUNCEPOSTUPLOADERFACEBOOKUSERID,
             "postUploaderKinveyUserID" : BOUNCEPOSTUPLOADERKINVEYUSERID,
             "postUploaderKinveyUserName" : BOUNCEPOSTUPLOADERKINVEYUSERNAME,
-            
             "postCreationDate" : BOUNCEPOSTCREATIONDATEKEY,
-
             "postUniqueId" : KCSEntityKeyId, //the required _id field
         ]
     }
@@ -101,8 +104,8 @@ class Post: NSManagedObject {
             
         }
         if obj == nil {
-            //fall back to creating a new if one if there is an error, or if it is new
-            obj = Post(entity: entity, insertIntoManagedObjectContext: context)
+            //fall back to creating a new if one if there is an error, or if it is new, DON'T SAVE TO MOC BECAUSE I'LL DO THE SAVING MY SELF IF I WANT TO SAVE IT,  NOT EVERY KINVEY OBJECT SHOULD BE SAVED!!!!
+            obj = Post(entity: entity, insertIntoManagedObjectContext: nil)
         }
         return obj
     }

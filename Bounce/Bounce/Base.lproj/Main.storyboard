@@ -94,7 +94,7 @@
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="7M4-sX-vqD"/>
                                     <barButtonItem style="plain" id="f6l-aM-voc">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="nYe-xz-who">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="nYe-xz-who">
                                             <rect key="frame" x="150" y="7" width="300" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>

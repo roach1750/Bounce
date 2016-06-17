@@ -81,7 +81,7 @@ class KinveyFetcher: NSObject {
                     }
                 }
                 everyonePlaceData?.append(newPlace)
-                }
+            }
             NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
         }
     }
@@ -95,14 +95,16 @@ class KinveyFetcher: NSObject {
     }
     
     
-    func configurePostQueryWithPlace(place:Place) -> KCSQuery {
+    func configurePostQueryWithPlace(place:Place, addDate:Bool) -> KCSQuery {
         let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
         
-        if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
-            //            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
-            let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
-            mainQuery.addQuery(dateRangeQuery)
-            mainQuery.queryByJoiningQuery(dateRangeQuery, usingOperator: .KCSAnd)
+        if addDate {
+            if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
+                //            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
+                let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
+                mainQuery.addQuery(dateRangeQuery)
+                mainQuery.queryByJoiningQuery(dateRangeQuery, usingOperator: .KCSAnd)
+            }
         }
         
         //TODO: need to add location to main query
@@ -156,7 +158,7 @@ class KinveyFetcher: NSObject {
         friendsOnlyPostData = friendsOnlyPostData == nil ? [Post]() : friendsOnlyPostData
         
         let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
-        let query = configurePostQueryWithPlace(place)
+        let query = configurePostQueryWithPlace(place, addDate: true)
         store.queryWithQuery(query, withCompletionBlock: { (downloadedData: [AnyObject]!, errorOrNil: NSError!) -> Void in
             if let error = errorOrNil {
                 print("Error from downloading posts data only: \(error)")
@@ -172,13 +174,7 @@ class KinveyFetcher: NSObject {
     
     
     
-    func countCoreData(){
-        managedObjectContext.performBlock {
-            let count = self.managedObjectContext.countForFetchRequest(NSFetchRequest(entityName:"Post"), error: nil)
-            print(count)
-        }
-    }
-    
+
     func handleDownloadedData(data:[Post]) {
         managedObjectContext.performBlockAndWait {
             for newPost in data  {
@@ -197,23 +193,32 @@ class KinveyFetcher: NSObject {
     }
     
     func fetchDataFromDataBase() {
+        countCoreData()
+        everyonePostData = [Post]()
+        friendsOnlyPostData = [Post]()
+        
         managedObjectContext.performBlockAndWait {
             let fetchRequest = NSFetchRequest(entityName: "Post")
-            let sortDescriptor = NSSortDescriptor(
-                key: "postCreationDate",
-                ascending: true,
-                selector: #selector(NSString.localizedStandardCompare(_:))
-            )
-            fetchRequest.sortDescriptors = [sortDescriptor]
+            //            let sortDescriptor = NSSortDescriptor(
+            //                key: "postCreationDate",
+            //                ascending: true,
+            //                selector: #selector(NSString.localizedStandardCompare(_:))
+            //            )
+            //            fetchRequest.sortDescriptors = [sortDescriptor]
             
             do {
                 let queryResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)
                 for post in queryResults as! [Post] {
                     if post.postShareSetting == BOUNCEFRIENDSONLYSHARESETTING {
-                        self.friendsOnlyPostData?.append(post)
+                        if !(self.friendsOnlyPostData?.contains(post))! {
+                            self.friendsOnlyPostData?.append(post)
+                            
+                        }
+                    }
+                    if !(self.everyonePostData?.contains(post))! {
+                        self.everyonePostData = queryResults as? [Post]
                     }
                 }
-                self.everyonePostData = queryResults as? [Post]
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
             } catch let error {
@@ -237,43 +242,46 @@ class KinveyFetcher: NSObject {
         
     }
     
+    func countCoreData(){
+        managedObjectContext.performBlock {
+            let count = self.managedObjectContext.countForFetchRequest(NSFetchRequest(entityName:"Post"), error: nil)
+            print("There are: \(count) post in the data base")
+        }
+    }
     
     
-    
+    //  THIS IS THE UPDATE SECTION!
     //
-    // downlods all objects that are existing based on the existing object IDs
+    // downlods all objects that are old
     //
     
     func fetchUpdatedPostsForPlace(place: Place) {
-        var existingObjectIDs = [String]()
-        for postObject in everyonePostData! {
-            existingObjectIDs.append(postObject.postUniqueId!)
-        }
-        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self
-            ])
-        store.loadObjectWithID(
-            existingObjectIDs,
-            withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
-                if errorOrNil == nil {
-                    print("Downloaded \(objectsOrNil.count) posts to update")
-                    self.saveUpdateDataToCoreData(objectsOrNil as! [Post])
-                } else {
-                    NSLog("error occurred: %@", errorOrNil)
-                }
-            },
-            withProgressBlock: nil
-        )
+
+        let collection = KCSCollection(fromString: BOUNCEPOSTCLASSNAME, ofClass: Post.self)
+        let store = KCSAppdataStore(collection: collection, options: nil)
+        let query = configurePostQueryWithPlace(place, addDate: false)
+        
+        store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) in
+            if errorOrNil == nil {
+                print("Downloaded \(objectsOrNil.count) posts to update")
+                self.saveUpdatedDataToCoreData(objectsOrNil as! [Post])
+            } else {
+                NSLog("error occurred: %@", errorOrNil)
+            }
+            
+            }, withProgressBlock: nil)
     }
     
-    func saveUpdateDataToCoreData(data:[Post]) {
+    func saveUpdatedDataToCoreData(data:[Post]) {
         
         let fetchRequest = NSFetchRequest(entityName: "Post")
+        print(data.count)
         for post in data {
             let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
             fetchRequest.predicate = predicate
-            
             do {
                 let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
+                print("Found \(fetchedEntities.count) post in the date base for this one post to update")
                 fetchedEntities.first?.postScore = post.postScore
                 
             } catch {
@@ -284,8 +292,7 @@ class KinveyFetcher: NSObject {
             } catch {
             }
         }
-        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
-
+        self.fetchDataFromDataBase()
     }
     
     

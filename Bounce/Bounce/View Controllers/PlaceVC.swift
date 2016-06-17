@@ -207,12 +207,15 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         let point = sender.convertPoint(CGPointZero, toView: tableView)
         let indexPath = tableView.indexPathForRowAtPoint(point)
-        let currentPost = posts![(indexPath?.row)!]
-        
+        let currentPost = posts![(indexPath?.section)!]
+        print("CurrentPost is: \(currentPost.postMessage!)")
         let kUP = KinveyUploader()
         kUP.changeScoreForPost(currentPost,increment: increment)
         
-
+        let updatedScore = currentPost.postScore!.integerValue + increment
+        print(updatedScore)
+        let currentCell = tableView(tableView, cellForRowAtIndexPath: indexPath!) as? PlaceTableViewCell
+        currentCell!.postScoreLabel.text = String(updatedScore)
     }
     
 
