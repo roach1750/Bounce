@@ -109,10 +109,6 @@ class Post: NSManagedObject {
         }
         return obj
     }
-
-    
-    
-    
     
     func clearData(){
         postMessage = nil

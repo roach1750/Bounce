@@ -75,14 +75,14 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func pullToRefresh() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         kinveyFetcher.fetchUpdatedPostsForPlace(place!)
-
+        
     }
     
     func refreshComplete() {
         refreshControl.endRefreshing()
         reloadTable()
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-
+        
     }
     
     
@@ -129,7 +129,22 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             //Score
             cell.postScoreLabel.text = String(currentPost.postScore!)
             
+            let userDefaults = NSUserDefaults.standardUserDefaults()
             
+            if let increment = userDefaults.objectForKey(currentPost.postUniqueId!) as? Int {
+            switch increment {
+            case 1:
+                cell.postPlusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
+                cell.postPlusButton.enabled = false
+                cell.postMinusButton.enabled = false
+            case -1:
+                cell.postMinusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
+                cell.postPlusButton.enabled = false
+                cell.postMinusButton.enabled = false
+            default:
+                break
+            }
+            }
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
@@ -147,7 +162,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func getIdentifierForCell(post: Post) -> String {
-
+        
         if post.postHasImage == NSNumber(bool: true) && post.postMessage != nil{
             tableView.estimatedRowHeight = 515.0
             return "commentAndPhoto"
@@ -195,32 +210,43 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //MARK: Score Buttons
     
     @IBAction func scoreButtonPressed(sender: UIButton) {
+        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        let cell = tableView.cellForRowAtIndexPath(indexPath!) as! PlaceTableViewCell
         
         let buttonTitle = sender.currentTitle
         let increment: Int
         
         switch(buttonTitle!) {
-        case "+" : increment = 1
-        case "-" : increment = -1
-        default: increment = 0
+        case "+" :
+            increment = 1
+            cell.postPlusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
+        case "-" :
+            increment = -1
+            cell.postMinusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
+        default:
+            increment = 0
         }
         
-        let point = sender.convertPoint(CGPointZero, toView: tableView)
-        let indexPath = tableView.indexPathForRowAtPoint(point)
+        
+        
         let currentPost = posts![(indexPath?.section)!]
-        print("CurrentPost is: \(currentPost.postMessage!)")
         let kUP = KinveyUploader()
         kUP.changeScoreForPost(currentPost,increment: increment)
         
-        let updatedScore = currentPost.postScore!.integerValue + increment
-        print(updatedScore)
-        let currentCell = tableView(tableView, cellForRowAtIndexPath: indexPath!) as? PlaceTableViewCell
-        currentCell!.postScoreLabel.text = String(updatedScore)
+        
+        let newScore = Int(currentPost.postScore!) + increment
+        cell.postScoreLabel.text = String(newScore)
+        cell.postPlusButton.enabled = false
+        cell.postMinusButton.enabled = false
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.setInteger(increment, forKey: currentPost.postUniqueId!)
     }
     
-
     
-
+    
+    
     
     //MARK: Tableview customization
     
@@ -237,7 +263,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             noDataLabel.textAlignment = .Center
             tableView.backgroundView = noDataLabel
             tableView.separatorStyle = .None
-
+            
         }
         return 0
     }

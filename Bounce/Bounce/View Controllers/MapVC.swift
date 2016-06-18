@@ -198,6 +198,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             mapView.setRegion(region, animated: true)
             locationManager!.stopUpdatingLocation()
             locationManager = nil
+            fetchButtonTapped(UIBarButtonItem())
         }
     }
     

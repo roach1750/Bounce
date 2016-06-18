@@ -199,12 +199,12 @@ class KinveyFetcher: NSObject {
         
         managedObjectContext.performBlockAndWait {
             let fetchRequest = NSFetchRequest(entityName: "Post")
-            //            let sortDescriptor = NSSortDescriptor(
-            //                key: "postCreationDate",
-            //                ascending: true,
-            //                selector: #selector(NSString.localizedStandardCompare(_:))
-            //            )
-            //            fetchRequest.sortDescriptors = [sortDescriptor]
+            let sortDescriptor = NSSortDescriptor(
+                key: "postCreationDate",
+                ascending: true,
+                selector: #selector(NSString.localizedStandardCompare(_:))
+            )
+            fetchRequest.sortDescriptors = [sortDescriptor]
             
             do {
                 let queryResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)
@@ -281,7 +281,9 @@ class KinveyFetcher: NSObject {
             fetchRequest.predicate = predicate
             do {
                 let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
-                print("Found \(fetchedEntities.count) post in the date base for this one post to update")
+                if fetchedEntities.count > 1 {
+                    print("Found \(fetchedEntities.count) post in the date base for this one post to update")
+                }
                 fetchedEntities.first?.postScore = post.postScore
                 
             } catch {
