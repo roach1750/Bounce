@@ -99,6 +99,9 @@ class KinveyUploader: NSObject {
         )
     }
     
+    func reportPost(post:Post) {
+        
+    }
 
     
 }

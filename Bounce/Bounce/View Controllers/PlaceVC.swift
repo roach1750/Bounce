@@ -90,6 +90,28 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         reloadTable()
     }
     
+    @IBAction func moreButtonPressed(sender: AnyObject) {
+        let point = sender.convertPoint(CGPointZero, toView: tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        let currentPost = posts![(indexPath?.section)!]
+
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .ActionSheet)
+        let reportAction = UIAlertAction(title: "Report", style: .Destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            let kUP = KinveyUploader.sharedInstance
+            kUP.reportPost(currentPost)
+        })
+        
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+        })
+        
+        optionMenu.addAction(reportAction)
+        optionMenu.addAction(cancelAction)
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+        
+    }
     
     func getDataForTable() {
         kinveyFetcher.fetchPostsForPlace(place!)
@@ -132,18 +154,18 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             let userDefaults = NSUserDefaults.standardUserDefaults()
             
             if let increment = userDefaults.objectForKey(currentPost.postUniqueId!) as? Int {
-            switch increment {
-            case 1:
-                cell.postPlusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
-                cell.postPlusButton.enabled = false
-                cell.postMinusButton.enabled = false
-            case -1:
-                cell.postMinusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
-                cell.postPlusButton.enabled = false
-                cell.postMinusButton.enabled = false
-            default:
-                break
-            }
+                switch increment {
+                case 1:
+                    cell.postPlusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
+                    cell.postPlusButton.enabled = false
+                    cell.postMinusButton.enabled = false
+                case -1:
+                    cell.postMinusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
+                    cell.postPlusButton.enabled = false
+                    cell.postMinusButton.enabled = false
+                default:
+                    break
+                }
             }
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -268,6 +290,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return 0
     }
     
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
