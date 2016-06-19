@@ -94,7 +94,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let point = sender.convertPoint(CGPointZero, toView: tableView)
         let indexPath = tableView.indexPathForRowAtPoint(point)
         let currentPost = posts![(indexPath?.section)!]
-
+        
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .ActionSheet)
         let reportAction = UIAlertAction(title: "Report", style: .Destructive, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -273,14 +273,14 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //MARK: Tableview customization
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        if let allPost = posts {
-            tableView.backgroundView = nil
-            return allPost.count
+        print(posts?.count)
+        if posts?.count > 0 {
+                tableView.backgroundView = nil
+                return posts!.count
         }
         else {
             let noDataLabel: UILabel = UILabel(frame: CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height))
-            noDataLabel.text = "No Post for this place...Pull to refresh"
+            noDataLabel.text = "No Post for this place...pull to refresh"
             noDataLabel.textColor = UIColor.blackColor()
             noDataLabel.textAlignment = .Center
             tableView.backgroundView = noDataLabel
@@ -290,7 +290,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return 0
     }
     
-
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }

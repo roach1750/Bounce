@@ -104,7 +104,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let objects = data {
             for place in objects {
                 let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
-                let annotation = BounceAnnotation(title: place.placeName, subtitle: String("Missing the score"), coordinate: coordinate, place: place)
+                let annotation = BounceAnnotation(title: place.placeName, subtitle: String(place.placeScore!), coordinate: coordinate, place: place)
                 mapView.addAnnotation(annotation)
                 
             }
