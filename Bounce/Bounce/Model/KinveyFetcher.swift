@@ -239,7 +239,6 @@ class KinveyFetcher: NSObject {
         } catch let error {
             print(error)
         }
-        
     }
     
     func countCoreData(){

@@ -99,6 +99,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
+        postTextView.resignFirstResponder()
         appDelegate.tempPostImageData = nil
         appDelegate.tempPostMessage = nil
         dismissViewControllerAnimated(true, completion: nil)

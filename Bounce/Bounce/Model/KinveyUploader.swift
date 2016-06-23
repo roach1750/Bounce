@@ -99,8 +99,19 @@ class KinveyUploader: NSObject {
         )
     }
     
-    func reportPost(post:Post) {
-        
+    func reportPost(post:Post,reason:String) {
+        let parameters = ["postID" : post.postUniqueId!, "reason" : reason, "userID" : KCSUser.activeUser().userId]
+        KCSCustomEndpoints.callEndpoint(
+            "reportPost",
+            params: parameters,
+            completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
+                if results != nil {
+                    print("Report Success")
+                } else {
+                    print("Report Error: \(error)")
+                }
+            }
+        )
     }
 
     

@@ -198,7 +198,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             mapView.setRegion(region, animated: true)
             locationManager!.stopUpdatingLocation()
             locationManager = nil
-            fetchButtonTapped(UIBarButtonItem())
+//            fetchButtonTapped(UIBarButtonItem())
         }
     }
     
@@ -228,7 +228,45 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
     }
     
+    
+    //This animated the pin drop see: http://stackoverflow.com/questions/1857160/how-can-i-create-a-custom-pin-drop-animation-using-mkannotationview
 
+//    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+//        for aV in views {
+//            if aV.isKindOfClass(MKUserLocation)
+//            {
+//                continue
+//            }
+//            
+//            let endFrame = aV.frame
+//            
+//            aV.frame = CGRectMake(aV.frame.origin.x, aV.frame.origin.y - view.frame.size.height, aV.frame.size.width, aV.frame.size.height)
+//            
+//            UIView.animateWithDuration(0.5, delay: 0.04, options: .CurveLinear, animations: { 
+//                aV.frame = endFrame
+//                }, completion: { finished in
+//                    if finished {
+//                        UIView.animateWithDuration(0.05, animations: { 
+//                            aV.transform = CGAffineTransformMakeScale(1.0, 0.8)
+//                            }, completion: { finished in
+//                                if finished {
+//                                    UIView.animateWithDuration(0.1, animations: {
+//                                        aV.transform = CGAffineTransformIdentity
+//                                    })
+//                                }
+//                        })
+//                    }
+//                    
+//            })
+//            
+//
+//        }
+//    }
+    
+    
+    
+    
+    
     
     
 }

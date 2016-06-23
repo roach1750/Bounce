@@ -859,11 +859,83 @@
                         <outlet property="shareSettingSegmentedControl" destination="lr1-vB-1QF" id="yvt-dE-zMb"/>
                         <outlet property="shareSettingToolbar" destination="hn2-HA-IjR" id="Fmx-C8-BbE"/>
                         <outlet property="tableView" destination="V4Z-yu-PaZ" id="TY1-u4-uyy"/>
+                        <segue destination="WoJ-N6-NPl" kind="show" identifier="reportPostSegue" id="agg-ZS-alY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jOi-xs-vdn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2160" y="713"/>
+            <point key="canvasLocation" x="2548" y="757"/>
+        </scene>
+        <!--Report This Post:-->
+        <scene sceneID="aYM-Hb-b73">
+            <objects>
+                <viewController id="WoJ-N6-NPl" customClass="ReportPostVC" customModule="Bounce" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ONl-ny-8Ts"/>
+                        <viewControllerLayoutGuide type="bottom" id="bJ0-QI-WA2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cA7-yt-Vwh">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select reason for reporting this post:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Auz-v9-SVh">
+                                <rect key="frame" x="20" y="8" width="560" height="59"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="59" id="agi-85-Awc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dmO-sb-BGe">
+                                <rect key="frame" x="20" y="75" width="560" height="453"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reportReason" textLabel="BYX-gs-YWp" style="IBUITableViewCellStyleDefault" id="OYm-9N-qiS">
+                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OYm-9N-qiS" id="6EK-ii-Qj4">
+                                            <rect key="frame" x="0.0" y="0.0" width="527" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BYX-gs-YWp">
+                                                    <rect key="frame" x="15" y="0.0" width="510" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="WoJ-N6-NPl" id="m8y-yf-qxB"/>
+                                    <outlet property="delegate" destination="WoJ-N6-NPl" id="leg-px-1Iu"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dmO-sb-BGe" firstAttribute="top" secondItem="Auz-v9-SVh" secondAttribute="bottom" constant="8" symbolic="YES" id="0dV-jI-Jcp"/>
+                            <constraint firstItem="Auz-v9-SVh" firstAttribute="trailing" secondItem="dmO-sb-BGe" secondAttribute="trailing" id="0gd-If-hDj"/>
+                            <constraint firstItem="Auz-v9-SVh" firstAttribute="leading" secondItem="dmO-sb-BGe" secondAttribute="leading" id="1Sf-ma-m1U"/>
+                            <constraint firstItem="Auz-v9-SVh" firstAttribute="trailing" secondItem="cA7-yt-Vwh" secondAttribute="trailingMargin" id="2kR-xw-c2I"/>
+                            <constraint firstItem="Auz-v9-SVh" firstAttribute="leading" secondItem="cA7-yt-Vwh" secondAttribute="leadingMargin" id="hX5-Eb-yKz"/>
+                            <constraint firstItem="bJ0-QI-WA2" firstAttribute="top" secondItem="dmO-sb-BGe" secondAttribute="bottom" constant="8" symbolic="YES" id="ioM-nH-wTv"/>
+                            <constraint firstItem="Auz-v9-SVh" firstAttribute="top" secondItem="ONl-ny-8Ts" secondAttribute="bottom" constant="8" symbolic="YES" id="sC7-Af-hUD"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Report This Post:" id="LqG-ZD-lJC"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                    <connections>
+                        <outlet property="tableView" destination="dmO-sb-BGe" id="bIO-mx-AgX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WG2-lk-D5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3370" y="757"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fcL-ji-UDF">

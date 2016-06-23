@@ -21,6 +21,7 @@
 		214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214329A31C7254D200FB9B99 /* FBLoginVC.swift */; };
 		21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */; };
 		2143AC011CD00B9C008BBF2D /* FourSquarePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2143AC001CD00B9C008BBF2D /* FourSquarePlace.swift */; };
+		214FE49C1D1B68C10079DB60 /* ReportPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214FE49B1D1B68C10079DB60 /* ReportPostVC.swift */; };
 		2168A82D1CADD77F009E76E5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2168A82C1CADD77F009E76E5 /* MapKit.framework */; };
 		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
 		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
@@ -89,6 +90,7 @@
 		214329A31C7254D200FB9B99 /* FBLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBLoginVC.swift; path = "View Controllers/FBLoginVC.swift"; sourceTree = "<group>"; };
 		21432A8E1C7FD09900FB9B99 /* UserFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserFetcher.swift; path = Model/UserFetcher.swift; sourceTree = "<group>"; };
 		2143AC001CD00B9C008BBF2D /* FourSquarePlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FourSquarePlace.swift; path = Model/FourSquarePlace.swift; sourceTree = "<group>"; };
+		214FE49B1D1B68C10079DB60 /* ReportPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportPostVC.swift; sourceTree = "<group>"; };
 		2168A82C1CADD77F009E76E5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				212DE0E51CC29E4400FEE5C4 /* SettingsVC.swift */,
 				21FFED5A1C488617006F294F /* MapVC.swift */,
 				210641801C585DDF00DFF326 /* PlaceVC.swift */,
+				214FE49B1D1B68C10079DB60 /* ReportPostVC.swift */,
 				21FFED611C4AAAC4006F294F /* PostVC.swift */,
 				21092A981C4B39FA0087BDE9 /* CameraVC.swift */,
 				21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */,
@@ -467,6 +470,7 @@
 				21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */,
 				21EC4E441C820090002C3572 /* Extensions.swift in Sources */,
 				21D420181CC9B629003E9B0E /* KinveyFetcher.swift in Sources */,
+				214FE49C1D1B68C10079DB60 /* ReportPostVC.swift in Sources */,
 				213482EF1CCDAA0300CAAD93 /* Post.swift in Sources */,
 				21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */,
 				21AC73A11C51964800C81D68 /* DataModel.swift in Sources */,

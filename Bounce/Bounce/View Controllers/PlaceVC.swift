@@ -98,8 +98,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .ActionSheet)
         let reportAction = UIAlertAction(title: "Report", style: .Destructive, handler: {
             (alert: UIAlertAction!) -> Void in
-            let kUP = KinveyUploader.sharedInstance
-            kUP.reportPost(currentPost)
+            self.performSegueWithIdentifier("reportPostSegue", sender: currentPost)
         })
         
         //
@@ -273,7 +272,6 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     //MARK: Tableview customization
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        print(posts?.count)
         if posts?.count > 0 {
                 tableView.backgroundView = nil
                 return posts!.count
@@ -307,7 +305,14 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     
-    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "reportPostSegue" {
+            let DV = segue.destinationViewController as! ReportPostVC
+            if let reportedPost = sender as? Post {
+                DV.selectedPost = reportedPost
+            }
+        }
+    }
     
     
     
