@@ -44,8 +44,11 @@ class KinveyUploader: NSObject {
     private func uploadPostImageThenObject(post: Post) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADBEGANNOTIFICATION, object: nil, userInfo: nil)
+        let metadata = KCSMetadata()
+        metadata.setGloballyReadable(true)
+        
         if let PID = post.postImageData {
-            KCSFileStore.uploadData(PID, options: nil, completionBlock: { (uploadInfo, error) in
+            KCSFileStore.uploadData(PID, options: [KCSFileACL : metadata], completionBlock: { (uploadInfo, error) in
                 if let receivedUploadInfo = uploadInfo {
                     self.upLoadPostObject(receivedUploadInfo,post: post)
                     

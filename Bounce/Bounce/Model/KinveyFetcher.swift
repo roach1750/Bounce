@@ -165,7 +165,7 @@ class KinveyFetcher: NSObject {
             }
             else {
                 print("Fetch \(downloadedData.count) objects from Kinvey")
-                self.handleDownloadedData(downloadedData as! [Post])
+                self.handleDownloadedData(downloadedData as! [Post], place: place)
             }
             },
                              withProgressBlock: { (objects, percentComplete) in
@@ -175,7 +175,7 @@ class KinveyFetcher: NSObject {
     
     
 
-    func handleDownloadedData(data:[Post]) {
+    func handleDownloadedData(data:[Post], place:Place) {
         managedObjectContext.performBlockAndWait {
             for newPost in data  {
                 //create new, unique post
@@ -184,7 +184,7 @@ class KinveyFetcher: NSObject {
             }
             do {
                 try self.managedObjectContext.save()
-                self.fetchDataFromDataBase()
+                self.fetchDataFromDataBase(place)
             }
             catch let error {
                 print(error)
@@ -192,19 +192,22 @@ class KinveyFetcher: NSObject {
         }
     }
     
-    func fetchDataFromDataBase() {
+    func fetchDataFromDataBase(place:Place) {
         countCoreData()
         everyonePostData = [Post]()
         friendsOnlyPostData = [Post]()
-        
+
         managedObjectContext.performBlockAndWait {
             let fetchRequest = NSFetchRequest(entityName: "Post")
             let sortDescriptor = NSSortDescriptor(
                 key: "postCreationDate",
-                ascending: true,
+                ascending: false,
                 selector: #selector(NSString.localizedStandardCompare(_:))
             )
             fetchRequest.sortDescriptors = [sortDescriptor]
+            let placeKeyPredicate = NSPredicate(format: "postBounceKey = %@", place.placeBounceKey!)
+            fetchRequest.predicate = placeKeyPredicate
+            
             
             do {
                 let queryResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)
@@ -263,7 +266,7 @@ class KinveyFetcher: NSObject {
         store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) in
             if errorOrNil == nil {
                 print("Downloaded \(objectsOrNil.count) posts to update")
-                self.saveUpdatedDataToCoreData(objectsOrNil as! [Post])
+                self.saveUpdatedDataToCoreData(objectsOrNil as! [Post], place: place)
             } else {
                 NSLog("error occurred: %@", errorOrNil)
             }
@@ -271,7 +274,7 @@ class KinveyFetcher: NSObject {
             }, withProgressBlock: nil)
     }
     
-    func saveUpdatedDataToCoreData(data:[Post]) {
+    func saveUpdatedDataToCoreData(data:[Post], place:Place) {
         
         let fetchRequest = NSFetchRequest(entityName: "Post")
         print(data.count)
@@ -293,7 +296,7 @@ class KinveyFetcher: NSObject {
             } catch {
             }
         }
-        self.fetchDataFromDataBase()
+        self.fetchDataFromDataBase(place)
     }
     
     
