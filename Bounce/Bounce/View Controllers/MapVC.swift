@@ -22,6 +22,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     //constants
     var fetcher = KinveyFetcher()
     
+    @IBOutlet weak var locationButton: UIButton!
     
     //Variables
     var selectedPlace: Place?
@@ -78,6 +79,17 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         self.performSegueWithIdentifier("showSettingsSegue", sender: self)
     }
     
+    @IBAction func locationButtonPressed(sender: UIButton) {
+        mapView.userTrackingMode = .Follow
+        locationButton.setImage(UIImage(named: "LocationButtonSelected"), forState: .Normal)
+    }
+    
+    func mapView(mapView: MKMapView, didChangeUserTrackingMode mode: MKUserTrackingMode, animated: Bool) {
+        if mode != .Follow {
+            locationButton.setImage(UIImage(named: "LocationButton"), forState: .Normal)
+        }
+    }
+
     
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
         createAnnotations()

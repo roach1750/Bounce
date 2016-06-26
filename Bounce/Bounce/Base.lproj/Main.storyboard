@@ -109,15 +109,28 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ic1-fC-SSV"/>
                                 </items>
                             </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVs-fL-3Iq">
+                                <rect key="frame" x="531" y="467" width="49" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="HVs-fL-3Iq" secondAttribute="height" multiplier="1:1" id="uhc-Fb-q8x"/>
+                                </constraints>
+                                <state key="normal" image="LocationButton"/>
+                                <connections>
+                                    <action selector="locationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Et-V3-HoW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="5oW-Xg-fee" firstAttribute="top" secondItem="UKq-Y6-kDC" secondAttribute="bottom" id="3hb-Eq-3zf"/>
                             <constraint firstItem="UKq-Y6-kDC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Meg-nv-pai"/>
                             <constraint firstItem="5oW-Xg-fee" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Q59-kj-ROn"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="HVs-fL-3Iq" secondAttribute="bottom" constant="20" id="XhK-wk-mfg"/>
                             <constraint firstAttribute="trailing" secondItem="5oW-Xg-fee" secondAttribute="trailing" id="Y2b-Fi-JRp"/>
+                            <constraint firstItem="HVs-fL-3Iq" firstAttribute="height" secondItem="5oW-Xg-fee" secondAttribute="height" multiplier="0.1" id="Ydp-CS-U9e"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5oW-Xg-fee" secondAttribute="bottom" id="nlc-Uw-s3A"/>
                             <constraint firstAttribute="trailing" secondItem="UKq-Y6-kDC" secondAttribute="trailing" id="sjP-75-7TE"/>
+                            <constraint firstItem="HVs-fL-3Iq" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="vf2-F3-qvr"/>
                             <constraint firstItem="UKq-Y6-kDC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vxj-9B-F0W"/>
                         </constraints>
                     </view>
@@ -156,6 +169,7 @@
                     <connections>
                         <outlet property="composeButton" destination="2C3-ai-Fpl" id="qJ1-zJ-2zU"/>
                         <outlet property="fetchButton" destination="sft-Yo-B7n" id="Mpc-4U-69y"/>
+                        <outlet property="locationButton" destination="HVs-fL-3Iq" id="14M-9C-hPV"/>
                         <outlet property="mapView" destination="5oW-Xg-fee" id="Ygs-3T-cG5"/>
                         <outlet property="shareSettingSegmentControl" destination="nYe-xz-who" id="LAG-An-xPs"/>
                         <outlet property="shareSettingToolbar" destination="UKq-Y6-kDC" id="sLb-4D-fg0"/>
@@ -957,6 +971,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="LocationButton" width="62" height="60"/>
         <image name="MoreInfo" width="79" height="30"/>
         <image name="cameraImage" width="1000" height="1000"/>
         <image name="gear" width="22" height="22"/>
