@@ -27,6 +27,7 @@ class KinveyFetcher: NSObject {
     var friendsOnlyPlaceData: [Place]?
     var everyonePlaceData: [Place]?
     
+    var topPlaceImageData = [String : NSData]()
     
     
     func queryForAllPlaces() {
@@ -340,6 +341,56 @@ class KinveyFetcher: NSObject {
             try self.managedObjectContext.save()
         } catch {
         }
+    }
+    
+    // 1. query kinvey for the top post for that place
+    // 2. check if this post is already in core database 
+    // 3. get the image from the data base or download the image from kinvey
+    
+    func downloadTopImageForPlace(place: Place) {
+        downloadTopPostForPlace(place)
+    }
+    
+    private func downloadTopPostForPlace(place: Place) {
+        let query = configurePostQueryWithPlace(place, addDate: false)
+        let dataSort = KCSQuerySortModifier(field: "score", inDirection: KCSSortDirection.Descending)
+        query.addSortModifier(dataSort)
+        query.limitModifer = KCSQueryLimitModifier(limit: 1)
+        
+        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
+        store.queryWithQuery(query, withCompletionBlock: { (downloadedData: [AnyObject]!, errorOrNil: NSError!) -> Void in
+            if let error = errorOrNil {
+                print("Error from downloading posts data only: \(error)")
+            }
+            else {
+                if let topPost = downloadedData[0] as? Post {
+                    print("fetched top place")
+                    self.fetchImageForTopPost(topPost, place: place)
+                }
+            }
+            },
+                             withProgressBlock: { (objects, percentComplete) in
+        })
+    }
+    
+    private func fetchImageForTopPost(post: Post, place: Place) {
+        KCSFileStore.downloadData(
+            post.postImageFileInfo,
+            completionBlock: { (downloadedResources: [AnyObject]!, error: NSError!) -> Void in
+                if error == nil {
+                    print("fetched top place Image")
+
+                    let file = downloadedResources[0] as! KCSFile
+                    self.topPlaceImageData[place.entityId!] = file.data
+                    NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETOPIMAGEDOWNLOADEDNOTIFICATION, object: nil)
+                    } else {
+                    print("Error from fetching place top image \(error)")
+                }
+            },
+            progressBlock: { (objects, percentComplete) in
+                print(percentComplete * 100)
+        })
+
     }
     
     

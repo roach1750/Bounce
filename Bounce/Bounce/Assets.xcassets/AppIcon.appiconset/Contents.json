@@ -128,6 +128,11 @@
       "subtype" : "42mm"
     },
     {
+      "idiom" : "mac",
+      "size" : "256x256",
+      "scale" : "1x"
+    },
+    {
       "size" : "256x256",
       "idiom" : "mac",
       "filename" : "iTunesArtwork-513.png",

@@ -21,7 +21,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     //constants
     var fetcher = KinveyFetcher()
-
+    
     
     //Variables
     var selectedPlace: Place?
@@ -34,6 +34,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         requestLocationData()
         configureViewColors()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MapVC.createAnnotations), name: BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MapVC.topImageForPlaceDownloaded), name: BOUNCETOPIMAGEDOWNLOADEDNOTIFICATION, object: nil)
     }
     
     func configureViewColors() {
@@ -53,7 +54,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
-
+        
         fetcher = KinveyFetcher()
         fetcher.queryForAllPlaces()
     }
@@ -98,7 +99,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         }
         else {
             data = fetcher.everyonePlaceData
-
+            
         }
         
         if let objects = data {
@@ -129,10 +130,9 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         {
             return nil
         }
-        
         let bounceAnnotation = annotation as! BounceAnnotation
-        let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotationIdentifier")
         if let place = bounceAnnotation.place {
+            let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: place.entityId!)
             let score = Int(place.placeScore!)
             if score <= BOUNCEDARKBLUESCORE {
                 pinAnnotationView.pinTintColor = BOUNCEDARKBLUE
@@ -152,17 +152,45 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             else {
                 pinAnnotationView.pinTintColor = BOUNCERED
             }
+
+            
+            pinAnnotationView.canShowCallout = true
+            pinAnnotationView.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            return pinAnnotationView
         }
-        
-        
-        
-        
-        
-        pinAnnotationView.canShowCallout = true
-        pinAnnotationView.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-        return pinAnnotationView
+        return nil
     }
     
+    func topImageForPlaceDownloaded() {
+        print("reloading map data")
+        let currentAnnotation = mapView.selectedAnnotations[0] as? BounceAnnotation
+        let place = currentAnnotation?.place
+        let currentPinAnotation = mapView.viewForAnnotation(currentAnnotation!)
+        if let imageData = KinveyFetcher.sharedInstance.topPlaceImageData[place!.entityId!] {
+            let image = UIImage(data: imageData)
+            let IC = ImageConfigurer()
+            let rotatedImage = IC.rotateImage90Degress(image!)
+            let topPostImageView = UIImageView(frame: CGRectMake(0, 0, 60, 60))
+            topPostImageView.contentMode = .ScaleAspectFit
+            topPostImageView.image  = rotatedImage
+            currentPinAnotation!.leftCalloutAccessoryView = topPostImageView
+            //        print(pinAnnotationView.leftCalloutAccessoryView?.frame)
+        }
+        
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        if let selectedAnnotation = mapView.selectedAnnotations[0] as? BounceAnnotation {
+            if !selectedAnnotation.isKindOfClass(MKUserLocation)
+            {
+                let place = selectedAnnotation.place
+                let kF = KinveyFetcher.sharedInstance
+                kF.downloadTopImageForPlace(place!)
+                print("clicked pin")
+            }
+        }
+        
+    }
     
     
     func mapView(MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -198,7 +226,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             mapView.setRegion(region, animated: true)
             locationManager!.stopUpdatingLocation()
             locationManager = nil
-//            fetchButtonTapped(UIBarButtonItem())
+            fetchButtonTapped(UIBarButtonItem())
         }
     }
     
@@ -230,38 +258,38 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     
     //This animated the pin drop see: http://stackoverflow.com/questions/1857160/how-can-i-create-a-custom-pin-drop-animation-using-mkannotationview
-
-//    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
-//        for aV in views {
-//            if aV.isKindOfClass(MKUserLocation)
-//            {
-//                continue
-//            }
-//            
-//            let endFrame = aV.frame
-//            
-//            aV.frame = CGRectMake(aV.frame.origin.x, aV.frame.origin.y - view.frame.size.height, aV.frame.size.width, aV.frame.size.height)
-//            
-//            UIView.animateWithDuration(0.5, delay: 0.04, options: .CurveLinear, animations: { 
-//                aV.frame = endFrame
-//                }, completion: { finished in
-//                    if finished {
-//                        UIView.animateWithDuration(0.05, animations: { 
-//                            aV.transform = CGAffineTransformMakeScale(1.0, 0.8)
-//                            }, completion: { finished in
-//                                if finished {
-//                                    UIView.animateWithDuration(0.1, animations: {
-//                                        aV.transform = CGAffineTransformIdentity
-//                                    })
-//                                }
-//                        })
-//                    }
-//                    
-//            })
-//            
-//
-//        }
-//    }
+    
+    //    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+    //        for aV in views {
+    //            if aV.isKindOfClass(MKUserLocation)
+    //            {
+    //                continue
+    //            }
+    //
+    //            let endFrame = aV.frame
+    //
+    //            aV.frame = CGRectMake(aV.frame.origin.x, aV.frame.origin.y - view.frame.size.height, aV.frame.size.width, aV.frame.size.height)
+    //
+    //            UIView.animateWithDuration(0.5, delay: 0.04, options: .CurveLinear, animations: {
+    //                aV.frame = endFrame
+    //                }, completion: { finished in
+    //                    if finished {
+    //                        UIView.animateWithDuration(0.05, animations: {
+    //                            aV.transform = CGAffineTransformMakeScale(1.0, 0.8)
+    //                            }, completion: { finished in
+    //                                if finished {
+    //                                    UIView.animateWithDuration(0.1, animations: {
+    //                                        aV.transform = CGAffineTransformIdentity
+    //                                    })
+    //                                }
+    //                        })
+    //                    }
+    //
+    //            })
+    //
+    //
+    //        }
+    //    }
     
     
     
