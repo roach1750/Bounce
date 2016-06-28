@@ -9,7 +9,8 @@
 import UIKit
 import MapKit
 import CoreLocation
-
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     //Outlets
@@ -38,6 +39,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MapVC.topImageForPlaceDownloaded), name: BOUNCETOPIMAGEDOWNLOADEDNOTIFICATION, object: nil)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        configureViewForUserStatus()
+    }
+    
     func configureViewColors() {
         //Navigation Bar Colors
         
@@ -51,7 +56,12 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     @IBAction func composeButtonTapped(sender: UIBarButtonItem) {
-        performSegueWithIdentifier("createPostSegue", sender: self)
+        if FBSDKAccessToken.currentAccessToken() == nil || KCSUser.activeUser() == nil {
+            addAndShowAlertToGoToSettingsWithMessage("You need to login to go to create a post, click login below")
+        }
+        else {
+            performSegueWithIdentifier("createPostSegue", sender: self)
+        }
     }
     
     @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
@@ -92,7 +102,18 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
-        createAnnotations()
+        if  currentShareSetting() == BOUNCEFRIENDSONLYSHARESETTING {
+            if FBSDKAccessToken.currentAccessToken() == nil || KCSUser.activeUser() == nil {
+                addAndShowAlertToGoToSettingsWithMessage("You need to login see your friends posts, click login below")
+                shareSettingSegmentControl.selectedSegmentIndex = 1
+            }
+            else {
+                createAnnotations()
+            }
+        }
+        else {
+            createAnnotations()
+        }
     }
     
     //MARK: - MapView Delegate Methods
@@ -238,7 +259,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             mapView.setRegion(region, animated: true)
             locationManager!.stopUpdatingLocation()
             locationManager = nil
-            fetchButtonTapped(UIBarButtonItem())
+//            fetchButtonTapped(UIBarButtonItem())
         }
     }
     
@@ -268,42 +289,42 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
     }
     
+
     
-    //This animated the pin drop see: http://stackoverflow.com/questions/1857160/how-can-i-create-a-custom-pin-drop-animation-using-mkannotationview
+    //MARK: User Logged in view customization 
     
-    //    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
-    //        for aV in views {
-    //            if aV.isKindOfClass(MKUserLocation)
-    //            {
-    //                continue
-    //            }
-    //
-    //            let endFrame = aV.frame
-    //
-    //            aV.frame = CGRectMake(aV.frame.origin.x, aV.frame.origin.y - view.frame.size.height, aV.frame.size.width, aV.frame.size.height)
-    //
-    //            UIView.animateWithDuration(0.5, delay: 0.04, options: .CurveLinear, animations: {
-    //                aV.frame = endFrame
-    //                }, completion: { finished in
-    //                    if finished {
-    //                        UIView.animateWithDuration(0.05, animations: {
-    //                            aV.transform = CGAffineTransformMakeScale(1.0, 0.8)
-    //                            }, completion: { finished in
-    //                                if finished {
-    //                                    UIView.animateWithDuration(0.1, animations: {
-    //                                        aV.transform = CGAffineTransformIdentity
-    //                                    })
-    //                                }
-    //                        })
-    //                    }
-    //
-    //            })
-    //
-    //
-    //        }
-    //    }
+    func configureViewForUserStatus() {
+        if FBSDKAccessToken.currentAccessToken() == nil || KCSUser.activeUser() == nil {
+            //the user is not logged in
+            changeViewStateToNotLoggedIn()
+        }
+        else {
+            changeViewStateToLoggedIn()
+        }
+    }
     
+    func changeViewStateToNotLoggedIn() {
+        composeButton.tintColor = UIColor(white: 1.0, alpha: 0.3)
+    }
     
+    func changeViewStateToLoggedIn(){
+        composeButton.tintColor = UIColor(white: 1.0, alpha: 1.0)
+    }
+    
+   
+    func addAndShowAlertToGoToSettingsWithMessage(message:String) {
+        let alertController = UIAlertController(title: "Hey!", message: message, preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in}
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: "Login", style: .Default) { (action) in
+            self.settingsButtonPressed(UIBarButtonItem())
+        }
+        alertController.addAction(OKAction)
+        self.presentViewController(alertController, animated: true) {
+        }
+
+    }
     
     
     

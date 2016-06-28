@@ -40,6 +40,10 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
         
     }
     
+    @IBAction func doneButtonPressed(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: {});
+
+    }
 
     func configureContinueButton() {
             
