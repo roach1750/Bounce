@@ -16,7 +16,6 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
     
     @IBOutlet weak var profilePictureView: FBSDKProfilePictureView!
     
-    @IBOutlet weak var continueButton: UIButton!
     
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -25,7 +24,6 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
         super.viewDidLoad()
         nameLabel.text = ""
 
-        configureContinueButton()
         
         let loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["public_profile", "email", "user_friends"]
@@ -49,16 +47,11 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
             
         if FBSDKAccessToken.currentAccessToken() != nil && KCSUser.activeUser() != nil {
             print("Logged in with Facebook & Kinvey")
-            self.continueButton.setTitle("Let's Bounce!", forState: .Normal)
-            self.continueButton.enabled = true
-            self.continueButton.alpha = 1.0
-//            continueButton.sendActionsForControlEvents(.TouchUpInside)
+
         }
         else {
             print("Not Login")
-            self.continueButton.enabled = false
-            self.continueButton.alpha = 0.3
-            self.continueButton.setTitle("Continue without facebook...", forState: .Normal)
+
 
         }
     }

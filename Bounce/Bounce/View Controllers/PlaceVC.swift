@@ -29,6 +29,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var posts:[Post]?
     
     override func viewDidLoad() {
+        tableView.dataSource = nil
         configureTableView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.reloadTable), name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.refreshComplete), name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
@@ -49,6 +50,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     func reloadTable() {
+        tableView.dataSource = self
         switch shareSettingSegmentedControl.selectedSegmentIndex {
         case 0:
             posts = kinveyFetcher.friendsOnlyPostData
@@ -57,6 +59,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         default:
             return
         }
+        tableView.reloadData()
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
         tableView.reloadData()
     }
     
@@ -116,6 +121,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         kinveyFetcher.fetchPostsForPlace(place!)
     }
     
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if let placesPost = posts {
             let currentPost = placesPost[indexPath.section]
@@ -135,6 +141,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     let rotatedImage = IC.rotateImage90Degress(image!)
                     cell.postImageView?.image = rotatedImage
                     cell.postImageView?.contentMode = .ScaleAspectFit
+                    print("loading image for cell # \(indexPath.section)")
                     
                 }
                 else {
@@ -169,12 +176,14 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.layoutMargins = UIEdgeInsetsZero
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-            
-            if cell.frame.width != view.frame.width {
-                reloadTable()
-            }
-            
-            
+//            
+//            print(cell.frame.width)
+//            
+//            if cell.frame.width != view.frame.width {
+////                reloadTable()
+//            }
+//            
+//            
             return cell
         }
         
@@ -182,6 +191,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell()
     }
     
+
     func getIdentifierForCell(post: Post) -> String {
         
         if post.postHasImage == NSNumber(bool: true) && post.postMessage != nil{
@@ -249,12 +259,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             increment = 0
         }
         
-        
-        
         let currentPost = posts![(indexPath?.section)!]
         let kUP = KinveyUploader()
         kUP.changeScoreForPost(currentPost,increment: increment)
-        
         
         let newScore = Int(currentPost.postScore!) + increment
         cell.postScoreLabel.text = String(newScore)

@@ -7,6 +7,8 @@
 //
 
 import CoreData
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class KinveyFetcher: NSObject {
     
@@ -42,8 +44,11 @@ class KinveyFetcher: NSObject {
         store.queryWithQuery(
             query,
             withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
-                print("Fetched \(objectsOrNil.count) Place objects")
-                self.sortPlaceData(objectsOrNil)
+                if let objects = objectsOrNil {
+                    print("Fetched \(objects.count) Place objects")
+                    self.sortPlaceData(objects)
+                }
+
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false;
                 
             },
@@ -61,11 +66,18 @@ class KinveyFetcher: NSObject {
         //Everyone Query
         let everyoneQuery = KCSQuery(onField: BOUNCEPLACEEVERYONEAUTHORS, usingConditional: .KCSNotEqual, forValue: [])
         //Friends Only Query
-        let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
-        let friendsOnlyQuery = KCSQuery(onField: BOUNCEPLACEFRIENDONLYAUTHORS, usingConditional: .KCSIn, forValue: facebookFriendIDs)
+        if FBSDKAccessToken.currentAccessToken() != nil && KCSUser.activeUser() != nil {
+            let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
+            let friendsOnlyQuery = KCSQuery(onField: BOUNCEPLACEFRIENDONLYAUTHORS, usingConditional: .KCSIn, forValue: facebookFriendIDs)
+            let combineQuery = everyoneQuery.queryByJoiningQuery(friendsOnlyQuery, usingOperator: .KCSOr)
+            return combineQuery
+        }
+        else {
+            return everyoneQuery
+        }
+
         //combine and return
-        let combineQuery = everyoneQuery.queryByJoiningQuery(friendsOnlyQuery, usingOperator: .KCSOr)
-        return combineQuery
+
     }
     
     func sortPlaceData(data:[AnyObject]) {
@@ -112,18 +124,26 @@ class KinveyFetcher: NSObject {
         
         //Get a post from anyone who has the setting set to everyone
         let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEEVERYONESHARESETTING)
-        
-        //If the share setting is to friends only, make sure this person is a friend
-        let friendsOnlyQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEFRIENDSONLYSHARESETTING)
-        let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
-        let matchingFriendsQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, usingConditional: .KCSIn, forValue: facebookFriendIDs)
-        friendsOnlyQuery.addQuery(matchingFriendsQuery)
-        
         let combineEveryoneQuery = everyoneQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
-        let combineFriendsQuery = friendsOnlyQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
+
         
-        let queryToReturn = combineFriendsQuery.queryByJoiningQuery(combineEveryoneQuery, usingOperator: .KCSOr)
-        return queryToReturn
+        if FBSDKAccessToken.currentAccessToken() != nil && KCSUser.activeUser() != nil {
+            //If the share setting is to friends only, make sure this person is a friend
+            let friendsOnlyQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEFRIENDSONLYSHARESETTING)
+            let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
+            let matchingFriendsQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, usingConditional: .KCSIn, forValue: facebookFriendIDs)
+            friendsOnlyQuery.addQuery(matchingFriendsQuery)
+            let combineFriendsQuery = friendsOnlyQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
+            let queryToReturn = combineFriendsQuery.queryByJoiningQuery(combineEveryoneQuery, usingOperator: .KCSOr)
+            return queryToReturn
+        }
+        else {
+            return combineEveryoneQuery
+        }
+        
+        
+        
+
     }
     
     //
@@ -223,7 +243,7 @@ class KinveyFetcher: NSObject {
                         self.everyonePostData = queryResults as? [Post]
                     }
                 }
-                
+                print("reloading from fetched database data")
                 NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
             } catch let error {
                 print(error)
@@ -313,7 +333,7 @@ class KinveyFetcher: NSObject {
                     post.postImageData = fileData
                     NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
                     self.saveImageToCoreDataForPost(post)
-                    print("fetched Image for post")
+                    print("fetched Image for post with message: \(post.postMessage!)")
                 } else {
                     print("Error from fetching post image \(error)")
                 }
@@ -388,7 +408,7 @@ class KinveyFetcher: NSObject {
                 }
             },
             progressBlock: { (objects, percentComplete) in
-                print(percentComplete * 100)
+//                print(percentComplete * 100)
         })
 
     }

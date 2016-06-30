@@ -43,6 +43,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         configureViewForUserStatus()
     }
     
+//    override func viewWillDisappear(animated: Bool) {
+//        NSNotificationCenter.defaultCenter().removeObserver(self, forKeyPath: BOUNCETOPIMAGEDOWNLOADEDNOTIFICATION)
+//    }
+    
     func configureViewColors() {
         //Navigation Bar Colors
         
@@ -259,7 +263,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             mapView.setRegion(region, animated: true)
             locationManager!.stopUpdatingLocation()
             locationManager = nil
-//            fetchButtonTapped(UIBarButtonItem())
+            fetchButtonTapped(UIBarButtonItem())
         }
     }
     

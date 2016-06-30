@@ -29,21 +29,8 @@
                                     <constraint firstAttribute="width" secondItem="xK4-S5-K5Z" secondAttribute="height" multiplier="1:1" id="xIC-XG-AdZ"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwg-Q1-Rni">
-                                <rect key="frame" x="20" y="435" width="560" height="81"/>
-                                <color key="backgroundColor" red="0.16862745098039217" green="0.52156862745098043" blue="0.82745098039215681" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="81" id="q3T-QX-jmT"/>
-                                </constraints>
-                                <state key="normal" title="Let's Bounce!">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="continueToBounceButtonPressed:" destination="ijD-7d-m1j" eventType="touchUpInside" id="vSy-4C-JjM"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YpB-ha-Jtz">
-                                <rect key="frame" x="20" y="216" width="560" height="21"/>
+                                <rect key="frame" x="20" y="216" width="560" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -53,11 +40,7 @@
                         <constraints>
                             <constraint firstItem="xK4-S5-K5Z" firstAttribute="centerX" secondItem="Q1h-MR-LcL" secondAttribute="centerX" id="2MD-nk-gtD"/>
                             <constraint firstItem="xK4-S5-K5Z" firstAttribute="top" secondItem="U1q-xb-o4B" secondAttribute="bottom" constant="8" id="AJU-UN-Ixp"/>
-                            <constraint firstItem="cwg-Q1-Rni" firstAttribute="leading" secondItem="Q1h-MR-LcL" secondAttribute="leading" constant="20" id="BIH-Ae-wuU"/>
                             <constraint firstAttribute="trailing" secondItem="YpB-ha-Jtz" secondAttribute="trailing" constant="20" id="OLC-d2-Wih"/>
-                            <constraint firstItem="6n9-Pr-pXi" firstAttribute="top" secondItem="cwg-Q1-Rni" secondAttribute="bottom" constant="20" id="Ot8-8F-atQ"/>
-                            <constraint firstAttribute="trailing" secondItem="cwg-Q1-Rni" secondAttribute="trailing" constant="20" id="UUj-2C-Z9S"/>
-                            <constraint firstItem="cwg-Q1-Rni" firstAttribute="centerX" secondItem="Q1h-MR-LcL" secondAttribute="centerX" id="eCa-ox-sOB"/>
                             <constraint firstItem="YpB-ha-Jtz" firstAttribute="top" secondItem="xK4-S5-K5Z" secondAttribute="bottom" constant="8" id="iLn-4k-9PF"/>
                             <constraint firstItem="YpB-ha-Jtz" firstAttribute="leading" secondItem="Q1h-MR-LcL" secondAttribute="leading" constant="20" id="pVO-0I-uw9"/>
                         </constraints>
@@ -70,7 +53,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="continueButton" destination="cwg-Q1-Rni" id="s65-gf-KCS"/>
                         <outlet property="nameLabel" destination="YpB-ha-Jtz" id="RtP-tl-nUY"/>
                         <outlet property="profilePictureView" destination="xK4-S5-K5Z" id="6gB-En-y8R"/>
                     </connections>
@@ -199,7 +181,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pAP-5F-NWL">
-                                <rect key="frame" x="0.0" y="842" width="600" height="94"/>
+                                <rect key="frame" x="0.0" y="842" width="600" height="93.5"/>
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Current Location Button">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -463,7 +445,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="640"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OJR-uK-ydp" id="gke-3n-DCp">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="640"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="639.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G8m-ax-61C">
@@ -584,7 +566,7 @@
                                         <rect key="frame" x="0.0" y="662" width="600" height="715"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MBl-Vd-qvx" id="mRe-fd-HKw">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="715"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="714.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fLq-jL-T0d">
@@ -716,7 +698,7 @@
                                         <rect key="frame" x="0.0" y="1377" width="600" height="115"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qhq-0U-UrM" id="Ibk-0a-ZWL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="114.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="UMh-Zk-rTP">
