@@ -141,7 +141,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     let rotatedImage = IC.rotateImage90Degress(image!)
                     cell.postImageView?.image = rotatedImage
                     cell.postImageView?.contentMode = .ScaleAspectFit
-                    print("loading image for cell # \(indexPath.section)")
+//                    print("loading image for cell # \(indexPath.section)")
                     
                 }
                 else {
@@ -261,7 +261,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         let currentPost = posts![(indexPath?.section)!]
         let kUP = KinveyUploader()
-        kUP.changeScoreForPost(currentPost,increment: increment)
+        kUP.changeScoreForPost(currentPost,place: place!,increment: increment)
         
         let newScore = Int(currentPost.postScore!) + increment
         cell.postScoreLabel.text = String(newScore)

@@ -249,6 +249,7 @@
                     <size key="freeformSize" width="600" height="1000"/>
                     <connections>
                         <outlet property="locationButton" destination="pAP-5F-NWL" id="eSp-vl-qUw"/>
+                        <outlet property="postButton" destination="eO5-dA-TvO" id="QwC-Hr-Nk2"/>
                         <outlet property="postImageView" destination="jCy-el-dWO" id="GRY-fO-JGE"/>
                         <outlet property="postTextView" destination="gcQ-uc-G5z" id="WRv-cH-DpM"/>
                         <segue destination="aRa-WI-oz7" kind="presentation" identifier="showCamera" id="mC5-Uw-hGL"/>

@@ -200,6 +200,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     func topImageForPlaceDownloaded() {
         print("reloading map data")
+        if mapView.selectedAnnotations.count > 0 {
         let currentAnnotation = mapView.selectedAnnotations[0] as? BounceAnnotation
         let place = currentAnnotation?.place
         let currentPinAnotation = mapView.viewForAnnotation(currentAnnotation!)
@@ -212,6 +213,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             topPostImageView.image  = rotatedImage
             currentPinAnotation!.leftCalloutAccessoryView = topPostImageView
             //        print(pinAnnotationView.leftCalloutAccessoryView?.frame)
+        }
         }
         
     }

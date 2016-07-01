@@ -14,6 +14,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var postButton: UIBarButtonItem!
     
     var postImageDeleteButton: UIButton!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -27,8 +28,10 @@ class PostVC: UIViewController, UITextViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.updateProgressIndicator(_:)), name: BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.showProgressIndicator), name: BOUNCEIMAGEUPLOADBEGANNOTIFICATION, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostVC.removeProgressIndicator), name: BOUNCEIMAGEUPLOADCOMPLETENOTIFICATION, object: nil)
+        postButton.enabled = false
         
     }
+    
     
     override func viewDidAppear(animated: Bool) {
         restoreDataIfApplicable()
@@ -67,7 +70,8 @@ class PostVC: UIViewController, UITextViewDelegate {
             let IC = ImageConfigurer()
             postImageView.image = IC.rotateImage90Degress(UIImage(data: appDelegate.tempPostImageData!)!)
             addDeleteImageButton()
-            
+            postButton.enabled = true
+
         }
         else {
             postImageView.image = UIImage(named: "cameraImage")
@@ -92,7 +96,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     
     func deleteImagePressed(){
         removeDeleteImageButton()
-        
+        postButton.enabled = false
         appDelegate.tempPostImageData = nil
         
         postImageView.image = UIImage(named: "cameraImage")

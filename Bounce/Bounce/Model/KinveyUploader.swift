@@ -88,18 +88,20 @@ class KinveyUploader: NSObject {
         })
     }
 
-    func changeScoreForPost(post: Post, increment: Int) {
+    func changeScoreForPost(post: Post, place: Place, increment: Int) {
         KCSCustomEndpoints.callEndpoint(
             "incrementScore",
             params: ["increment":increment,"_id": post.postUniqueId!],
             completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
                 if results != nil {
                     print("Incremental Success")
+                    KinveyFetcher.sharedInstance.fetchUpdatedPostsForPlace(place)
                 } else {
                     print("Incremental Error: \(error)")
                 }
             }
         )
+        
     }
     
     func reportPost(post:Post,reason:String) {
