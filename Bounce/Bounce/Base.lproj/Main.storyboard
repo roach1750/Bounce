@@ -337,6 +337,7 @@
                     <size key="freeformSize" width="600" height="818"/>
                     <connections>
                         <outlet property="cameraPreviewImageView" destination="Khr-gG-Kap" id="wTP-mY-jfo"/>
+                        <outlet property="saveButton" destination="qsJ-k4-ILX" id="7Oh-qV-0rV"/>
                         <outlet property="takePictureButton" destination="5a0-2U-j8X" id="jfp-ig-Ari"/>
                     </connections>
                 </viewController>

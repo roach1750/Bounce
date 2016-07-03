@@ -48,7 +48,7 @@ class Place: NSObject {
     
     
     
-    /// Below is kinvey core data methods, this many be useful for the future...don't delete for now
+    /// Below is kinvey core data methods, this may be useful for the future...don't delete for now
     
 //    internal override static func kinveyObjectBuilderOptions() -> [NSObject : AnyObject]! {
 //        return [

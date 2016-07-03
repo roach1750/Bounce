@@ -14,6 +14,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     @IBOutlet weak var cameraPreviewImageView: UIImageView!
     @IBOutlet weak var takePictureButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     
     //    let captureSession: AVCaptureSession = AVCaptureSession()
     var captureSession: AVCaptureSession = AVCaptureSession()
@@ -31,6 +32,10 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
     override func viewDidAppear(animated: Bool) {
         beginCameraSession()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        saveButton.hidden = true
     }
     
     func beginCameraSession(){
@@ -125,6 +130,8 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         else {
             cameraPreviewImageView.image = nil
             takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
+            self.saveButton.hidden = true
+
             beginCameraSession()
         }
     }
@@ -135,6 +142,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         if let configuredImage = IC.image {
             self.cameraPreviewImageView.image = configuredImage;
             self.takePictureButton.setImage(UIImage(named: "Delete Picture Button"), forState: .Normal)
+            self.saveButton.hidden = false
         }
 
         
