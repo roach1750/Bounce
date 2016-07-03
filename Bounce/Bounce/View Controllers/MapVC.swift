@@ -43,9 +43,9 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         configureViewForUserStatus()
     }
     
-//    override func viewWillDisappear(animated: Bool) {
-//        NSNotificationCenter.defaultCenter().removeObserver(self, forKeyPath: BOUNCETOPIMAGEDOWNLOADEDNOTIFICATION)
-//    }
+    //    override func viewWillDisappear(animated: Bool) {
+    //        NSNotificationCenter.defaultCenter().removeObserver(self, forKeyPath: BOUNCETOPIMAGEDOWNLOADEDNOTIFICATION)
+    //    }
     
     func configureViewColors() {
         //Navigation Bar Colors
@@ -103,7 +103,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             locationButton.setImage(UIImage(named: "LocationButton"), forState: .Normal)
         }
     }
-
+    
     
     @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
         if  currentShareSetting() == BOUNCEFRIENDSONLYSHARESETTING {
@@ -189,7 +189,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             else {
                 pinAnnotationView.pinTintColor = BOUNCERED
             }
-
+            
             
             pinAnnotationView.canShowCallout = true
             pinAnnotationView.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
@@ -201,30 +201,34 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func topImageForPlaceDownloaded() {
         print("reloading map data")
         if mapView.selectedAnnotations.count > 0 {
-        let currentAnnotation = mapView.selectedAnnotations[0] as? BounceAnnotation
-        let place = currentAnnotation?.place
-        let currentPinAnotation = mapView.viewForAnnotation(currentAnnotation!)
-        if let imageData = KinveyFetcher.sharedInstance.topPlaceImageData[place!.entityId!] {
-            let image = UIImage(data: imageData)
-            let IC = ImageConfigurer()
-            let rotatedImage = IC.rotateImage90Degress(image!)
-            let topPostImageView = UIImageView(frame: CGRectMake(0, 0, 60, 60))
-            topPostImageView.contentMode = .ScaleAspectFit
-            topPostImageView.image  = rotatedImage
-            currentPinAnotation!.leftCalloutAccessoryView = topPostImageView
-            //        print(pinAnnotationView.leftCalloutAccessoryView?.frame)
-        }
+            let currentAnnotation = mapView.selectedAnnotations[0] as? BounceAnnotation
+            let place = currentAnnotation?.place
+            let currentPinAnotation = mapView.viewForAnnotation(currentAnnotation!)
+            if let imageData = KinveyFetcher.sharedInstance.topPlaceImageData[place!.entityId!] {
+                let image = UIImage(data: imageData)
+                let IC = ImageConfigurer()
+                let rotatedImage = IC.rotateImage90Degress(image!)
+                let topPostImageView = UIImageView(frame: CGRectMake(0, 0, 60, 60))
+                topPostImageView.contentMode = .ScaleAspectFit
+                topPostImageView.image  = rotatedImage
+                currentPinAnotation!.leftCalloutAccessoryView = topPostImageView
+                //        print(pinAnnotationView.leftCalloutAccessoryView?.frame)
+            }
         }
         
     }
     
+    //////////////////////////////////////////////////////////////////////////////////////////when should this data be reloaded? 
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         if let selectedAnnotation = mapView.selectedAnnotations[0] as? BounceAnnotation {
             if !selectedAnnotation.isKindOfClass(MKUserLocation)
             {
-                let place = selectedAnnotation.place
-                let kF = KinveyFetcher.sharedInstance
-                kF.downloadTopImageForPlace(place!)
+                let currentPinAnotation = mapView.viewForAnnotation(selectedAnnotation)
+                if currentPinAnotation?.leftCalloutAccessoryView == nil {
+                    let place = selectedAnnotation.place
+                    let kF = KinveyFetcher.sharedInstance
+                    kF.downloadTopImageForPlace(place!)
+                }
                 print("clicked pin")
             }
         }
@@ -295,9 +299,9 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
     }
     
-
     
-    //MARK: User Logged in view customization 
+    
+    //MARK: User Logged in view customization
     
     func configureViewForUserStatus() {
         if FBSDKAccessToken.currentAccessToken() == nil || KCSUser.activeUser() == nil {
@@ -317,7 +321,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         composeButton.tintColor = UIColor(white: 1.0, alpha: 1.0)
     }
     
-   
+    
     func addAndShowAlertToGoToSettingsWithMessage(message:String) {
         let alertController = UIAlertController(title: "Hey!", message: message, preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in}
@@ -329,7 +333,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         alertController.addAction(OKAction)
         self.presentViewController(alertController, animated: true) {
         }
-
+        
     }
     
     

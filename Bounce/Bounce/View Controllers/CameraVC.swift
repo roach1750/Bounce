@@ -27,7 +27,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     override func viewDidLoad() {
         takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraVC.saveImage), name: BOUNCEIMAGEPROCESSEDNOTIFICATION, object: nil)
-        
+        addSwitchCameraButton()
         super.viewDidLoad()
     }
     override func viewDidAppear(animated: Bool) {
