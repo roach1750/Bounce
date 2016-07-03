@@ -68,7 +68,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 previewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.Portrait
                 previewLayer.frame = cameraPreviewImageView.bounds
                 previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-                captureSession.sessionPreset = AVCaptureSessionPresetHigh
+                captureSession.sessionPreset = AVCaptureSessionPresetMedium
                 self.cameraPreviewImageView.layer.addSublayer(previewLayer)
                 captureSession.startRunning()
                 addSwitchCameraButton()

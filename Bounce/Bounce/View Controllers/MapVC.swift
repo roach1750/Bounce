@@ -212,13 +212,13 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
                 topPostImageView.contentMode = .ScaleAspectFit
                 topPostImageView.image  = rotatedImage
                 currentPinAnotation!.leftCalloutAccessoryView = topPostImageView
-                //        print(pinAnnotationView.leftCalloutAccessoryView?.frame)
+//                        print(currentPinAnotation!.leftCalloutAccessoryView?.frame)
             }
         }
         
     }
     
-    //////////////////////////////////////////////////////////////////////////////////////////when should this data be reloaded? 
+    //////////////////////////////////////////////////////////////////////////////////////////when should this data be reloaded?
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         if let selectedAnnotation = mapView.selectedAnnotations[0] as? BounceAnnotation {
             if !selectedAnnotation.isKindOfClass(MKUserLocation)
