@@ -44,7 +44,11 @@ class UserFetcher: NSObject {
                     KCSUser.userWithUsername(
                         userName,
                         password: "bounce",
-                        fieldsAndValues: nil,
+                        fieldsAndValues: [
+                            "userReportedCount" : 0,
+                            KCSUserAttributeGivenname : givenName,
+                            KCSUserAttributeSurname : surname
+                            ],
                         withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
                             if errorOrNil == nil {
                                 print("Created new user")
