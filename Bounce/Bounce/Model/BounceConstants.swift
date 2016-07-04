@@ -18,6 +18,8 @@ let BOUNCEIMAGEKEY  =  "imageFile"
 let BOUNCEHASIMAGEKEY  =  "hasImage"
 let BOUNCESCOREKEY  =  "score"
 let BOUNCEREPORTEDCOUNTKEY  =  "postReportedCount"
+let BOUNCEEXPIREDKEY  =  "postExpired"
+
 let BOUNCEKEY =  "bounceKey"
 let BOUNCEFRIENDSONLYAUTHORSKEY =  "friendOnlyAuthors"
 let BOUNCEEVERYONEAUTHORSKEY =  "everyoneAuthors"

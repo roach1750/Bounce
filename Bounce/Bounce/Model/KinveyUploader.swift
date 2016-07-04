@@ -38,6 +38,7 @@ class KinveyUploader: NSObject {
         coreDataPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
         coreDataPost.postCreationDate = NSDate()
         coreDataPost.postReportedCount = 0
+        coreDataPost.postExpired = NSNumber(bool: false)
         uploadPostImageThenObject(coreDataPost)
     }
     

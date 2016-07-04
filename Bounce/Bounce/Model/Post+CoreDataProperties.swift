@@ -18,6 +18,8 @@ extension Post {
     @NSManaged var postPlaceName: String?
     @NSManaged var postImageData: NSData?
     @NSManaged var postHasImage: NSNumber?
+    @NSManaged var postExpired: NSNumber?
+
     @NSManaged var postLatitude: NSNumber?
     @NSManaged var postLongitude: NSNumber?
     @NSManaged var postScore: NSNumber?
