@@ -38,6 +38,7 @@ class Post: NSManagedObject {
             newPost.postUploaderKinveyUserName = post.postUploaderKinveyUserName
             newPost.postCreationDate = post.postCreationDate
             newPost.postUniqueId = post.postUniqueId
+            newPost.postReportedCount = post.postReportedCount
         }
         return nil
     }
@@ -70,6 +71,7 @@ class Post: NSManagedObject {
             "postUploaderKinveyUserID" : BOUNCEPOSTUPLOADERKINVEYUSERID,
             "postUploaderKinveyUserName" : BOUNCEPOSTUPLOADERKINVEYUSERNAME,
             "postCreationDate" : BOUNCEPOSTCREATIONDATEKEY,
+            "postReportedCount" :BOUNCEREPORTEDCOUNTKEY,
             "postUniqueId" : KCSEntityKeyId, //the required _id field
         ]
     }

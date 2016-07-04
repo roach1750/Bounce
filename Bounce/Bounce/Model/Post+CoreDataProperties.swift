@@ -21,6 +21,7 @@ extension Post {
     @NSManaged var postLatitude: NSNumber?
     @NSManaged var postLongitude: NSNumber?
     @NSManaged var postScore: NSNumber?
+    @NSManaged var postReportedCount: NSNumber?
     @NSManaged var postShareSetting: String?
     @NSManaged var postBounceKey: String?
     @NSManaged var postUploaderFacebookUserID: String?
