@@ -117,9 +117,19 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                             
                             let dataProvider = CGDataProviderCreateWithCFData(imageData)
                             let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
-                            let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
+                            var image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
                             self.captureSession.stopRunning()
                             let IC = ImageConfigurer.sharedInstance
+                            if self.frontCamera == true {
+                                
+                                image = UIImage(CGImage: image.CGImage!, scale: 1.0, orientation: .UpMirrored)
+                                
+                                //reflect the image 
+                                print("front camera")
+                            }
+                            
+                            
+                            
                             IC.image = image
                             IC.processImage()
                         }
@@ -131,7 +141,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             cameraPreviewImageView.image = nil
             takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
             self.saveButton.hidden = true
-
+            
             beginCameraSession()
         }
     }
@@ -140,6 +150,8 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     func saveImage() {
         let IC = ImageConfigurer.sharedInstance
         if let configuredImage = IC.image {
+            
+            
             self.cameraPreviewImageView.image = configuredImage;
             self.takePictureButton.setImage(UIImage(named: "Delete Picture Button"), forState: .Normal)
             self.saveButton.hidden = false

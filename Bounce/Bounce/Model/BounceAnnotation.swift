@@ -15,14 +15,16 @@ class BounceAnnotation: NSObject, MKAnnotation
     let subtitle:String?
     let coordinate: CLLocationCoordinate2D
     let place: Place?
+    let color: UIColor?
     
-    
-    init(title: String?, subtitle:String?, coordinate: CLLocationCoordinate2D, place: Place?)
+    init(title: String?, subtitle:String?, coordinate: CLLocationCoordinate2D, place: Place?, color: UIColor?)
     {
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
         self.place = place
+        self.color = color
+        
         super.init()
     }
 }

@@ -120,6 +120,17 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         }
     }
     
+    func currentShareSetting() -> String {
+        switch (shareSettingSegmentControl.selectedSegmentIndex) {
+        case 0:
+            return BOUNCEFRIENDSONLYSHARESETTING
+        case 1:
+            return BOUNCEEVERYONESHARESETTING
+        default:
+            return ""
+        }
+    }
+    
     //MARK: - MapView Delegate Methods
     func configureMapView(){
         mapView.showsUserLocation = true
@@ -142,23 +153,59 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let objects = data {
             for place in objects {
                 let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
-                let annotation = BounceAnnotation(title: place.placeName, subtitle: String(place.placeScore!), coordinate: coordinate, place: place)
+                let annotation = BounceAnnotation(title: place.placeName, subtitle: String(place.placeScore!), coordinate: coordinate, place: place, color: UIColor.blueColor())
                 mapView.addAnnotation(annotation)
                 
             }
         }
     }
     
-    func currentShareSetting() -> String {
-        switch (shareSettingSegmentControl.selectedSegmentIndex) {
-        case 0:
-            return BOUNCEFRIENDSONLYSHARESETTING
-        case 1:
-            return BOUNCEEVERYONESHARESETTING
-        default:
-            return ""
+
+    private var mapChangedFromUserInteraction = false
+    
+    private func mapViewRegionDidChangeFromUserInteraction() -> Bool {
+        let view = self.mapView.subviews[0]
+        //  Look through gesture recognizers to determine whether this region change is from user interaction
+        if let gestureRecognizers = view.gestureRecognizers {
+            for recognizer in gestureRecognizers {
+                if( recognizer.state == UIGestureRecognizerState.Began || recognizer.state == UIGestureRecognizerState.Ended ) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        mapChangedFromUserInteraction = mapViewRegionDidChangeFromUserInteraction()
+        if (mapChangedFromUserInteraction) {
+            // user changed map region
+            print("Region will change")
         }
     }
+    
+
+    
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if (mapChangedFromUserInteraction) {
+            // user changed map region
+            print("Region did change")
+            
+            let annotations = mapView.visibleAnnotations()
+            
+            //recalculate pin colors for annotations on screen
+            
+            mapView.removeAnnotations(annotations)
+            
+            createAnnotations()
+            
+            print("There are \(annotations.count) Visiable Annotations")
+        }
+    }
+    
+    
+    
+
     
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
@@ -170,32 +217,43 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let bounceAnnotation = annotation as! BounceAnnotation
         if let place = bounceAnnotation.place {
             let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: place.entityId!)
-            let score = Int(place.placeScore!)
-            if score <= BOUNCEDARKBLUESCORE {
-                pinAnnotationView.pinTintColor = BOUNCEDARKBLUE
-            }
-            else if (score > BOUNCEDARKBLUESCORE && score <= BOUNCELIGHTBLUESCORE){
-                pinAnnotationView.pinTintColor = BOUNCELIGHTBLUE
-            }
-            else if (score > BOUNCELIGHTBLUESCORE && score <= BOUNCEGREENSCORE){
-                pinAnnotationView.pinTintColor = BOUNCEGREEN
-            }
-            else if (score > BOUNCEGREENSCORE && score <= BOUNCEYELLOWSCORE){
-                pinAnnotationView.pinTintColor = BOUNCEYELLOW
-            }
-            else if (score > BOUNCEYELLOWSCORE && score <= BOUNCEORANGESCORE){
-                pinAnnotationView.pinTintColor = BOUNCEORANGE
-            }
-            else {
-                pinAnnotationView.pinTintColor = BOUNCERED
-            }
+//            let score = Int(place.placeScore!)
+            
+//            if score <= BOUNCEDARKBLUESCORE {
+//                pinAnnotationView.pinTintColor = BOUNCEDARKBLUE
+//            }
+//            else if (score > BOUNCEDARKBLUESCORE && score <= BOUNCELIGHTBLUESCORE){
+//                pinAnnotationView.pinTintColor = BOUNCELIGHTBLUE
+//            }
+//            else if (score > BOUNCELIGHTBLUESCORE && score <= BOUNCEGREENSCORE){
+//                pinAnnotationView.pinTintColor = BOUNCEGREEN
+//            }
+//            else if (score > BOUNCEGREENSCORE && score <= BOUNCEYELLOWSCORE){
+//                pinAnnotationView.pinTintColor = BOUNCEYELLOW
+//            }
+//            else if (score > BOUNCEYELLOWSCORE && score <= BOUNCEORANGESCORE){
+//                pinAnnotationView.pinTintColor = BOUNCEORANGE
+//            }
+//            else {
+//                pinAnnotationView.pinTintColor = BOUNCERED
+//            }
             
             
+            
+//            pinAnnotationView.pinTintColor = bounceAnnotation.color!
+            pinAnnotationView.pinTintColor  = getRandomColor()
             pinAnnotationView.canShowCallout = true
             pinAnnotationView.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
             return pinAnnotationView
         }
         return nil
+    }
+
+    func getRandomColor() -> UIColor{
+        let randomRed:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
     
     func topImageForPlaceDownloaded() {
@@ -342,5 +400,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
 }
 
+extension MKMapView {
+    func visibleAnnotations() -> [MKAnnotation] {
+        return self.annotationsInMapRect(self.visibleMapRect).map { obj -> MKAnnotation in return obj as! MKAnnotation }
+    }
+}
 
 
