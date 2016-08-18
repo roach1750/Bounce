@@ -152,8 +152,12 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         
         if let objects = data {
             for place in objects {
+                let color = colorDict[place.placeScore!]
+                print(color)
+                
+                
                 let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
-                let annotation = BounceAnnotation(title: place.placeName, subtitle: String(place.placeScore!), coordinate: coordinate, place: place, color: UIColor.blueColor())
+                let annotation = BounceAnnotation(title: place.placeName, subtitle: String(place.placeScore!), coordinate: coordinate, place: place, color: color)
                 mapView.addAnnotation(annotation)
                 
             }
@@ -184,22 +188,77 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         }
     }
     
+    func roundToNearest(number: Double, toNearest: Double) -> Double {
+        return round(number / toNearest) * toNearest
+    }
+    
+    
+    func pinColorPicker(pins:[BounceAnnotation]) -> [NSNumber:UIColor] {
+        
+        var scores = [Double]()
+        var colorDict = [NSNumber:UIColor]()
+        
+        for pin in pins {
+            let score = pin.place?.placeScore
+            scores.append(Double(score!))
+        }
+        
+        let maxScore = scores.maxElement()
+        let minScore = scores.minElement()
+        
+        var h = 0.0
+        let s = 1.0
+        let b = 0.5
+        let a = 1.0
+        
+        let startAngle = 180.0
+        let angle = 240.0 - startAngle
+        
+        
+        //Curve is an arc, so length is length of an arc
+        let curveLength = (2.0 * M_PI * s * angle / 360.0)
+        
+        for score in scores {
+            
+            let newLength = curveLength * score / (maxScore! - minScore!)
+            
+            let absAngle = newLength * 360 / (2.0 * M_PI * s) + startAngle
+            
+            h = roundToNearest(absAngle/360,toNearest: 0.1)
+            
+            let color = UIColor(hue: CGFloat(Float(h)), saturation: CGFloat(Float(s)), brightness: CGFloat(Float(b)), alpha: CGFloat(Float(a)))
+            
+            print(color)
+            
+            colorDict[NSNumber(double: score)] = color
+        }
+        return colorDict
+    }
 
+    var colorDict = [NSNumber:UIColor]()
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         if (mapChangedFromUserInteraction) {
             // user changed map region
+            
             print("Region did change")
             
             let annotations = mapView.visibleAnnotations()
+            var bounceAnnotations = [BounceAnnotation]()
+            for annotation in annotations {
+                if annotation.isKindOfClass(BounceAnnotation) {
+                    bounceAnnotations.append(annotation as! BounceAnnotation)
+                }
+            }
             
             //recalculate pin colors for annotations on screen
+            colorDict = pinColorPicker(bounceAnnotations)
             
             mapView.removeAnnotations(annotations)
             
             createAnnotations()
             
-            print("There are \(annotations.count) Visiable Annotations")
+            print("There are \(annotations.count) Visible Annotations")
         }
     }
     
@@ -217,31 +276,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let bounceAnnotation = annotation as! BounceAnnotation
         if let place = bounceAnnotation.place {
             let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: place.entityId!)
-//            let score = Int(place.placeScore!)
-            
-//            if score <= BOUNCEDARKBLUESCORE {
-//                pinAnnotationView.pinTintColor = BOUNCEDARKBLUE
-//            }
-//            else if (score > BOUNCEDARKBLUESCORE && score <= BOUNCELIGHTBLUESCORE){
-//                pinAnnotationView.pinTintColor = BOUNCELIGHTBLUE
-//            }
-//            else if (score > BOUNCELIGHTBLUESCORE && score <= BOUNCEGREENSCORE){
-//                pinAnnotationView.pinTintColor = BOUNCEGREEN
-//            }
-//            else if (score > BOUNCEGREENSCORE && score <= BOUNCEYELLOWSCORE){
-//                pinAnnotationView.pinTintColor = BOUNCEYELLOW
-//            }
-//            else if (score > BOUNCEYELLOWSCORE && score <= BOUNCEORANGESCORE){
-//                pinAnnotationView.pinTintColor = BOUNCEORANGE
-//            }
-//            else {
-//                pinAnnotationView.pinTintColor = BOUNCERED
-//            }
-            
-            
-            
-//            pinAnnotationView.pinTintColor = bounceAnnotation.color!
-            pinAnnotationView.pinTintColor  = getRandomColor()
+
+            pinAnnotationView.pinTintColor = bounceAnnotation.color
             pinAnnotationView.canShowCallout = true
             pinAnnotationView.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
             return pinAnnotationView
