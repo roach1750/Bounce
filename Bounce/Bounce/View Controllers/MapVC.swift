@@ -208,23 +208,36 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         
         var h = 0.0
         let s = 1.0
-        let b = 0.5
+        let b = 1.0
         let a = 1.0
         
-        let startAngle = 180.0
-        let angle = 240.0 - startAngle
+        let redStartAngle = 55.0
+        let redEndAngle = 0.0
         
+        let blueStartAngle = 240.0
+        let blueEndAngle = 180.0
         
-        //Curve is an arc, so length is length of an arc
-        let curveLength = (2.0 * M_PI * s * angle / 360.0)
+        let redAngle = redStartAngle - redEndAngle
+        let blueAngle = blueStartAngle - blueEndAngle
+        
+        let totalAngle = redAngle + blueAngle
+        
         
         for score in scores {
             
-            let newLength = curveLength * score / (maxScore! - minScore!)
+            let absouteColorAngle: Double
             
-            let absAngle = newLength * 360 / (2.0 * M_PI * s) + startAngle
+            let scorePercentage = (score - minScore!) / (maxScore! - minScore!)
+            let colorSegmentAngle = scorePercentage * totalAngle
             
-            h = roundToNearest(absAngle/360,toNearest: 0.1)
+            if colorSegmentAngle <= blueAngle {
+                absouteColorAngle = blueStartAngle - colorSegmentAngle
+                
+            } else {
+                absouteColorAngle = redStartAngle - (colorSegmentAngle - blueAngle)
+            }
+            
+            h = roundToNearest(absouteColorAngle/360,toNearest: 0.1)
             
             let color = UIColor(hue: CGFloat(Float(h)), saturation: CGFloat(Float(s)), brightness: CGFloat(Float(b)), alpha: CGFloat(Float(a)))
             
