@@ -9,9 +9,12 @@
 /* Begin PBXBuildFile section */
 		2106417F1C56E41E00DFF326 /* BounceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2106417E1C56E41E00DFF326 /* BounceAnnotation.swift */; };
 		210641811C585DDF00DFF326 /* PlaceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210641801C585DDF00DFF326 /* PlaceVC.swift */; };
+		21072E2E1D6771910028253C /* PinColorGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21072E2D1D6771910028253C /* PinColorGenerator.swift */; };
 		21092A991C4B39FA0087BDE9 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21092A981C4B39FA0087BDE9 /* CameraVC.swift */; };
 		2114B42A1C59890F0002C930 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2114B4291C59890F0002C930 /* PlaceTableViewCell.swift */; };
 		2114B42E1C5E69590002C930 /* ImageConfigurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2114B42D1C5E69590002C930 /* ImageConfigurer.swift */; };
+		212987DE1D6E86190085C6FE /* TakePictureVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212987DD1D6E86190085C6FE /* TakePictureVC.swift */; };
+		212987E01D71E5000085C6FE /* ConfigurePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212987DF1D71E5000085C6FE /* ConfigurePostVC.swift */; };
 		212DE0E01CBC750200FEE5C4 /* KinveyUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */; };
 		213482D11CCDA5C700CAAD93 /* Data Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 213482CF1CCDA5C700CAAD93 /* Data Model.xcdatamodeld */; };
 		213482EE1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213482EA1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift */; };
@@ -74,10 +77,13 @@
 		0EC36282F191544BA7F4A271 /* Pods-Bounce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bounce.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bounce/Pods-Bounce.debug.xcconfig"; sourceTree = "<group>"; };
 		2106417E1C56E41E00DFF326 /* BounceAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceAnnotation.swift; path = Model/BounceAnnotation.swift; sourceTree = "<group>"; };
 		210641801C585DDF00DFF326 /* PlaceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceVC.swift; path = "View Controllers/PlaceVC.swift"; sourceTree = "<group>"; };
+		21072E2D1D6771910028253C /* PinColorGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PinColorGenerator.swift; path = Model/PinColorGenerator.swift; sourceTree = "<group>"; };
 		21092A981C4B39FA0087BDE9 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraVC.swift; path = "View Controllers/CameraVC.swift"; sourceTree = "<group>"; };
 		2114B4291C59890F0002C930 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		2114B42D1C5E69590002C930 /* ImageConfigurer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageConfigurer.swift; path = Model/ImageConfigurer.swift; sourceTree = "<group>"; };
 		211BC37B1C665DCD005A17AB /* Arlington.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Arlington.gpx; sourceTree = "<group>"; };
+		212987DD1D6E86190085C6FE /* TakePictureVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TakePictureVC.swift; path = "View Controllers/TakePictureVC.swift"; sourceTree = "<group>"; };
+		212987DF1D71E5000085C6FE /* ConfigurePostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurePostVC.swift; path = "View Controllers/ConfigurePostVC.swift"; sourceTree = "<group>"; };
 		212DE0DF1CBC750200FEE5C4 /* KinveyUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KinveyUploader.swift; path = Model/KinveyUploader.swift; sourceTree = "<group>"; };
 		212DE0E21CBDD19400FEE5C4 /* Bounce-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bounce-Bridging-Header.h"; sourceTree = "<group>"; };
 		213482D01CCDA5C700CAAD93 /* Data Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Data Model.xcdatamodel"; sourceTree = "<group>"; };
@@ -192,6 +198,8 @@
 				21FFED291C487CEE006F294F /* Main.storyboard */,
 				214329A31C7254D200FB9B99 /* FBLoginVC.swift */,
 				21FFED5A1C488617006F294F /* MapVC.swift */,
+				212987DD1D6E86190085C6FE /* TakePictureVC.swift */,
+				212987DF1D71E5000085C6FE /* ConfigurePostVC.swift */,
 				210641801C585DDF00DFF326 /* PlaceVC.swift */,
 				214FE49B1D1B68C10079DB60 /* ReportPostVC.swift */,
 				21FFED611C4AAAC4006F294F /* PostVC.swift */,
@@ -237,6 +245,7 @@
 				21D420171CC9B629003E9B0E /* KinveyFetcher.swift */,
 				2143AC001CD00B9C008BBF2D /* FourSquarePlace.swift */,
 				21FFED561C4884EE006F294F /* LocationFetcher.swift */,
+				21072E2D1D6771910028253C /* PinColorGenerator.swift */,
 				212DE0E11CBDD17800FEE5C4 /* Helpers */,
 				21970FC21C4DA44D00048B54 /* 3rd Party Models */,
 			);
@@ -455,9 +464,11 @@
 				21FFED621C4AAAC4006F294F /* PostVC.swift in Sources */,
 				21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */,
 				214329A41C7254D200FB9B99 /* FBLoginVC.swift in Sources */,
+				212987E01D71E5000085C6FE /* ConfigurePostVC.swift in Sources */,
 				210641811C585DDF00DFF326 /* PlaceVC.swift in Sources */,
 				21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */,
 				21FFED601C4AA325006F294F /* Proposer.swift in Sources */,
+				212987DE1D6E86190085C6FE /* TakePictureVC.swift in Sources */,
 				212DE0E01CBC750200FEE5C4 /* KinveyUploader.swift in Sources */,
 				213482EE1CCDAA0300CAAD93 /* Post+CoreDataProperties.swift in Sources */,
 				213482D11CCDA5C700CAAD93 /* Data Model.xcdatamodeld in Sources */,
@@ -469,6 +480,7 @@
 				21432A8F1C7FD09900FB9B99 /* UserFetcher.swift in Sources */,
 				21FFED5B1C488617006F294F /* MapVC.swift in Sources */,
 				2106417F1C56E41E00DFF326 /* BounceAnnotation.swift in Sources */,
+				21072E2E1D6771910028253C /* PinColorGenerator.swift in Sources */,
 				21FFED571C4884EE006F294F /* LocationFetcher.swift in Sources */,
 				213482F11CCDAA0300CAAD93 /* Place.swift in Sources */,
 				2143AC011CD00B9C008BBF2D /* FourSquarePlace.swift in Sources */,

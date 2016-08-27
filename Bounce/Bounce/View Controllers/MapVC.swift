@@ -19,9 +19,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var shareSettingToolbar: UIToolbar!
     @IBOutlet weak var fetchButton: UIBarButtonItem!
     @IBOutlet weak var composeButton: UIBarButtonItem!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
     
-    //constants
-    var fetcher = KinveyFetcher()
     
     @IBOutlet weak var locationButton: UIButton!
     
@@ -29,6 +28,9 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     var selectedPlace: Place?
     //Constants
     var locationManager: CLLocationManager?
+    var colorDict = [NSNumber:UIColor]()
+    var fetcher = KinveyFetcher()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +68,15 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         else {
             performSegueWithIdentifier("createPostSegue", sender: self)
         }
+    }
+    @IBAction func cameraButtonTapped(sender: UIBarButtonItem) {
+        if FBSDKAccessToken.currentAccessToken() == nil || KCSUser.activeUser() == nil {
+            addAndShowAlertToGoToSettingsWithMessage("You need to login to go to create a post, click login below")
+        }
+        else {
+            performSegueWithIdentifier("showCamera", sender: self)
+        }
+        
     }
     
     @IBAction func fetchButtonTapped(sender: UIBarButtonItem) {
@@ -153,8 +164,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let objects = data {
             for place in objects {
                 let color = colorDict[place.placeScore!]
-                print(color)
-                
                 
                 let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
                 let annotation = BounceAnnotation(title: place.placeName, subtitle: String(place.placeScore!), coordinate: coordinate, place: place, color: color)
@@ -188,69 +197,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         }
     }
     
-    func roundToNearest(number: Double, toNearest: Double) -> Double {
-        return round(number / toNearest) * toNearest
-    }
-    
-    
-    func pinColorPicker(pins:[BounceAnnotation]) -> [NSNumber:UIColor] {
-        
-        var scores = [Double]()
-        var colorDict = [NSNumber:UIColor]()
-        
-        for pin in pins {
-            let score = pin.place?.placeScore
-            scores.append(Double(score!))
-        }
-        
-        let maxScore = scores.maxElement()
-        let minScore = scores.minElement()
-        
-        var h = 0.0
-        let s = 1.0
-        let b = 1.0
-        let a = 1.0
-        
-        let redStartAngle = 55.0
-        let redEndAngle = 0.0
-        
-        let blueStartAngle = 240.0
-        let blueEndAngle = 180.0
-        
-        let redAngle = redStartAngle - redEndAngle
-        let blueAngle = blueStartAngle - blueEndAngle
-        
-        let totalAngle = redAngle + blueAngle
-        
-        
-        for score in scores {
-            
-            let absouteColorAngle: Double
-            
-            let scorePercentage = (score - minScore!) / (maxScore! - minScore!)
-            let colorSegmentAngle = scorePercentage * totalAngle
-            
-            if colorSegmentAngle <= blueAngle {
-                absouteColorAngle = blueStartAngle - colorSegmentAngle
-                
-            } else {
-                absouteColorAngle = redStartAngle - (colorSegmentAngle - blueAngle)
-            }
-            
-            h = roundToNearest(absouteColorAngle/360,toNearest: 0.1)
-            
-            let color = UIColor(hue: CGFloat(Float(h)), saturation: CGFloat(Float(s)), brightness: CGFloat(Float(b)), alpha: CGFloat(Float(a)))
-            
-            print(color)
-            
-            colorDict[NSNumber(double: score)] = color
-        }
-        return colorDict
-    }
-
-    var colorDict = [NSNumber:UIColor]()
-    
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+       func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         if (mapChangedFromUserInteraction) {
             // user changed map region
             
@@ -265,7 +212,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             }
             
             //recalculate pin colors for annotations on screen
-            colorDict = pinColorPicker(bounceAnnotations)
+            let pCG = PinColorGenerator()
+            colorDict = pCG.pinColorPicker(bounceAnnotations)
             
             mapView.removeAnnotations(annotations)
             
@@ -298,12 +246,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         return nil
     }
 
-    func getRandomColor() -> UIColor{
-        let randomRed:CGFloat = CGFloat(drand48())
-        let randomGreen:CGFloat = CGFloat(drand48())
-        let randomBlue:CGFloat = CGFloat(drand48())
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-    }
     
     func topImageForPlaceDownloaded() {
         print("reloading map data")
