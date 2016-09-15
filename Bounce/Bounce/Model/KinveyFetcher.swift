@@ -267,8 +267,8 @@ class KinveyFetcher: NSObject {
     
     func countCoreData(){
         managedObjectContext.performBlock {
-            let count = self.managedObjectContext.countForFetchRequest(NSFetchRequest(entityName:"Post"), error: nil)
-            print("There are: \(count) post in the data base")
+            //let count = self.managedObjectContext.countForFetchRequest(NSFetchRequest(entityName:"Post"), error: nil)
+            //print("There are: \(count) post in the data base")
         }
     }
     

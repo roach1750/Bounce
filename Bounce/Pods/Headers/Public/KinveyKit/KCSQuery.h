@@ -1,1 +1,1 @@
-../../../KinveyKit/KinveyKit-1.40.7/include/KinveyKit/KCSQuery.h
+../../../KinveyKit/KinveyKit-1.40.9/include/KinveyKit/KCSQuery.h

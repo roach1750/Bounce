@@ -1,1 +1,1 @@
-../../../KinveyKit/KinveyKit-1.40.7/include/KinveyKit/NSString+KinveyAdditions.h
+../../../KinveyKit/KinveyKit-1.40.9/include/KinveyKit/NSString+KinveyAdditions.h

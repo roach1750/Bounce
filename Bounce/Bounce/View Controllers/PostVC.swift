@@ -151,7 +151,7 @@ class PostVC: UIViewController, UITextViewDelegate {
     @IBAction func goToCameraView(sender: UITapGestureRecognizer) {
         let camera: PrivateResource = .Camera
         
-        proposeToAccess(camera, agreed: {
+        proposeToAccess( camera, agreed: {
             self.performSegueWithIdentifier("showCamera", sender: self)
             
             }, rejected: {
@@ -168,7 +168,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         
         let uploader = KinveyUploader()
         
-        if let image = postImageView.image, selectedPlace = LocationFetcher.sharedInstance.selectedPlace {
+        if let image = postImageView.image, let selectedPlace = LocationFetcher.sharedInstance.selectedPlace {
             
             let imageData = UIImagePNGRepresentation(image)
             
@@ -186,7 +186,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         postTextView.returnKeyType = UIReturnKeyType.Done
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n"){
             if textView.text == "" {
                 textView.text = "Enter caption for post"
@@ -196,6 +196,7 @@ class PostVC: UIViewController, UITextViewDelegate {
         }
         return true
     }
+    
     
     func textViewDidBeginEditing(textView: UITextView) {
         if textView.text == "Enter caption for post" {
