@@ -9,7 +9,7 @@
 import UIKit
 
 class PinColorGenerator: NSObject {
-
+    
     func roundToNearest(number: Double, toNearest: Double) -> Double {
         return round(number / toNearest) * toNearest
     }
@@ -29,47 +29,56 @@ class PinColorGenerator: NSObject {
         let minScore = scores.minElement()
         
         var h = 0.0
-        let s = 1.0
+        let s = 0.75
         let b = 1.0
         let a = 1.0
         
-        let redStartAngle = 55.0
-        let redEndAngle = 0.0
+        let redStartAngle = 54.0
+        let redEndAngle = 11.0
         
-        let blueStartAngle = 240.0
-        let blueEndAngle = 180.0
+        //        let blueStartAngle = 59.0
+        //        let blueEndAngle = 59.0
         
         let redAngle = redStartAngle - redEndAngle
-        let blueAngle = blueStartAngle - blueEndAngle
+        //        let blueAngle = blueStartAngle - blueEndAngle
         
-        let totalAngle = redAngle + blueAngle
+        //        let totalAngle = redAngle + blueAngle
         
         
         for score in scores {
             
-            let absouteColorAngle: Double
-            
             let scorePercentage = (score - minScore!) / (maxScore! - minScore!)
-            let colorSegmentAngle = scorePercentage * totalAngle
+            let colorSegmentAngle = redStartAngle - scorePercentage * redAngle
             
-            if colorSegmentAngle <= blueAngle {
-                absouteColorAngle = blueStartAngle - colorSegmentAngle
-                
-            } else {
-                absouteColorAngle = redStartAngle - (colorSegmentAngle - blueAngle)
-            }
             
-            h = roundToNearest(absouteColorAngle/360,toNearest: 0.1)
+            h = roundToNearest(colorSegmentAngle/360,toNearest: 0.1)
             
             let color = UIColor(hue: CGFloat(Float(h)), saturation: CGFloat(Float(s)), brightness: CGFloat(Float(b)), alpha: CGFloat(Float(a)))
-                        
+            
             colorDict[NSNumber(double: score)] = color
         }
+        //        //2 Color Segments
+        //        for score in scores {
+        //
+        //            let absouteColorAngle: Double
+        //
+        //            let scorePercentage = (score - minScore!) / (maxScore! - minScore!)
+        //            let colorSegmentAngle = scorePercentage * totalAngle
+        //
+        //            if colorSegmentAngle < blueAngle {
+        //                absouteColorAngle = blueStartAngle - colorSegmentAngle
+        //
+        //            } else {
+        //                absouteColorAngle = redStartAngle - (colorSegmentAngle - blueAngle)
+        //            }
+        //
+        //            h = roundToNearest(absouteColorAngle/360,toNearest: 0.1)
+        //
+        //            let color = UIColor(hue: CGFloat(Float(h)), saturation: CGFloat(Float(s)), brightness: CGFloat(Float(b)), alpha: CGFloat(Float(a)))
+        //            
+        //            colorDict[NSNumber(double: score)] = color
+        //        }
+        
         return colorDict
     }
-    
-    
-
-    
-    
 }
