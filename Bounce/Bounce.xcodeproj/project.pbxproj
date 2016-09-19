@@ -283,6 +283,7 @@
 				21AC739F1C5193D300C81D68 /* Embed Frameworks */,
 				3EF09AAC0DC132C823899F18 /* Embed Pods Frameworks */,
 				BA1AA87CD9162F45D7509CDD /* Copy Pods Resources */,
+				74DD494E1D900ACF001F1699 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -426,6 +427,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bounce/Pods-Bounce-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		74DD494E1D900ACF001F1699 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/Fabric/run 8284737770425450575384558d3cca553a4489dc 9691f39977ec5b28e89ec023839464c922ec4731d692931492429dcb97840efc";
 		};
 		BA1AA87CD9162F45D7509CDD /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

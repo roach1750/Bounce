@@ -13,6 +13,10 @@ pod 'KinveyKit'
 
 pod 'MBProgressHUD', '~> 0.9.2'
 
+pod 'Fabric'
+
+pod 'Crashlytics'
+
 end
 
 target 'BounceTests' do
