@@ -9,6 +9,8 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import Fabric
+import Crashlytics
 
 
 class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
@@ -61,6 +63,10 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
             //facebook login succesfull
             let userFetcher = UserFetcher()
             userFetcher.createUser()
+            
+            Answers.logLoginWithMethod("Facebook",
+                                       success: true,
+                                       customAttributes: [:])
         }
         
     }

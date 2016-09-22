@@ -11,6 +11,8 @@ import MapKit
 import CoreLocation
 import FBSDKCoreKit
 import FBSDKLoginKit
+import Fabric
+import Crashlytics
 
 class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     //Outlets
@@ -26,6 +28,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     //Variables
     var selectedPlace: Place?
+    var mapRegion: MKCoordinateRegion?
+    var mapRegionChanged = false
     //Constants
     var locationManager: CLLocationManager?
     var colorDict = [NSNumber:UIColor]()
@@ -53,7 +57,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         //Navigation Bar Colors
         
         //Toolbar Colors
-        shareSettingToolbar.backgroundColor = BOUNCEPRIMARYCOLOR
+        shareSettingToolbar.barTintColor = BOUNCEPRIMARYCOLOR
         shareSettingSegmentControl.tintColor = BOUNCESECONDARYCOLOR
         
         //Remove Line under Navigation Bar
@@ -83,6 +87,23 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         
         fetcher = KinveyFetcher()
         fetcher.queryForAllPlaces()
+        
+        print("mapRegionChanged")
+        print(mapRegionChanged)
+        
+        if mapRegionChanged {
+        
+            Answers.logCustomEventWithName("mapRegionSearch",
+                                           customAttributes: [
+                                            "latCenter": NSNumber(double: mapRegion!.center.latitude),
+                                            "lonCenter": NSNumber(double: mapRegion!.center.longitude),
+                                            "latDelta": NSNumber(double: mapRegion!.span.latitudeDelta),
+                                            "lonDelta": NSNumber(double: mapRegion!.span.longitudeDelta)
+                                        
+                ])
+        }
+        
+        
     }
     
     @IBAction func infoButtonPressed(sender: UIBarButtonItem) {
@@ -219,6 +240,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             
             createAnnotations()
             
+            mapRegion = mapView.region
+            mapRegionChanged = true
+            
+            
             print("There are \(annotations.count) Visible Annotations")
         }
     }
@@ -287,8 +312,17 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     func mapView(MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == annotationView.rightCalloutAccessoryView {
+            
+            
             let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
             selectedPlace = annoation.place
+            
+            Answers.logContentViewWithName("ViewPlace",
+                                           contentType: "Place",
+                                           contentId: selectedPlace?.entityId,
+                                           customAttributes: [
+                                            "score": String(selectedPlace?.placeScore)])
+            
             performSegueWithIdentifier("showPosts", sender: self)
         }
     }
