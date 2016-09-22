@@ -57,16 +57,17 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     func login() {
+        
         if FBSDKAccessToken.currentAccessToken() != nil {
             //facebook login succesfull
             let userFetcher = UserFetcher()
             userFetcher.createUser()
         }
-        
     }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
     {
+        print("login to facebook complete")
         login()
     }
     
