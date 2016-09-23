@@ -126,6 +126,11 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     @IBAction func locationButtonPressed(sender: UIButton) {
+        Answers.logCustomEventWithName("My First Custom Event",
+                                       customAttributes: nil)
+        Answers.logCustomEventWithName("Played Song",
+                                       customAttributes: [:])
+        
         mapView.userTrackingMode = .Follow
         locationButton.setImage(UIImage(named: "LocationButtonSelected"), forState: .Normal)
     }
