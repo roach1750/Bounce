@@ -18,13 +18,13 @@ class KinveyUploader: NSObject {
         return Singleton.instance
     }
     
-    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
     
-    func createPostThenUpload(message: String, image: NSData, shareSetting: String, selectedPlace: FourSquarePlace ) {
+    func createPostThenUpload(_ message: String, image: Data, shareSetting: String, selectedPlace: FourSquarePlace ) {
         // Create Entity
-        let entity = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
+        let entity = NSEntityDescription.entity(forEntityName: "Post", in: self.managedObjectContext)
         // Initialize Record
-        let coreDataPost = Post(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext)
+        let coreDataPost = Post(entity: entity!, insertInto: self.managedObjectContext)
         coreDataPost.postMessage = message
         coreDataPost.postImageData = image
         coreDataPost.postHasImage = true
@@ -33,85 +33,78 @@ class KinveyUploader: NSObject {
         coreDataPost.postBounceKey = selectedPlace.name! + "," + String(selectedPlace.location!.coordinate.latitude) + "," + String(selectedPlace.location!.coordinate.longitude)
         coreDataPost.postScore = 0
         coreDataPost.postShareSetting = shareSetting
-        coreDataPost.postUploaderFacebookUserID = KCSUser.activeUser().getValueForAttribute("Facebook ID") as? String
-        coreDataPost.postUploaderKinveyUserName = KCSUser.activeUser().username
-        coreDataPost.postUploaderKinveyUserID = KCSUser.activeUser().userId
-        coreDataPost.postCreationDate = NSDate()
+        coreDataPost.postUploaderFacebookUserID = KCSUser.active().getValueForAttribute("Facebook ID") as? String
+        coreDataPost.postUploaderKinveyUserName = KCSUser.active().username
+        coreDataPost.postUploaderKinveyUserID = KCSUser.active().userId
+        coreDataPost.postCreationDate = Date()
         coreDataPost.postReportedCount = 0
-        coreDataPost.postExpired = NSNumber(bool: false)
+        coreDataPost.postExpired = NSNumber(value: false as Bool)
         uploadPostImageThenObject(coreDataPost)
     }
     
     //This uploads the image first, then calls the method below to upload the object
-    private func uploadPostImageThenObject(post: Post) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADBEGANNOTIFICATION, object: nil, userInfo: nil)
+    fileprivate func uploadPostImageThenObject(_ post: Post) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCEIMAGEUPLOADBEGANNOTIFICATION), object: nil, userInfo: nil)
         let metadata = KCSMetadata()
         metadata.setGloballyReadable(true)
         
         if let PID = post.postImageData {
-            KCSFileStore.uploadData(PID, options: [KCSFileACL : metadata], completionBlock: { (uploadInfo, error) in
+            KCSFileStore.uploadData(PID as Data!, options: [KCSFileACL : metadata], completionBlock: { (uploadInfo, error) in
                 if let receivedUploadInfo = uploadInfo {
                     self.upLoadPostObject(receivedUploadInfo,post: post)
                     
                 }
-                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADCOMPLETENOTIFICATION, object: nil, userInfo: nil)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCEIMAGEUPLOADCOMPLETENOTIFICATION), object: nil, userInfo: nil)
                 }, progressBlock: { (objects, percentComplete) in
                     
                     let progressDictionary = ["progress" : percentComplete]
-                    NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION, object: nil, userInfo: progressDictionary)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCEIMAGEUPLOADINPROGRESSNOTIFICATION), object: nil, userInfo: progressDictionary)
                     //                    print(percentComplete)
             })
         }
     }
     
-    private func upLoadPostObject(imageInfo: KCSFile, post: Post) {
+    fileprivate func upLoadPostObject(_ imageInfo: KCSFile, post: Post) {
         
         post.postImageFileInfo = imageInfo.fileId
-        let collection = KCSCollection(fromString: BOUNCEPOSTCLASSNAME, ofClass: Post.self)
-        let updateStore = KCSLinkedAppdataStore.storeWithOptions([KCSStoreKeyResource: collection])
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-
-        updateStore.saveObject(
-            post,
-            withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
-                if errorOrNil != nil {
-                    //save failed
-                    print("Uploading Object: Save failed, with error: %@", errorOrNil.description)
-                } else {
-                    //save was successful
-                    
-                    print("Successfully saved event (id='%@').", (objectsOrNil[0] as! NSObject).kinveyObjectId())
-                }
+        let collection = KCSCollection(from: BOUNCEPOSTCLASSNAME, of: Post.self)
+        let updateStore = KCSLinkedAppdataStore.withOptions([KCSStoreKeyResource: collection])
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        _ = updateStore?.save(post, withCompletionBlock: { (objectsOrNil, error) in
+            if error != nil {
+                //save failed
+                print("Uploading Object: Save failed, with error: %@", error)
+            } else {
+                //save was successful
                 
-            },
-            withProgressBlock: { (objects, percentComplete) in
-                //                print(percentComplete)
-        })
-    }
-
-    func changeScoreForPost(post: Post, place: Place, increment: Int) {
-        KCSCustomEndpoints.callEndpoint(
-            "incrementScore",
-            params: ["increment":increment,"_id": post.postUniqueId!],
-            completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
-                if results != nil {
-                    print("Incremental Success")
-                    KinveyFetcher.sharedInstance.fetchUpdatedPostsForPlace(place)
-                } else {
-                    print("Incremental Error: \(error)")
-                }
+                print("Successfully saved event (id='%@').", (objectsOrNil?[0] as! NSObject).kinveyObjectId())
             }
-        )
+            
+            }, withProgressBlock: nil)
+        
+        
         
     }
+
+    func changeScoreForPost(_ post: Post, place: Place, increment: Int) {
+        KCSCustomEndpoints.callEndpoint("incrementScore", params: ["increment":increment,"_id": post.postUniqueId!]) { (results, error) in
+            if results != nil {
+                print("Incremental Success")
+                KinveyFetcher.sharedInstance.fetchUpdatedPostsForPlace(place)
+            } else {
+                print("Incremental Error: \(error)")
+            }
+        }
+    }
     
-    func reportPost(post:Post,reason:String) {
-        let parameters = ["postID" : post.postUniqueId!, "reason" : reason, "userID" : KCSUser.activeUser().userId]
+    
+    func reportPost(_ post:Post,reason:String) {
+        let parameters = ["postID" : post.postUniqueId!, "reason" : reason, "userID" : KCSUser.active().userId]
         KCSCustomEndpoints.callEndpoint(
             "reportPost",
             params: parameters,
-            completionBlock: { (results: AnyObject!, error: NSError!) -> Void in
+            completionBlock: { (results, error) in
                 if results != nil {
                     print("Report Success")
                 } else {

@@ -13,67 +13,57 @@ import FBSDKLoginKit
 class UserFetcher: NSObject {
 
     func createUser() {
-        FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name, last_name, id, picture.type(large)"]).startWithCompletionHandler { (connection, result, error) -> Void in
+        FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name, last_name, id, picture.type(large)"]).start { (connection, result, error) -> Void in
             
-            
-            let givenName = result.objectForKey("first_name") as! String
-            let surname = result.objectForKey("last_name") as! String
-            let userId = result.objectForKey("id") as! String
-            
+            let resultObject = result as AnyObject
+            let givenName = resultObject.object(forKey: "first_name") as! String
+            let surname = resultObject.object(forKey: "last_name") as! String
+            let userId = resultObject.object(forKey: "id") as! String
+
             let userName = givenName + "_" + surname + "_" + userId
             
             KCSUser.checkUsername(userName, withCompletionBlock: { (userName, alreadyTaken, error) in
                 if alreadyTaken {
                     print("this user already exists...attempting to login")
-                    KCSUser.loginWithUsername(
-                        userName,
-                        password: "bounce",
-                        withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
-                            if errorOrNil == nil {
-                                print("logged in with existing userName")
-                                self.updateUserFriends()
-
-                            } else {
-                                print(errorOrNil.localizedDescription)
-                            }
+                    
+                    KCSUser.login(withUsername: userName, password: "bounce", withCompletionBlock: { (user, error, resultAction) in
+                        if user != nil {
+                            print("logged in with existing userName")
+                            self.updateUserFriends()
+                            
+                        } else if let error = error as? NSError {
+                            print(error.localizedDescription)
                         }
-                    )
+                    })
                 }
                 else {
                     print("creating a new kinvey user")
-                    KCSUser.userWithUsername(
-                        userName,
-                        password: "bounce",
-                        fieldsAndValues: [
-                            "userReportedCount" : 0,
-                            KCSUserAttributeGivenname : givenName,
-                            KCSUserAttributeSurname : surname
-                            ],
-                        withCompletionBlock: { (user: KCSUser!, errorOrNil: NSError!, result: KCSUserActionResult) -> Void in
-                            if errorOrNil == nil {
+                    
+                    KCSUser.user(withUsername: userName, password: "bounce", fieldsAndValues: [
+                        "userReportedCount" : 0,
+                        KCSUserAttributeGivenname : givenName,
+                        KCSUserAttributeSurname : surname],
+                        
+                        withCompletionBlock: { (user, error, resultAction) in
+                            if error == nil {
                                 print("Created new user")
-                                print(KCSUser.activeUser())
+                                print(KCSUser.active())
                                 self.uploadFacebookUserID(userId)
                                 self.updateUserFriends()
                             } else {
-                                print(errorOrNil)
+                                print(error)
                             }
-                        }
-                    )
-                }
-                
+                    })
+                    }
             })
-            
-
-            
         }
         
     }
     
-    func uploadFacebookUserID(id: String) {
+    func uploadFacebookUserID(_ id: String) {
         
-        KCSUser.activeUser().setValue(id, forAttribute: "Facebook ID")
-        KCSUser.activeUser().saveWithCompletionBlock({ (saveUser, error) in
+        KCSUser.active().setValue(id, forAttribute: "Facebook ID")
+        KCSUser.active().save(completionBlock: { (saveUser, error) in
             if error != nil {
                 print(error)
             }
@@ -87,38 +77,34 @@ class UserFetcher: NSObject {
     func updateUserFriends(){
         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields": "id, first_name, last_name"])
         
-        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-            
+
+        _ = fbRequest?.start(completionHandler: { (connection, result, error) in
             if error == nil {
                 var friendIDs = [String]()
-                let friendObjects = result["data"] as! [NSDictionary]
+                let resultData = result as AnyObject
+                let friendObjects = resultData["data"] as! [NSDictionary]
                 for friendObject in friendObjects {
-//                    let firstName = friendObject.objectForKey("first_name") as! String
-//                    let lastName = friendObject.objectForKey("last_name") as! String
-                    let userID = friendObject.objectForKey("id") as! String
-//                    print(firstName + " " + lastName + " " + userID)
+                    //                    let firstName = friendObject.objectForKey("first_name") as! String
+                    //                    let lastName = friendObject.objectForKey("last_name") as! String
+                    let userID = friendObject.object(forKey: "id") as! String
+                    //                    print(firstName + " " + lastName + " " + userID)
                     friendIDs.append(userID)
                 }
-                
-                KCSUser.activeUser().setValue(friendIDs, forAttribute: "Facebook Friends IDs")
-                KCSUser.activeUser().saveWithCompletionBlock({ (saveUser, error) in
+                KCSUser.active().setValue(friendIDs, forAttribute: "Facebook Friends IDs")
+                KCSUser.active().save(completionBlock: { (saveUser, error) in
                     if error != nil {
                         print(error)
                     }
                     else {
                         print("user's friends updated on the server")
-                        NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEUSERLOGGEDIN, object: nil)
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCEUSERLOGGEDIN), object: nil)
                     }
                 })
-                
-            
-            } else {
-                
-                print("Error Getting Friends \(error)");
-                
             }
-        }
+            else {
+                print("Error Getting Friends \(error)");
+            }
+        })
     }
-    
 
 }

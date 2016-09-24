@@ -25,7 +25,7 @@ class Place: NSObject {
     dynamic var entityId: String?
 
     
-    override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
+    override func hostToKinveyPropertyMapping() -> [AnyHashable: Any]! {
         return [
             "entityId" : KCSEntityKeyId, //the required _id field
             "placeName": BOUNCELOCATIONNAMEKEY,

@@ -18,36 +18,36 @@ class TakePictureVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        denyPictureButton.hidden = true
-        acceptPictureButton.hidden = true
+        denyPictureButton.isHidden = true
+        acceptPictureButton.isHidden = true
     }
 
     
-    @IBAction func cancelButtonPressed(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
 
     
-    @IBAction func takePictureButtonPressed(sender: AnyObject) {
-        takePictureButton.hidden = true
-        denyPictureButton.hidden = false
-        acceptPictureButton.hidden = false
+    @IBAction func takePictureButtonPressed(_ sender: AnyObject) {
+        takePictureButton.isHidden = true
+        denyPictureButton.isHidden = false
+        acceptPictureButton.isHidden = false
         
     }
     
-    @IBAction func acceptPictureButtonPressed(sender: UIButton) {
+    @IBAction func acceptPictureButtonPressed(_ sender: UIButton) {
     }
     
     
-    @IBAction func denyPictureButtonPressed(sender: UIButton) {
-        takePictureButton.hidden = false
-        denyPictureButton.hidden = true
-        acceptPictureButton.hidden = true
+    @IBAction func denyPictureButtonPressed(_ sender: UIButton) {
+        takePictureButton.isHidden = false
+        denyPictureButton.isHidden = true
+        acceptPictureButton.isHidden = true
     }
     
     
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     

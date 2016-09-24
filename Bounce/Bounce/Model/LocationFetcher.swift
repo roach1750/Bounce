@@ -8,6 +8,19 @@
 
 import UIKit
 import CoreLocation
+import SwiftyJSON
+
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 //API KEY = AIzaSyCuFv4j7KQGLzZZDl-4T6SeT-Vjow2wgyU
 
@@ -42,10 +55,10 @@ class LocationFetcher: NSObject {
                 "&v=20130815" +
                 "&ll=" + latitude + "," + longitude
             
-            let session = NSURLSession.sharedSession()
-            let url = NSURL(string: urlString)
-            let request = NSURLRequest(URL: url!)
-            let dataTask = session.dataTaskWithRequest(request) { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+            let session = URLSession.shared
+            let url = URL(string: urlString)
+            let request = URLRequest(url: url!)
+            _ = session.dataTask(with: request, completionHandler: { (data, response, error)in
                 if let error = error {
                     print(error)
                 }
@@ -64,28 +77,27 @@ class LocationFetcher: NSObject {
                             let longitude = resultsJSON["response"]["venues"][i]["location"]["lng"].double!
                             place.location = CLLocation(latitude: latitude, longitude: longitude)
                             
-                            
-
-                            let point = CGPointMake(CGFloat(latitude), CGFloat(longitude))
-                            let currentLocationPoint = CGPointMake(CGFloat((self.currentLocation?.coordinate.latitude)!), CGFloat((self.currentLocation?.coordinate.longitude)!))
+                            let point = CGPoint(x: latitude, y: longitude)
+                            let currentLocationCoordinate = self.currentLocation?.coordinate
+                            let currentLocationPoint = CGPoint(x: (currentLocationCoordinate?.latitude)!, y: (currentLocationCoordinate?.longitude)!)
                             place.distanceFromUser = self.distanceBetweenPoints(point, point2: currentLocationPoint)
                             // print(currentPlace.description)
                             self.placeArray?.append(place)
                         }
-                        self.placeArray?.sortInPlace({$0.distanceFromUser < $1.distanceFromUser})
+                        self.placeArray?.sort(by: {$0.distanceFromUser < $1.distanceFromUser})
                         
                         self.selectedPlace = self.placeArray?[0]
                         print("Foursquare Done")
                     }
                 }
-            }
-            dataTask.resume()
+            })
         }
     }
     
     
+    
     //Calculates the distance between to CGPoints and returns a double in feet
-    func distanceBetweenPoints(point1:CGPoint, point2:CGPoint) -> Double {
+    func distanceBetweenPoints(_ point1:CGPoint, point2:CGPoint) -> Double {
         let xDist = point2.x - point1.x
         let yDist = point2.y - point1.y
         let coordDistance = Double(sqrt(pow(xDist,2) + pow(yDist,2)))
@@ -105,23 +117,23 @@ class LocationFetcher: NSObject {
             let longitude = String(location.coordinate.longitude)
             let urlString = "https://maps.googleapis.com/maps/api/place/search/json?location=" + latitude + "," + longitude + "&radius=" + searchRadius + "&key=AIzaSyCuFv4j7KQGLzZZDl-4T6SeT-Vjow2wgyU" + "&sensor=true"
             
-            let session = NSURLSession.sharedSession()
-            let url = NSURL(string: urlString)
-            let request = NSURLRequest(URL: url!)
+            let session = URLSession.shared
+            let url = URL(string: urlString)
+            let request = URLRequest(url: url!)
             
-            let dataTask = session.dataTaskWithRequest(request) { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+            let dataTask = session.dataTask(with: request, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) -> Void in
                 if let error = error {
                     print(error)
                 }
                 if let response = response {
-                    print("url = \(response.URL!)")
+                    print("url = \(response.url!)")
                     print("response = \(response)")
-                    let httpResponse = response as! NSHTTPURLResponse
+                    let httpResponse = response as! HTTPURLResponse
                     print("response code = \(httpResponse.statusCode)")
                     
                     //if you response is json do the following
                     do{
-                        let resultJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
+                        let resultJSON = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions())
                         print(resultJSON)
                         
                         
@@ -130,7 +142,7 @@ class LocationFetcher: NSObject {
                     }
                     
                 }
-            }
+            } as! (Data?, URLResponse?, Error?) -> Void) 
             dataTask.resume()
             
         }

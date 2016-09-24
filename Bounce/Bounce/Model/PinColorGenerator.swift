@@ -10,12 +10,12 @@ import UIKit
 
 class PinColorGenerator: NSObject {
     
-    func roundToNearest(number: Double, toNearest: Double) -> Double {
+    func roundToNearest(_ number: Double, toNearest: Double) -> Double {
         return round(number / toNearest) * toNearest
     }
     
     
-    func pinColorPicker(pins:[BounceAnnotation]) -> [NSNumber:UIColor] {
+    func pinColorPicker(_ pins:[BounceAnnotation]) -> [NSNumber:UIColor] {
         
         var scores = [Double]()
         var colorDict = [NSNumber:UIColor]()
@@ -25,8 +25,8 @@ class PinColorGenerator: NSObject {
             scores.append(Double(score!))
         }
         
-        let maxScore = scores.maxElement()
-        let minScore = scores.minElement()
+        let maxScore = scores.max()
+        let minScore = scores.min()
         
         var h = 0.0
         let s = 0.75
@@ -55,7 +55,7 @@ class PinColorGenerator: NSObject {
             
             let color = UIColor(hue: CGFloat(Float(h)), saturation: CGFloat(Float(s)), brightness: CGFloat(Float(b)), alpha: CGFloat(Float(a)))
             
-            colorDict[NSNumber(double: score)] = color
+            colorDict[NSNumber(value: score as Double)] = color
         }
         //        //2 Color Segments
         //        for score in scores {

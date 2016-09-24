@@ -25,7 +25,6 @@
 		2143AC011CD00B9C008BBF2D /* FourSquarePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2143AC001CD00B9C008BBF2D /* FourSquarePlace.swift */; };
 		214FE49C1D1B68C10079DB60 /* ReportPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214FE49B1D1B68C10079DB60 /* ReportPostVC.swift */; };
 		2168A82D1CADD77F009E76E5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2168A82C1CADD77F009E76E5 /* MapKit.framework */; };
-		21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC01C4DA44900048B54 /* SwiftyJSON.swift */; };
 		21970FC61C4DB03300048B54 /* NearbyPlacesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */; };
 		21970FE01C4EFF5600048B54 /* BounceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21970FDF1C4EFF5600048B54 /* BounceConstants.swift */; };
 		21D420181CC9B629003E9B0E /* KinveyFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D420171CC9B629003E9B0E /* KinveyFetcher.swift */; };
@@ -95,7 +94,6 @@
 		2143AC001CD00B9C008BBF2D /* FourSquarePlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FourSquarePlace.swift; path = Model/FourSquarePlace.swift; sourceTree = "<group>"; };
 		214FE49B1D1B68C10079DB60 /* ReportPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportPostVC.swift; sourceTree = "<group>"; };
 		2168A82C1CADD77F009E76E5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		21970FC01C4DA44900048B54 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		21970FC51C4DB03300048B54 /* NearbyPlacesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyPlacesTVC.swift; path = "View Controllers/NearbyPlacesTVC.swift"; sourceTree = "<group>"; };
 		21970FDF1C4EFF5600048B54 /* BounceConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BounceConstants.swift; path = Model/BounceConstants.swift; sourceTree = "<group>"; };
 		21D420171CC9B629003E9B0E /* KinveyFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KinveyFetcher.swift; path = Model/KinveyFetcher.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				21FFED5F1C4AA325006F294F /* Proposer.swift */,
-				21970FC01C4DA44900048B54 /* SwiftyJSON.swift */,
 			);
 			name = "3rd Party Models";
 			sourceTree = "<group>";
@@ -494,7 +491,6 @@
 				2143AC011CD00B9C008BBF2D /* FourSquarePlace.swift in Sources */,
 				2114B42E1C5E69590002C930 /* ImageConfigurer.swift in Sources */,
 				2114B42A1C59890F0002C930 /* PlaceTableViewCell.swift in Sources */,
-				21970FC11C4DA44900048B54 /* SwiftyJSON.swift in Sources */,
 				21FFED261C487CEE006F294F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -640,6 +636,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0EC36282F191544BA7F4A271 /* Pods-Bounce.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bounce/Bounce.entitlements;
 				DEFINES_MODULE = NO;
@@ -655,7 +652,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.Bounce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = Header.h;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -664,6 +661,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 987CB5985C4580F3B8979254 /* Pods-Bounce.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bounce/Bounce.entitlements;
 				DEFINES_MODULE = NO;
@@ -679,7 +677,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.Bounce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = Header.h;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -692,7 +690,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.BounceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bounce.app/Bounce";
 			};
 			name = Debug;
@@ -705,7 +703,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.BounceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bounce.app/Bounce";
 			};
 			name = Release;
@@ -719,7 +717,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.BounceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Bounce;
 				USES_XCTRUNNER = YES;
 			};
@@ -733,7 +731,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = awesomeApps.BounceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Bounce;
 				USES_XCTRUNNER = YES;
 			};

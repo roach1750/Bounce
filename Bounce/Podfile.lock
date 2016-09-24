@@ -16,6 +16,7 @@ PODS:
     - FBSDKCoreKit
   - KinveyKit (1.40.9)
   - MBProgressHUD (0.9.2)
+  - SwiftyJSON (3.0.0)
 
 DEPENDENCIES:
   - Crashlytics
@@ -25,6 +26,7 @@ DEPENDENCIES:
   - FBSDKShareKit
   - KinveyKit
   - MBProgressHUD (~> 0.9.2)
+  - SwiftyJSON
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
@@ -35,5 +37,6 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 11cbb5a4d7b5fda8143cc95b76188147e6725736
   KinveyKit: 35ee59aba4a62dc808dfabf510c4c7fd70f1d08b
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  SwiftyJSON: f57b2b44bc166617372d1c70773591fe9f0f5fd4
 
 COCOAPODS: 0.39.0

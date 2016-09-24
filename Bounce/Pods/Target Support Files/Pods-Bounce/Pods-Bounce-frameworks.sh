@@ -89,6 +89,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Bounce/FBSDKLoginKit.framework"
   install_framework "Pods-Bounce/FBSDKShareKit.framework"
   install_framework "Pods-Bounce/MBProgressHUD.framework"
+  install_framework "Pods-Bounce/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Bounce/Bolts.framework"
@@ -96,4 +97,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Bounce/FBSDKLoginKit.framework"
   install_framework "Pods-Bounce/FBSDKShareKit.framework"
   install_framework "Pods-Bounce/MBProgressHUD.framework"
+  install_framework "Pods-Bounce/SwiftyJSON.framework"
 fi

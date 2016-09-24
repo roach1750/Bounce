@@ -28,17 +28,17 @@ class ConfigurePostVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
-    @IBAction func backButtonPressed(sender: UIButton) {
-                dismissViewControllerAnimated(false, completion: nil)
+    @IBAction func backButtonPressed(_ sender: UIButton) {
+                dismiss(animated: false, completion: nil)
     }
     
-    @IBAction func postButtonPressed(sender: AnyObject) {
+    @IBAction func postButtonPressed(_ sender: AnyObject) {
     }
     
-    @IBAction func morePlacesButtonPressed(sender: UIButton) {
+    @IBAction func morePlacesButtonPressed(_ sender: UIButton) {
     }
     
     

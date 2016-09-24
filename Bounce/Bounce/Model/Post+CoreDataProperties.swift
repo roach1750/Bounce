@@ -16,7 +16,7 @@ extension Post {
 
     @NSManaged var postMessage: String?
     @NSManaged var postPlaceName: String?
-    @NSManaged var postImageData: NSData?
+    @NSManaged var postImageData: Data?
     @NSManaged var postHasImage: NSNumber?
     @NSManaged var postExpired: NSNumber?
 
@@ -32,7 +32,7 @@ extension Post {
     @NSManaged var postUniqueId: String?
     @NSManaged var postImageFileInfo: String?
     @NSManaged var postPlace: Place?
-    @NSManaged var postCreationDate: NSDate?
+    @NSManaged var postCreationDate: Date?
 
     @NSManaged var entityId: String?
 

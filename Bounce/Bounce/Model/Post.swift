@@ -17,14 +17,14 @@ class Post: NSManagedObject {
     dynamic var postLocation: CLLocation?
 
     
-    class func postWithPostInfo(post: Post, inManagedObjectContext context: NSManagedObjectContext) -> Post?
+    class func postWithPostInfo(_ post: Post, inManagedObjectContext context: NSManagedObjectContext) -> Post?
     {
-        let request = NSFetchRequest(entityName: "Post")
+        let request: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
         request.predicate = NSPredicate(format: "postUniqueId = %@", post.postUniqueId!)
         
-        if let existingPost = (try? context.executeFetchRequest(request))?.first as? Post {
+        if let existingPost = (try? context.fetch(request))?.first! {
             return existingPost
-        } else if let newPost = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: context) as? Post{
+        } else if let newPost = NSEntityDescription.insertNewObject(forEntityName: "Post", into: context) as? Post{
             newPost.postMessage = post.postMessage
             newPost.postImageFileInfo = post.postImageFileInfo
             newPost.postHasImage = post.postHasImage
@@ -59,7 +59,7 @@ class Post: NSManagedObject {
     
     //Kinvey Stuff
 
-    override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
+    override func hostToKinveyPropertyMapping() -> [AnyHashable: Any]! {
         return [
             "postMessage" : BOUNCECOMMENTKEY,
             "postImageFileInfo" : BOUNCEKINVEYIMAGEFILEIDKEY,
@@ -79,41 +79,86 @@ class Post: NSManagedObject {
         ]
     }
         
-    internal override static func kinveyObjectBuilderOptions() -> [NSObject : AnyObject]! {
+    internal override static func kinveyObjectBuilderOptions() -> [AnyHashable: Any]! {
         return [
             KCS_USE_DESIGNATED_INITIALIZER_MAPPING_KEY : true,
             KCS_REFERENCE_MAP_KEY : [ "post" : Post.self ]
         ]
     }
     
-    internal override static func kinveyDesignatedInitializer(jsonDocument: [NSObject : AnyObject]!) -> AnyObject! {
-        let existingID = jsonDocument[KCSEntityKeyId] as? String
-        var obj: Post? = nil
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entityForName("Post", inManagedObjectContext: context)!
-        if existingID != nil {
-            let request = NSFetchRequest()
-            request.entity = entity
-            let predicate = NSPredicate(format: "entityId = %@", existingID!)
-            request.predicate = predicate
-            
-            
-            do {
-                let results = try context.executeFetchRequest(request)
-                if results.count > 0 {
-                    obj = results.first as? Post
+//    internal static func kinveyDesignatedInitializer(_ jsonDocument: [AnyHashable: Any]!) -> AnyObject! {
+//        let existingID = jsonDocument[KCSEntityKeyId] as? String
+//        var obj: Post? = nil
+//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+//        let entity = NSEntityDescription.entity(forEntityName: "Post", in: context)!
+//        if existingID != nil {
+//            let request: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
+//            request.entity = entity
+//            let predicate = NSPredicate(format: "entityId = %@", existingID!)
+//            request.predicate = predicate
+//            
+//            
+//            do {
+//                let results = try context.fetch(request)
+//                if results.count > 0 {
+//                    obj = results.first! 
+//                }
+//            } catch {
+//                print("error fetching results")
+//            }
+//            
+//        }
+//        if obj == nil {
+//            //fall back to creating a new if one if there is an error, or if it is new, DON'T SAVE TO MOC BECAUSE I'LL DO THE SAVING MY SELF IF I WANT TO SAVE IT,  NOT EVERY KINVEY OBJECT SHOULD BE SAVED!!!!
+//            obj = Post(entity: entity, insertInto: nil)
+//        }
+//        return obj
+//    }
+
+    func kinveyDesignatedInitializer(_ jsonDocument: [AnyHashable : Any]!) -> Any! {
+                let existingID = jsonDocument[KCSEntityKeyId] as? String
+                var obj: Post? = nil
+                let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+                let entity = NSEntityDescription.entity(forEntityName: "Post", in: context)!
+                if existingID != nil {
+                    let request: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
+                    request.entity = entity
+                    let predicate = NSPredicate(format: "entityId = %@", existingID!)
+                    request.predicate = predicate
+        
+        
+                    do {
+                        let results = try context.fetch(request)
+                        if results.count > 0 {
+                            obj = results.first!
+                        }
+                    } catch {
+                        print("error fetching results")
+                    }
+        
                 }
-            } catch {
-                print("error fetching results")
-            }
-            
-        }
-        if obj == nil {
-            //fall back to creating a new if one if there is an error, or if it is new, DON'T SAVE TO MOC BECAUSE I'LL DO THE SAVING MY SELF IF I WANT TO SAVE IT,  NOT EVERY KINVEY OBJECT SHOULD BE SAVED!!!!
-            obj = Post(entity: entity, insertIntoManagedObjectContext: nil)
-        }
-        return obj
+                if obj == nil {
+                    //fall back to creating a new if one if there is an error, or if it is new, DON'T SAVE TO MOC BECAUSE I'LL DO THE SAVING MY SELF IF I WANT TO SAVE IT,  NOT EVERY KINVEY OBJECT SHOULD BE SAVED!!!!
+                    obj = Post(entity: entity, insertInto: nil)
+                }
+                return obj
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     func clearData(){
         postMessage = nil

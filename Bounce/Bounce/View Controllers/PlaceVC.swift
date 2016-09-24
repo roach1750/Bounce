@@ -7,6 +7,26 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 
 class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -31,8 +51,8 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         tableView.dataSource = nil
         configureTableView()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.reloadTable), name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlaceVC.refreshComplete), name: BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PlaceVC.reloadTable), name: NSNotification.Name(rawValue: BOUNCETABLEDATAREADYNOTIFICATION), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PlaceVC.refreshComplete), name: NSNotification.Name(rawValue: BOUNCETABLEDATAREADYNOTIFICATION), object: nil)
         configureViewColors()
         super.viewDidLoad()
     }
@@ -45,7 +65,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         shareSettingSegmentedControl.tintColor = BOUNCESECONDARYCOLOR
         
         //Remove Line under Navigation Bar
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
     
@@ -68,17 +88,17 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func configureTableView() {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor ( red: 0.7885, green: 0.8121, blue: 0.9454, alpha: 1.0 )
         
         //Pull to refresh
         refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(PlaceVC.pullToRefresh), forControlEvents: .ValueChanged)
+        refreshControl.addTarget(self, action: #selector(PlaceVC.pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
     }
     
     func pullToRefresh() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         kinveyFetcher.fetchUpdatedPostsForPlace(place!)
         
     }
@@ -86,34 +106,34 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func refreshComplete() {
         refreshControl.endRefreshing()
         reloadTable()
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
     }
     
     
-    @IBAction func sortingMethodSwitched(sender: UISegmentedControl) {
+    @IBAction func sortingMethodSwitched(_ sender: UISegmentedControl) {
         reloadTable()
     }
     
-    @IBAction func moreButtonPressed(sender: AnyObject) {
-        let point = sender.convertPoint(CGPointZero, toView: tableView)
-        let indexPath = tableView.indexPathForRowAtPoint(point)
-        let currentPost = posts![(indexPath?.section)!]
+    @IBAction func moreButtonPressed(_ sender: AnyObject) {
+        let point = sender.convert(CGPoint.zero, to: tableView)
+        let indexPath = tableView.indexPathForRow(at: point)
+        let currentPost = posts![((indexPath as NSIndexPath?)?.section)!]
         
-        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .ActionSheet)
-        let reportAction = UIAlertAction(title: "Report", style: .Destructive, handler: {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        let reportAction = UIAlertAction(title: "Report", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
-            self.performSegueWithIdentifier("reportPostSegue", sender: currentPost)
+            self.performSegue(withIdentifier: "reportPostSegue", sender: currentPost)
         })
         
         //
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
         })
         
         optionMenu.addAction(reportAction)
         optionMenu.addAction(cancelAction)
-        self.presentViewController(optionMenu, animated: true, completion: nil)
+        self.present(optionMenu, animated: true, completion: nil)
         
     }
     
@@ -122,11 +142,11 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let placesPost = posts {
-            let currentPost = placesPost[indexPath.section]
+            let currentPost = placesPost[(indexPath as NSIndexPath).section]
             let identifier = getIdentifierForCell(currentPost)
-            let cell:PlaceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(identifier) as! PlaceTableViewCell
+            let cell:PlaceTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier) as! PlaceTableViewCell
             
             
             //Coment
@@ -136,11 +156,11 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             if  ((currentPost.postHasImage?.boolValue) != nil) {
                 //If there is already an image downloaded:
                 if let imageData = currentPost.postImageData {
-                    let image = UIImage(data: imageData)
+                    let image = UIImage(data: imageData as Data)
                     let IC = ImageConfigurer()
                     let rotatedImage = IC.rotateImage90Degress(image!)
                     cell.postImageView?.image = rotatedImage
-                    cell.postImageView?.contentMode = .ScaleAspectFit
+                    cell.postImageView?.contentMode = .scaleAspectFit
 //                    print("loading image for cell # \(indexPath.section)")
                     
                 }
@@ -155,26 +175,26 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.postCreationDate.text = timeSinceObjectWasCreated(abs(currentPost.postCreationDate!.timeIntervalSinceNow))
             
             //Score
-            cell.postScoreLabel.text = String(currentPost.postScore!)
+            cell.postScoreLabel.text = String(describing: currentPost.postScore!)
             
-            let userDefaults = NSUserDefaults.standardUserDefaults()
+            let userDefaults = UserDefaults.standard
             
-            if let increment = userDefaults.objectForKey(currentPost.postUniqueId!) as? Int {
+            if let increment = userDefaults.object(forKey: currentPost.postUniqueId!) as? Int {
                 switch increment {
                 case 1:
-                    cell.postPlusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
-                    cell.postPlusButton.enabled = false
-                    cell.postMinusButton.enabled = false
+                    cell.postPlusButton.setTitleColor(BOUNCEORANGE, for: UIControlState())
+                    cell.postPlusButton.isEnabled = false
+                    cell.postMinusButton.isEnabled = false
                 case -1:
-                    cell.postMinusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
-                    cell.postPlusButton.enabled = false
-                    cell.postMinusButton.enabled = false
+                    cell.postMinusButton.setTitleColor(BOUNCEORANGE, for: UIControlState())
+                    cell.postPlusButton.isEnabled = false
+                    cell.postMinusButton.isEnabled = false
                 default:
                     break
                 }
             }
-            cell.layoutMargins = UIEdgeInsetsZero
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.layoutMargins = UIEdgeInsets.zero
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             
 //            
 //            print(cell.frame.width)
@@ -192,13 +212,13 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
 
-    func getIdentifierForCell(post: Post) -> String {
+    func getIdentifierForCell(_ post: Post) -> String {
         
-        if post.postHasImage == NSNumber(bool: true) && post.postMessage != nil{
+        if post.postHasImage == NSNumber(value: true as Bool) && post.postMessage != nil{
             tableView.estimatedRowHeight = 515.0
             return "commentAndPhoto"
         }
-        else if post.postHasImage == NSNumber(bool: true) {
+        else if post.postHasImage == NSNumber(value: true as Bool) {
             tableView.estimatedRowHeight = 415.0
             return "photoOnly"
         }
@@ -211,7 +231,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func timeSinceObjectWasCreated(timeInSeconds: Double) -> String{
+    func timeSinceObjectWasCreated(_ timeInSeconds: Double) -> String{
         let timeInMinutes = timeInSeconds / 60
         let timeInHours = timeInMinutes / 60
         
@@ -229,9 +249,9 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func convertToProperTense(time: String) -> String {
-        if time.substringToIndex(time.startIndex.successor()) == "1" {
-            return time.substringToIndex(time.endIndex.predecessor())
+    func convertToProperTense(_ time: String) -> String {
+        if time.substring(to: time.characters.index(after: time.startIndex)) == "1" {
+            return time.substring(to: time.characters.index(before: time.endIndex))
         }
         else {
             return time
@@ -240,10 +260,10 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: Score Buttons
     
-    @IBAction func scoreButtonPressed(sender: UIButton) {
-        let point = sender.convertPoint(CGPointZero, toView: tableView)
-        let indexPath = tableView.indexPathForRowAtPoint(point)
-        let cell = tableView.cellForRowAtIndexPath(indexPath!) as! PlaceTableViewCell
+    @IBAction func scoreButtonPressed(_ sender: UIButton) {
+        let point = sender.convert(CGPoint.zero, to: tableView)
+        let indexPath = tableView.indexPathForRow(at: point)
+        let cell = tableView.cellForRow(at: indexPath!) as! PlaceTableViewCell
         
         let buttonTitle = sender.currentTitle
         let increment: Int
@@ -251,25 +271,25 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         switch(buttonTitle!) {
         case "+" :
             increment = 1
-            cell.postPlusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
+            cell.postPlusButton.setTitleColor(BOUNCEORANGE, for: UIControlState())
         case "-" :
             increment = -1
-            cell.postMinusButton.setTitleColor(BOUNCEORANGE, forState: .Normal)
+            cell.postMinusButton.setTitleColor(BOUNCEORANGE, for: UIControlState())
         default:
             increment = 0
         }
         
-        let currentPost = posts![(indexPath?.section)!]
+        let currentPost = posts![((indexPath as NSIndexPath?)?.section)!]
         let kUP = KinveyUploader()
         kUP.changeScoreForPost(currentPost,place: place!,increment: increment)
         
         let newScore = Int(currentPost.postScore!) + increment
         cell.postScoreLabel.text = String(newScore)
-        cell.postPlusButton.enabled = false
-        cell.postMinusButton.enabled = false
+        cell.postPlusButton.isEnabled = false
+        cell.postMinusButton.isEnabled = false
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setInteger(increment, forKey: currentPost.postUniqueId!)
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(increment, forKey: currentPost.postUniqueId!)
     }
     
     
@@ -278,43 +298,43 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: Tableview customization
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         if posts?.count > 0 {
                 tableView.backgroundView = nil
                 return posts!.count
         }
         else {
-            let noDataLabel: UILabel = UILabel(frame: CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height))
+            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: view.bounds.size.height))
             noDataLabel.text = "No Post for this place...pull to refresh"
-            noDataLabel.textColor = UIColor.blackColor()
-            noDataLabel.textAlignment = .Center
+            noDataLabel.textColor = UIColor.black
+            noDataLabel.textAlignment = .center
             tableView.backgroundView = noDataLabel
-            tableView.separatorStyle = .None
+            tableView.separatorStyle = .none
             
         }
         return 0
     }
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ? 0 : 15
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRectMake(0, 0, tableView.bounds.size.width, 15))
-        headerView.backgroundColor = UIColor.clearColor()
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 15))
+        headerView.backgroundColor = UIColor.clear
         return headerView
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "reportPostSegue" {
-            let DV = segue.destinationViewController as! ReportPostVC
+            let DV = segue.destination as! ReportPostVC
             if let reportedPost = sender as? Post {
                 DV.selectedPost = reportedPost
             }

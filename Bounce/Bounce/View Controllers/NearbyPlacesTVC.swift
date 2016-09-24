@@ -17,11 +17,11 @@ class NearbyPlacesTVC: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let placesArray = LocationFetcher.sharedInstance.placeArray {
             return placesArray.count
         }
@@ -29,10 +29,10 @@ class NearbyPlacesTVC: UITableViewController {
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("placeCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "placeCell", for: indexPath)
         if let placesArray = LocationFetcher.sharedInstance.placeArray {
-            let place = placesArray[indexPath.row]
+            let place = placesArray[(indexPath as NSIndexPath).row]
             cell.textLabel?.text = place.name
             
             let roundedDistance = 50 * Int(round(place.distanceFromUser! / 50.0))
@@ -41,14 +41,14 @@ class NearbyPlacesTVC: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let placesArray = LocationFetcher.sharedInstance.placeArray {
-            let place = placesArray[indexPath.row]
+            let place = placesArray[(indexPath as NSIndexPath).row]
             LocationFetcher.sharedInstance.selectedPlace = place
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        navigationController?.popToRootViewControllerAnimated(true)
+        tableView.deselectRow(at: indexPath, animated: true)
+        _ = navigationController?.popToRootViewController(animated: true)
     }
 
 

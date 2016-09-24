@@ -25,17 +25,17 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var frontCamera: Bool = true
     
     override func viewDidLoad() {
-        takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraVC.saveImage), name: BOUNCEIMAGEPROCESSEDNOTIFICATION, object: nil)
+        takePictureButton.setImage(UIImage(named: "Take Picture Button"), for: UIControlState())
+        NotificationCenter.default.addObserver(self, selector: #selector(CameraVC.saveImage), name: NSNotification.Name(rawValue: BOUNCEIMAGEPROCESSEDNOTIFICATION), object: nil)
         addSwitchCameraButton()
         super.viewDidLoad()
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         beginCameraSession()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        saveButton.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        saveButton.isHidden = true
     }
     
     func beginCameraSession(){
@@ -44,10 +44,10 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         //pick camera
         var camera: AVCaptureDevice?
         if frontCamera == true {
-            camera = cameraWithPosition(.Front)
+            camera = cameraWithPosition(.front)
         }
         else {
-            camera = cameraWithPosition(.Back)
+            camera = cameraWithPosition(.back)
         }
         
         var error: NSError?
@@ -65,7 +65,7 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             if captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addOutput(stillImageOutput)
                 previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                previewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.Portrait
+                previewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 previewLayer.frame = cameraPreviewImageView.bounds
                 previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                 captureSession.sessionPreset = AVCaptureSessionPresetMedium
@@ -76,10 +76,10 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
     }
     
-    func cameraWithPosition(position: AVCaptureDevicePosition) -> AVCaptureDevice {
-        let devices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
-        for device  in devices {
-            if device.position == position {
+    func cameraWithPosition(_ position: AVCaptureDevicePosition) -> AVCaptureDevice {
+        let devices = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo)
+        for device  in devices! {
+            if (device as AnyObject).position == position {
                 return device as! AVCaptureDevice
             }
         }
@@ -92,37 +92,37 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     
-    @IBAction func cancelButtonPressed(sender: UIButton) {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    @IBAction func cancelButtonPressed(_ sender: UIButton) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.tempPostImageData = nil
         appDelegate.tempPostMessage = nil
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func saveButtonPressed(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func takePicture(sender: UIButton) {
+    @IBAction func takePicture(_ sender: UIButton) {
         if cameraPreviewImageView.image == nil {
-            if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo){
-                videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
-                stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
+            if let videoConnection = stillImageOutput.connection(withMediaType: AVMediaTypeVideo){
+                videoConnection.videoOrientation = AVCaptureVideoOrientation.portrait
+                stillImageOutput.captureStillImageAsynchronously(from: videoConnection, completionHandler: {(sampleBuffer, error) in
                     if (sampleBuffer != nil) {
                         
-                        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+                        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
                             
                             let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
                             
-                            let dataProvider = CGDataProviderCreateWithCFData(imageData)
-                            let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider!, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
-                            var image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
+                            let dataProvider = CGDataProvider(data: imageData as! CFData)
+                            let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
+                            var image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.up)
                             self.captureSession.stopRunning()
                             let IC = ImageConfigurer.sharedInstance
                             if self.frontCamera == true {
                                 
-                                image = UIImage(CGImage: image.CGImage!, scale: 1.0, orientation: .UpMirrored)
+                                image = UIImage(cgImage: image.cgImage!, scale: 1.0, orientation: .upMirrored)
                                 
                                 //reflect the image 
                                 print("front camera")
@@ -139,8 +139,8 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
         else {
             cameraPreviewImageView.image = nil
-            takePictureButton.setImage(UIImage(named: "Take Picture Button"), forState: .Normal)
-            self.saveButton.hidden = true
+            takePictureButton.setImage(UIImage(named: "Take Picture Button"), for: UIControlState())
+            self.saveButton.isHidden = true
             
             beginCameraSession()
         }
@@ -153,8 +153,8 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             
             
             self.cameraPreviewImageView.image = configuredImage;
-            self.takePictureButton.setImage(UIImage(named: "Delete Picture Button"), forState: .Normal)
-            self.saveButton.hidden = false
+            self.takePictureButton.setImage(UIImage(named: "Delete Picture Button"), for: UIControlState())
+            self.saveButton.isHidden = false
         }
 
         
@@ -164,16 +164,16 @@ class CameraVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     // MARK: - UI Configuration
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     func addSwitchCameraButton() {
         switchCameraButton = UIButton(frame: CGRect(x:  cameraPreviewImageView.frame.size.width - 70, y: 10 + cameraPreviewImageView.frame.origin.y, width: 50, height: 50))
-        switchCameraButton.setImage(UIImage(named: "SwitchCamera"), forState: .Normal)
-        switchCameraButton.addTarget(self, action: #selector(CameraVC.switchCamera), forControlEvents: .TouchUpInside)
+        switchCameraButton.setImage(UIImage(named: "SwitchCamera"), for: UIControlState())
+        switchCameraButton.addTarget(self, action: #selector(CameraVC.switchCamera), for: .touchUpInside)
         view.addSubview(switchCameraButton)
-        view.bringSubviewToFront(switchCameraButton)
+        view.bringSubview(toFront: switchCameraButton)
     }
     
     

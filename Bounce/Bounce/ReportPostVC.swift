@@ -19,26 +19,26 @@ class ReportPostVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableView.tableFooterView = UIView()
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reportReason", forIndexPath: indexPath)
-        cell.textLabel?.text = reasonsArray[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reportReason", for: indexPath)
+        cell.textLabel?.text = reasonsArray[(indexPath as NSIndexPath).row]
         return cell
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let kU = KinveyUploader()
-        let reason = reasonsArray[indexPath.row]
+        let reason = reasonsArray[(indexPath as NSIndexPath).row]
         kU.reportPost(selectedPost!, reason: reason)
-        navigationController?.popViewControllerAnimated(true)
+        _ = navigationController?.popViewController(animated: true)
 
     }
     

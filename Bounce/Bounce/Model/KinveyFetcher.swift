@@ -9,6 +9,26 @@
 import CoreData
 import FBSDKCoreKit
 import FBSDKLoginKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class KinveyFetcher: NSObject {
     
@@ -19,7 +39,7 @@ class KinveyFetcher: NSObject {
         return Singleton.instance
     }
     
-    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
     
     
     var friendsOnlyPostData: [Post]?
@@ -29,7 +49,7 @@ class KinveyFetcher: NSObject {
     var friendsOnlyPlaceData: [Place]?
     var everyonePlaceData: [Place]?
     
-    var topPlaceImageData = [String : NSData]()
+    var topPlaceImageData = [String : Data]()
     
     
     func queryForAllPlaces() {
@@ -37,19 +57,19 @@ class KinveyFetcher: NSObject {
         friendsOnlyPlaceData = [Place]()
         everyonePlaceData = [Place]()
         
-        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
+        let store = KCSAppdataStore.withOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
             ])
         let query = configurePlaceQuery()
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true;
-        store.queryWithQuery(
-            query,
-            withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) -> Void in
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true;
+        _ = store?.query(
+            withQuery: query,
+            withCompletionBlock: { (objectsOrNil, errorOrNil) in
                 if let objects = objectsOrNil {
                     print("Fetched \(objects.count) Place objects")
-                    self.sortPlaceData(objects)
+                    self.sortPlaceData(objects as [AnyObject])
                 }
 
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false;
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false;
                 
             },
             withProgressBlock: { (objects, percentComplete) in
@@ -64,27 +84,27 @@ class KinveyFetcher: NSObject {
     //
     func configurePlaceQuery() -> KCSQuery {
         //Everyone Query
-        let everyoneQuery = KCSQuery(onField: BOUNCEPLACEEVERYONEAUTHORS, usingConditional: .KCSNotEqual, forValue: [])
+        let everyoneQuery = KCSQuery(onField: BOUNCEPLACEEVERYONEAUTHORS, using: .kcsNotEqual, forValue: nil)
         //Friends Only Query
-        if FBSDKAccessToken.currentAccessToken() != nil && KCSUser.activeUser() != nil {
-            let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
-            let friendsOnlyQuery = KCSQuery(onField: BOUNCEPLACEFRIENDONLYAUTHORS, usingConditional: .KCSIn, forValue: facebookFriendIDs)
-            let combineQuery = everyoneQuery.queryByJoiningQuery(friendsOnlyQuery, usingOperator: .KCSOr)
-            return combineQuery
+        if FBSDKAccessToken.current() != nil && KCSUser.active() != nil {
+            let facebookFriendIDs =  KCSUser.active().getValueForAttribute("Facebook Friends IDs") as! [String]
+            let friendsOnlyQuery = KCSQuery(onField: BOUNCEPLACEFRIENDONLYAUTHORS, using: .kcsIn, forValue: facebookFriendIDs as NSObject!)
+            let combineQuery = everyoneQuery?.joiningQuery(friendsOnlyQuery, usingOperator: .kcsOr)
+            return combineQuery!
         }
         else {
-            return everyoneQuery
+            return everyoneQuery!
         }
 
         //combine and return
 
     }
     
-    func sortPlaceData(data:[AnyObject]) {
+    func sortPlaceData(_ data:[AnyObject]) {
         if data.count > 0 {
             for object in data{
                 let newPlace = object as! Place
-                let currentUserFBFriends = KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as? [String]
+                let currentUserFBFriends = KCSUser.active().getValueForAttribute("Facebook Friends IDs") as? [String]
                 if let fOAS = newPlace.friendsOnlyAuthors {
                     for fOA in fOAS {
                         if currentUserFBFriends!.contains(fOA) {
@@ -95,7 +115,7 @@ class KinveyFetcher: NSObject {
                 }
                 everyonePlaceData?.append(newPlace)
             }
-            NSNotificationCenter.defaultCenter().postNotificationName(BOUNCEANNOTATIONSREADYNOTIFICATION, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCEANNOTATIONSREADYNOTIFICATION), object: nil)
         }
     }
     
@@ -103,42 +123,42 @@ class KinveyFetcher: NSObject {
     
     /////////////////////////////////////////////////POST SECTION////////////////////////////////////////////////
     
-    func fetchPostsForPlace(place: Place) {
+    func fetchPostsForPlace(_ place: Place) {
         self.fetchPostFromKinveyForPlace(place)
     }
     
     
-    func configurePostQueryWithPlace(place:Place, addDate:Bool) -> KCSQuery {
-        let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey)
+    func configurePostQueryWithPlace(_ place:Place, addDate:Bool) -> KCSQuery {
+        let mainQuery = KCSQuery(onField: BOUNCEKEY, withExactMatchForValue: place.placeBounceKey as NSObject!)
         
         if addDate {
             if let mostRecentPostInDBDate = dateOfMostRecentPostInDataBase() {
                 //            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
-                let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, usingConditional: KCSQueryConditional.KCSGreaterThan, forValue: mostRecentPostInDBDate)
-                mainQuery.addQuery(dateRangeQuery)
-                mainQuery.queryByJoiningQuery(dateRangeQuery, usingOperator: .KCSAnd)
+                let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, using: KCSQueryConditional.kcsGreaterThan, forValue: mostRecentPostInDBDate as NSObject!)
+                mainQuery?.addQuery(dateRangeQuery)
+                mainQuery?.joiningQuery(dateRangeQuery, usingOperator: .kcsAnd)
             }
         }
         
         //TODO: need to add location to main query
         
         //Get a post from anyone who has the setting set to everyone
-        let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEEVERYONESHARESETTING)
-        let combineEveryoneQuery = everyoneQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
+        let everyoneQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEEVERYONESHARESETTING as NSObject!)
+        let combineEveryoneQuery = everyoneQuery?.joiningQuery(mainQuery, usingOperator: .kcsAnd)
 
         
-        if FBSDKAccessToken.currentAccessToken() != nil && KCSUser.activeUser() != nil {
+        if FBSDKAccessToken.current() != nil && KCSUser.active() != nil {
             //If the share setting is to friends only, make sure this person is a friend
-            let friendsOnlyQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEFRIENDSONLYSHARESETTING)
-            let facebookFriendIDs =  KCSUser.activeUser().getValueForAttribute("Facebook Friends IDs") as! [String]
-            let matchingFriendsQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, usingConditional: .KCSIn, forValue: facebookFriendIDs)
-            friendsOnlyQuery.addQuery(matchingFriendsQuery)
-            let combineFriendsQuery = friendsOnlyQuery.queryByJoiningQuery(mainQuery, usingOperator: .KCSAnd)
-            let queryToReturn = combineFriendsQuery.queryByJoiningQuery(combineEveryoneQuery, usingOperator: .KCSOr)
-            return queryToReturn
+            let friendsOnlyQuery = KCSQuery(onField: BOUNCESHARESETTINGKEY, withExactMatchForValue: BOUNCEFRIENDSONLYSHARESETTING as NSObject!)
+            let facebookFriendIDs =  KCSUser.active().getValueForAttribute("Facebook Friends IDs") as! [String]
+            let matchingFriendsQuery = KCSQuery(onField: BOUNCEPOSTUPLOADERFACEBOOKUSERID, using: .kcsIn, forValue: facebookFriendIDs as NSObject!)
+            friendsOnlyQuery?.addQuery(matchingFriendsQuery)
+            let combineFriendsQuery = friendsOnlyQuery?.joiningQuery(mainQuery, usingOperator: .kcsAnd)
+            let queryToReturn = combineFriendsQuery?.joiningQuery(combineEveryoneQuery, usingOperator: .kcsOr)
+            return queryToReturn!
         }
         else {
-            return combineEveryoneQuery
+            return combineEveryoneQuery!
         }
         
         
@@ -149,16 +169,16 @@ class KinveyFetcher: NSObject {
     //
     // Fetch the date of the most recent post in the data base in order to decide what needs to be update from Kinvey
     //
-    func dateOfMostRecentPostInDataBase() -> NSDate? {
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Post", inManagedObjectContext: self.managedObjectContext)
+    func dateOfMostRecentPostInDataBase() -> Date? {
+        let fetchRequest: NSFetchRequest<Post> = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Post", in: self.managedObjectContext)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postCreationDate", ascending: false)]
         fetchRequest.fetchLimit = 1
         fetchRequest.entity = entityDescription
         do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest) as? [Post]
-            if result?.count > 0 {
-                let dateToReturn = result![0].postCreationDate
+            let result = try self.managedObjectContext.fetch(fetchRequest) 
+            if result.count > 0 {
+                let dateToReturn = result[0].postCreationDate
                 return dateToReturn
             }
             
@@ -174,18 +194,18 @@ class KinveyFetcher: NSObject {
     //
     // Downloads the post from Kinvey withImages
     //
-    private func fetchPostFromKinveyForPlace(place: Place) {
+    fileprivate func fetchPostFromKinveyForPlace(_ place: Place) {
         everyonePostData = everyonePostData == nil ? [Post]() : everyonePostData
         friendsOnlyPostData = friendsOnlyPostData == nil ? [Post]() : friendsOnlyPostData
         
-        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
+        let store = KCSAppdataStore.withOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
         let query = configurePostQueryWithPlace(place, addDate: true)
-        store.queryWithQuery(query, withCompletionBlock: { (downloadedData: [AnyObject]!, errorOrNil: NSError!) -> Void in
+        _ = store?.query(withQuery: query, withCompletionBlock: { (downloadedData, errorOrNil) in
             if let error = errorOrNil {
                 print("Error from downloading posts data only: \(error)")
             }
             else {
-                print("Fetch \(downloadedData.count) objects from Kinvey")
+                print("Fetch \(downloadedData?.count) objects from Kinvey")
                 self.handleDownloadedData(downloadedData as! [Post], place: place)
             }
             },
@@ -196,8 +216,8 @@ class KinveyFetcher: NSObject {
     
     
 
-    func handleDownloadedData(data:[Post], place:Place) {
-        managedObjectContext.performBlockAndWait {
+    func handleDownloadedData(_ data:[Post], place:Place) {
+        managedObjectContext.performAndWait {
             for newPost in data  {
                 //create new, unique post
                 _ = Post.postWithPostInfo(newPost, inManagedObjectContext: self.managedObjectContext)
@@ -213,13 +233,13 @@ class KinveyFetcher: NSObject {
         }
     }
     
-    func fetchDataFromDataBase(place:Place) {
+    func fetchDataFromDataBase(_ place:Place) {
         countCoreData()
         everyonePostData = [Post]()
         friendsOnlyPostData = [Post]()
 
-        managedObjectContext.performBlockAndWait {
-            let fetchRequest = NSFetchRequest(entityName: "Post")
+        managedObjectContext.performAndWait {
+            let fetchRequest: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
             let sortDescriptor = NSSortDescriptor(
                 key: "postCreationDate",
                 ascending: false,
@@ -231,8 +251,8 @@ class KinveyFetcher: NSObject {
             
             
             do {
-                let queryResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-                for post in queryResults as! [Post] {
+                let queryResults = try self.managedObjectContext.fetch(fetchRequest)
+                for post in queryResults {
                     if post.postShareSetting == BOUNCEFRIENDSONLYSHARESETTING {
                         if !(self.friendsOnlyPostData?.contains(post))! {
                             self.friendsOnlyPostData?.append(post)
@@ -240,11 +260,11 @@ class KinveyFetcher: NSObject {
                         }
                     }
                     if !(self.everyonePostData?.contains(post))! {
-                        self.everyonePostData = queryResults as? [Post]
+                        self.everyonePostData = queryResults
                     }
                 }
                 print("reloading from fetched database data")
-                NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCETABLEDATAREADYNOTIFICATION), object: nil)
             } catch let error {
                 print(error)
             }
@@ -252,12 +272,12 @@ class KinveyFetcher: NSObject {
     }
     
     func deleteAllPostFromCoreDatabase() {
-        let fetchRequest = NSFetchRequest(entityName: "Post")
+        let fetchRequest: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
         do {
-            let queryResults = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+            let queryResults = try self.managedObjectContext.fetch(fetchRequest)
             print("Deleted \(queryResults.count) objects")
-            for result in (queryResults as? [Post])! {
-                managedObjectContext.deleteObject(result)
+            for result in queryResults {
+                managedObjectContext.delete(result)
             }
             
         } catch let error {
@@ -266,7 +286,7 @@ class KinveyFetcher: NSObject {
     }
     
     func countCoreData(){
-        managedObjectContext.performBlock {
+        managedObjectContext.perform {
             //let count = self.managedObjectContext.countForFetchRequest(NSFetchRequest(entityName:"Post"), error: nil)
             //print("There are: \(count) post in the data base")
         }
@@ -278,32 +298,32 @@ class KinveyFetcher: NSObject {
     // downlods all objects that are old
     //
     
-    func fetchUpdatedPostsForPlace(place: Place) {
+    func fetchUpdatedPostsForPlace(_ place: Place) {
 
-        let collection = KCSCollection(fromString: BOUNCEPOSTCLASSNAME, ofClass: Post.self)
+        let collection = KCSCollection(from: BOUNCEPOSTCLASSNAME, of: Post.self)
         let store = KCSAppdataStore(collection: collection, options: nil)
         let query = configurePostQueryWithPlace(place, addDate: false)
         
-        store.queryWithQuery(query, withCompletionBlock: { (objectsOrNil: [AnyObject]!, errorOrNil: NSError!) in
+        _ = store?.query(withQuery: query, withCompletionBlock: { (objectsOrNil, errorOrNil) in
             if errorOrNil == nil {
-                print("Downloaded \(objectsOrNil.count) posts to update")
+                print("Downloaded \(objectsOrNil?.count) posts to update")
                 self.saveUpdatedDataToCoreData(objectsOrNil as! [Post], place: place)
             } else {
-                NSLog("error occurred: %@", errorOrNil)
+                print("error occurred: %@", errorOrNil)
             }
             
             }, withProgressBlock: nil)
     }
     
-    func saveUpdatedDataToCoreData(data:[Post], place:Place) {
+    func saveUpdatedDataToCoreData(_ data:[Post], place:Place) {
         
-        let fetchRequest = NSFetchRequest(entityName: "Post")
+        let fetchRequest: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
         print(data.count)
         for post in data {
             let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
             fetchRequest.predicate = predicate
             do {
-                let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
+                let fetchedEntities = try self.managedObjectContext.fetch(fetchRequest)
                 if fetchedEntities.count > 1 {
                     print("Found \(fetchedEntities.count) post in the date base for this one post to update")
                 }
@@ -321,17 +341,17 @@ class KinveyFetcher: NSObject {
     }
     
     
-    func fetchImageForPost(post: Post) {
+    func fetchImageForPost(_ post: Post) {
         
         KCSFileStore.downloadData(
             post.postImageFileInfo,
-            completionBlock: { (downloadedResources: [AnyObject]!, error: NSError!) -> Void in
+            completionBlock: { (downloadedResources, error) in
                 if error == nil {
-                    let file = downloadedResources[0] as! KCSFile
+                    let file = downloadedResources?[0] as! KCSFile
                     let fileData = file.data
                     post.postHasImage = true
                     post.postImageData = fileData
-                    NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETABLEDATAREADYNOTIFICATION, object: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCETABLEDATAREADYNOTIFICATION), object: nil)
                     self.saveImageToCoreDataForPost(post)
                     print("fetched Image for post with message: \(post.postMessage!)")
                 } else {
@@ -343,14 +363,14 @@ class KinveyFetcher: NSObject {
         })
     }
     
-    func saveImageToCoreDataForPost(post: Post) {
+    func saveImageToCoreDataForPost(_ post: Post) {
         let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
         
-        let fetchRequest = NSFetchRequest(entityName: "Post")
+        let fetchRequest: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
         fetchRequest.predicate = predicate
         
         do {
-            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Post]
+            let fetchedEntities = try self.managedObjectContext.fetch(fetchRequest)
             fetchedEntities.first?.postHasImage = post.postHasImage
             fetchedEntities.first?.postImageData = post.postImageData
             
@@ -367,23 +387,23 @@ class KinveyFetcher: NSObject {
     // 2. check if this post is already in core database 
     // 3. get the image from the data base or download the image from kinvey
     
-    func downloadTopImageForPlace(place: Place) {
+    func downloadTopImageForPlace(_ place: Place) {
         downloadTopPostForPlace(place)
     }
     
-    private func downloadTopPostForPlace(place: Place) {
+    fileprivate func downloadTopPostForPlace(_ place: Place) {
         let query = configurePostQueryWithPlace(place, addDate: false)
-        let dataSort = KCSQuerySortModifier(field: "score", inDirection: KCSSortDirection.Descending)
+        let dataSort = KCSQuerySortModifier(field: "score", in: KCSSortDirection.descending)
         query.addSortModifier(dataSort)
         query.limitModifer = KCSQueryLimitModifier(limit: 1)
         
-        let store = KCSAppdataStore.storeWithOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
-        store.queryWithQuery(query, withCompletionBlock: { (downloadedData: [AnyObject]!, errorOrNil: NSError!) -> Void in
+        let store = KCSAppdataStore.withOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
+        _ = store?.query(withQuery: query, withCompletionBlock: { (downloadedData, errorOrNil) in
             if let error = errorOrNil {
                 print("Error from downloading posts data only: \(error)")
             }
             else {
-                if let topPost = downloadedData[0] as? Post {
+                if let topPost = downloadedData?[0] as? Post {
                     print("fetched top place")
                     self.fetchImageForTopPost(topPost, place: place)
                 }
@@ -393,16 +413,16 @@ class KinveyFetcher: NSObject {
         })
     }
     
-    private func fetchImageForTopPost(post: Post, place: Place) {
+    fileprivate func fetchImageForTopPost(_ post: Post, place: Place) {
         KCSFileStore.downloadData(
             post.postImageFileInfo,
-            completionBlock: { (downloadedResources: [AnyObject]!, error: NSError!) -> Void in
+            completionBlock: { (downloadedResources, error) in
                 if error == nil {
                     print("fetched top place Image")
 
-                    let file = downloadedResources[0] as! KCSFile
+                    let file = downloadedResources?[0] as! KCSFile
                     self.topPlaceImageData[place.entityId!] = file.data
-                    NSNotificationCenter.defaultCenter().postNotificationName(BOUNCETOPIMAGEDOWNLOADEDNOTIFICATION, object: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCETOPIMAGEDOWNLOADEDNOTIFICATION), object: nil)
                     } else {
                     print("Error from fetching place top image \(error)")
                 }
