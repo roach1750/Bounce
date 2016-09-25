@@ -20,7 +20,7 @@ class Post: NSManagedObject {
         let request: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
         request.predicate = NSPredicate(format: "postUniqueId = %@", post.postUniqueId!)
         
-        if let existingPost = (try? context.fetch(request))?.first! {
+        if let existingPost = (try? context.fetch(request))?.first {
             return existingPost
         } else if let newPost = NSEntityDescription.insertNewObject(forEntityName: "Post", into: context) as? Post{
             newPost.postMessage = post.postMessage

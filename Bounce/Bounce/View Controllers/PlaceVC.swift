@@ -61,7 +61,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         //Navigation Bar Colors
         
         //Toolbar Colors
-        shareSettingToolbar.backgroundColor = BOUNCEPRIMARYCOLOR
+        shareSettingToolbar.barTintColor = BOUNCEPRIMARYCOLOR
         shareSettingSegmentedControl.tintColor = BOUNCESECONDARYCOLOR
         
         //Remove Line under Navigation Bar
