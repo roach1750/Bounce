@@ -57,34 +57,35 @@ class Place: NSObject {
 //        ]
 //    }
 //    
-//    internal override static func kinveyDesignatedInitializer(jsonDocument: [NSObject : AnyObject]!) -> AnyObject! {
+//    override func kinveyDesignatedInitializer(_ jsonDocument: [AnyHashable : Any]!) -> Any! {
+    
 //        let existingID = jsonDocument[KCSEntityKeyId] as? String
 //        var obj: Place? = nil
-//        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-//        let entity = NSEntityDescription.entityForName("Place", inManagedObjectContext: context)!
-//        if existingID != nil {
-//            let request = NSFetchRequest()
-//            request.entity = entity
-//            let predicate = NSPredicate(format: "entityId = %@", existingID!)
-//            request.predicate = predicate
-//
-//            
-//            do {
-//                let results = try context.executeFetchRequest(request)
-//                if results.count > 0 {
-//                    obj = results.first as? Place
-//                }
-//            } catch {
-//                print("error fetching results")
-//            }
-//            
-//        }
-//        if obj == nil {
-//            //fall back to creating a new if one if there is an error, or if it is new
-//            obj = Place(entity: entity, insertIntoManagedObjectContext: context)
-//        }
-//        return obj
+//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+//        let entity = NSEntityDescription.entity(forEntityName: "Place", in: context)!
+////        if existingID != nil {
+////            let request: NSFetchRequest<Place> = NSFetchRequest(entityName: "Place")
+////            request.entity = entity
+////            let predicate = NSPredicate(format: "entityId = %@", existingID!)
+////            request.predicate = predicate
+////
+////            
+////            do {
+////                let results = try context.executeFetchRequest(request)
+////                if results.count > 0 {
+////                    obj = results.first as? Place
+////                }
+////            } catch {
+////                print("error fetching results")
+////            }
+////            
+////       }
+////        if obj == nil {
+////            //fall back to creating a new if one if there is an error, or if it is new
+////            obj = Place(entity: entity, insertIntoManagedObjectContext: nil)
+////        }
+//        return Place()
 //    }
-    
+//    
 
 }

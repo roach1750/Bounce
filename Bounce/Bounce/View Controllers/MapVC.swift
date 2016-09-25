@@ -200,7 +200,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         mapChangedFromUserInteraction = mapViewRegionDidChangeFromUserInteraction()
         if (mapChangedFromUserInteraction) {
             // user changed map region
-            print("Region will change")
         }
     }
     
@@ -208,7 +207,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if (mapChangedFromUserInteraction) {
             // user changed map region
             
-            print("Region did change")
             
             let annotations = mapView.visibleAnnotations()
             var bounceAnnotations = [BounceAnnotation]()
@@ -226,7 +224,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             
             createAnnotations()
             
-            print("There are \(annotations.count) Visible Annotations")
+//            print("There are \(annotations.count) Visible Annotations")
         }
     }
     
@@ -320,14 +318,16 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let location = locations.last {
             print("updated location")
             let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.005, 0.005))
+            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(1.0, 1.0))//MKCoordinateSpanMake(0.005, 0.005))
             LocationFetcher.sharedInstance.currentLocation = location
             mapView.setRegion(region, animated: true)
             locationManager!.stopUpdatingLocation()
             locationManager = nil
-            fetchButtonTapped(UIBarButtonItem())
+//            fetchButtonTapped(UIBarButtonItem())
         }
     }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)

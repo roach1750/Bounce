@@ -84,7 +84,11 @@ class KinveyFetcher: NSObject {
     //
     func configurePlaceQuery() -> KCSQuery {
         //Everyone Query
-        let everyoneQuery = KCSQuery(onField: BOUNCEPLACEEVERYONEAUTHORS, using: .kcsNotEqual, forValue: nil)
+        let everyoneQuery = KCSQuery(onField: BOUNCEPLACEEVERYONEAUTHORS, using: .kcsSize, forValue: 0 as NSObject!)
+        everyoneQuery?.negateQuery()
+        ///////////////////////////////////////////////////this might not work!!!!!
+        
+        
         //Friends Only Query
         if FBSDKAccessToken.current() != nil && KCSUser.active() != nil {
             let facebookFriendIDs =  KCSUser.active().getValueForAttribute("Facebook Friends IDs") as! [String]
