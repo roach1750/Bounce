@@ -140,7 +140,8 @@ class KinveyFetcher: NSObject {
                 //            print("Most Recent post's date in DB: \(mostRecentPostInDBDate)")
                 let dateRangeQuery = KCSQuery(onField: BOUNCEPOSTCREATIONDATEKEY, using: KCSQueryConditional.kcsGreaterThan, forValue: mostRecentPostInDBDate as NSObject!)
                 mainQuery?.addQuery(dateRangeQuery)
-                mainQuery?.joiningQuery(dateRangeQuery, usingOperator: .kcsAnd)
+                _ = mainQuery?.joiningQuery(dateRangeQuery, usingOperator: .kcsAnd)
+                ////////////////////////////////need to come back and fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!???????????????????????????????
             }
         }
         
