@@ -455,13 +455,28 @@
                                     <action selector="denyPictureButtonPressed:" destination="PR2-ky-ttL" eventType="touchUpInside" id="6qb-cG-nfV"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cib-lJ-K7j">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="78" id="OcG-zW-Gyy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Switch">
+                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </state>
+                                <connections>
+                                    <action selector="switchCamera:" destination="PR2-ky-ttL" eventType="touchUpInside" id="Rr4-Ky-RA8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0078431372549019607" green="0.10196078431372549" blue="0.25098039215686274" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4QI-FI-N1z" firstAttribute="top" secondItem="7Xu-Yw-oOW" secondAttribute="bottom" constant="34" id="0IX-8H-bio"/>
+                            <constraint firstItem="7Xu-Yw-oOW" firstAttribute="top" secondItem="Cib-lJ-K7j" secondAttribute="bottom" constant="4" id="0cN-qp-0vs"/>
                             <constraint firstItem="IAe-T7-PpN" firstAttribute="leading" secondItem="y5u-dh-Myg" secondAttribute="leadingMargin" id="1H1-A4-oHa"/>
+                            <constraint firstItem="Cib-lJ-K7j" firstAttribute="top" secondItem="y5u-dh-Myg" secondAttribute="topMargin" constant="8" id="45x-f1-FMY"/>
                             <constraint firstItem="7Xu-Yw-oOW" firstAttribute="top" secondItem="jBe-S9-qrF" secondAttribute="bottom" constant="4" id="9wA-v2-CsI"/>
                             <constraint firstItem="YnT-ph-Kb5" firstAttribute="height" secondItem="4QI-FI-N1z" secondAttribute="height" id="Aw7-L3-VCM"/>
+                            <constraint firstItem="Cib-lJ-K7j" firstAttribute="trailing" secondItem="y5u-dh-Myg" secondAttribute="trailingMargin" id="EHD-KQ-aB4"/>
                             <constraint firstItem="IAe-T7-PpN" firstAttribute="width" secondItem="4QI-FI-N1z" secondAttribute="width" id="FTL-PF-V38"/>
                             <constraint firstItem="YnT-ph-Kb5" firstAttribute="width" secondItem="4QI-FI-N1z" secondAttribute="width" id="L6e-46-eo5"/>
                             <constraint firstItem="YnT-ph-Kb5" firstAttribute="trailing" secondItem="y5u-dh-Myg" secondAttribute="trailingMargin" id="QU4-tR-teP"/>
@@ -482,12 +497,13 @@
                         <outlet property="acceptPictureButton" destination="YnT-ph-Kb5" id="oc1-Yn-6lq"/>
                         <outlet property="denyPictureButton" destination="IAe-T7-PpN" id="Hvs-Fv-rcw"/>
                         <outlet property="previewView" destination="7Xu-Yw-oOW" id="lJJ-mA-fNT"/>
+                        <outlet property="switchButton" destination="Cib-lJ-K7j" id="hHA-dU-RYx"/>
                         <outlet property="takePictureButton" destination="4QI-FI-N1z" id="WBh-2z-nbl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RzZ-ye-pJo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1795" y="-2118"/>
+            <point key="canvasLocation" x="1793.5999999999999" y="-2118.440779610195"/>
         </scene>
         <!--Configure PostVC-->
         <scene sceneID="S60-9h-lWq">
@@ -721,9 +737,9 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="91b-RT-ywp"/>
                                                     <exclude reference="naL-A3-ajd"/>
                                                     <exclude reference="PPY-Zr-dfo"/>
+                                                    <exclude reference="91b-RT-ywp"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1051,7 +1067,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WG2-lk-D5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3370" y="757"/>
+            <point key="canvasLocation" x="4024" y="757"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fcL-ji-UDF">

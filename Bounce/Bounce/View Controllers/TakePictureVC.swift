@@ -15,6 +15,7 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var takePictureButton: UIButton!
     @IBOutlet weak var denyPictureButton: UIButton!
     @IBOutlet weak var acceptPictureButton: UIButton!
+    @IBOutlet weak var switchButton: UIButton!
     
     
     
@@ -216,6 +217,77 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     
+    private let videoDeviceDiscoverySession = AVCaptureDeviceDiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInDuoCamera], mediaType: AVMediaTypeVideo, position: .unspecified)!
+
+    
+    @IBAction func switchCamera(_ sender: UIButton) {
+        takePictureButton.isEnabled = false
+        
+        sessionQueue.async { [unowned self] in
+            let currentVideoDevice = self.videoDeviceInput.device
+            let currentPosition = currentVideoDevice!.position
+            
+            let preferredPosition: AVCaptureDevicePosition
+            let preferredDeviceType: AVCaptureDeviceType
+            
+            switch currentPosition {
+            case .unspecified, .front:
+                preferredPosition = .back
+                preferredDeviceType = .builtInDuoCamera
+                
+            case .back:
+                preferredPosition = .front
+                preferredDeviceType = .builtInWideAngleCamera
+            }
+            
+            let devices = self.videoDeviceDiscoverySession.devices!
+            var newVideoDevice: AVCaptureDevice? = nil
+            
+            // First, look for a device with both the preferred position and device type. Otherwise, look for a device with only the preferred position.
+            if let device = devices.filter({ $0.position == preferredPosition && $0.deviceType == preferredDeviceType }).first {
+                newVideoDevice = device
+            }
+            else if let device = devices.filter({ $0.position == preferredPosition }).first {
+                newVideoDevice = device
+            }
+            
+            if let videoDevice = newVideoDevice {
+                do {
+                    let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
+                    
+                    self.session.beginConfiguration()
+                    
+                    // Remove the existing device input first, since using the front and back camera simultaneously is not supported.
+                    self.session.removeInput(self.videoDeviceInput)
+                    
+                    if self.session.canAddInput(videoDeviceInput) {
+                        self.session.addInput(videoDeviceInput)
+                        self.videoDeviceInput = videoDeviceInput
+                    }
+                    else {
+                        self.session.addInput(self.videoDeviceInput);
+                    }
+                    
+                    self.session.commitConfiguration()
+                }
+                catch {
+                    print("Error occured while creating video device input: \(error)")
+                }
+            }
+            
+            DispatchQueue.main.async { [unowned self] in
+                self.takePictureButton.isEnabled = true
+
+            }
+        
+
+        }
+
+        
+        
+        
+    }
+    
     
     
     // MARK: Capturing Photos
@@ -224,7 +296,8 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     let photoOutput = AVCapturePhotoOutput()
     
     @IBAction func takePictureButtonPressed(_ sender: AnyObject) {
-
+        
+        switchButton.isHidden = true
         
 
         let videoPreviewLayerOrientation = previewView.videoPreviewLayer.connection.videoOrientation
@@ -256,7 +329,8 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
         takePictureButton.isHidden = false
         denyPictureButton.isHidden = true
         acceptPictureButton.isHidden = true
-        
+        switchButton.isHidden = false
+
         previewView.image = nil
         
         

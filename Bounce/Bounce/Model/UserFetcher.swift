@@ -9,18 +9,22 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import SwiftyJSON
+
 
 class UserFetcher: NSObject {
 
     func createUser() {
         FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name, last_name, id, picture.type(large)"]).start { (connection, result, error) -> Void in
             
-            let resultObject = result as AnyObject
-            let givenName = resultObject.object(forKey: "first_name") as! String
-            let surname = resultObject.object(forKey: "last_name") as! String
-            let userId = resultObject.object(forKey: "id") as! String
+            
+            let resultsJSON = JSON(result).dictionaryValue
+            
+            let givenName = resultsJSON["first_name"]?.rawString()
+            let surname = resultsJSON["last_name"]?.rawString()
+            let userId = resultsJSON["id"]?.rawString()
 
-            let userName = givenName + "_" + surname + "_" + userId
+            let userName = givenName! + "_" + surname! + "_" + userId!
             
             KCSUser.checkUsername(userName, withCompletionBlock: { (userName, alreadyTaken, error) in
                 if alreadyTaken {
@@ -48,7 +52,7 @@ class UserFetcher: NSObject {
                             if error == nil {
                                 print("Created new user")
                                 print(KCSUser.active())
-                                self.uploadFacebookUserID(userId)
+                                self.uploadFacebookUserID(userId!)
                                 self.updateUserFriends()
                             } else {
                                 print(error)
@@ -81,15 +85,16 @@ class UserFetcher: NSObject {
         _ = fbRequest?.start(completionHandler: { (connection, result, error) in
             if error == nil {
                 var friendIDs = [String]()
-                let resultData = result as AnyObject
-                let friendObjects = resultData["data"] as! [NSDictionary]
-                for friendObject in friendObjects {
-                    //                    let firstName = friendObject.objectForKey("first_name") as! String
-                    //                    let lastName = friendObject.objectForKey("last_name") as! String
-                    let userID = friendObject.object(forKey: "id") as! String
-                    //                    print(firstName + " " + lastName + " " + userID)
-                    friendIDs.append(userID)
+                
+                let resultsJSON = JSON(result).dictionaryValue
+
+                for friendObject in resultsJSON["data"]! {
+
+                    let userID = friendObject.1["id"].rawString()
+                    friendIDs.append(userID!)
                 }
+                print(friendIDs)
+                
                 KCSUser.active().setValue(friendIDs, forAttribute: "Facebook Friends IDs")
                 KCSUser.active().save(completionBlock: { (saveUser, error) in
                     if error != nil {
