@@ -446,7 +446,7 @@
                                 <state key="normal" image="AcceptPictureButton"/>
                                 <connections>
                                     <action selector="acceptPictureButtonPressed:" destination="PR2-ky-ttL" eventType="touchUpInside" id="lvT-yx-jpw"/>
-                                    <segue destination="7n5-Lw-c4G" kind="show" animates="NO" id="adC-eF-Qc7"/>
+                                    <segue destination="7n5-Lw-c4G" kind="show" identifier="configurePost" animates="NO" id="RB1-Vj-r59"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAe-T7-PpN">
@@ -574,7 +574,11 @@
                                     </segmentedControl>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cBc-ft-lI3">
                                         <subviews>
-                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UUp-ec-PLC"/>
+                                            <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UUp-ec-PLC">
+                                                <connections>
+                                                    <outlet property="delegate" destination="7n5-Lw-c4G" id="mJd-xn-SSG"/>
+                                                </connections>
+                                            </mapView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QgQ-FB-wRb">
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <state key="normal" title="more places...">
@@ -608,6 +612,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="mapView" destination="UUp-ec-PLC" id="VM7-OP-4KA"/>
                         <outlet property="postImageView" destination="IGd-xq-Zk4" id="VQh-84-MJW"/>
                         <outlet property="postSharSettingSegmentedControl" destination="p8q-jr-9B5" id="IN6-6S-d2f"/>
                         <outlet property="postTextView" destination="TX5-qP-HDJ" id="xue-h0-UTR"/>

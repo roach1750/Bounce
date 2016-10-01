@@ -7,26 +7,30 @@
 //
 
 import UIKit
+import MapKit
 
-class ConfigurePostVC: UIViewController {
+class ConfigurePostVC: UIViewController, UITextViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate{
 
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var postSharSettingSegmentedControl: UISegmentedControl!
     
-    
-    
+    @IBOutlet weak var mapView: MKMapView!
+    var postImage: UIImage?
+    var locationManager: CLLocationManager?
+    var placesArray: [FourSquarePlace]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if postImage != nil {
+            postImageView.image = postImage
+        }
+        requestLocationData()
 
-        // Do any additional setup after loading the view.
-    }
+        NotificationCenter.default.addObserver(self, selector: #selector(ConfigurePostVC.createAnnotations), name: NSNotification.Name(rawValue: BOUNCEFOURSQUAREPLACESDONENOTIFICATION), object: nil)
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
     
     override var prefersStatusBarHidden : Bool {
         return true
@@ -42,26 +46,47 @@ class ConfigurePostVC: UIViewController {
     }
     
     
+    //MARK: - Location Manager
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func requestLocationData() {
+        let location: PrivateResource = .location(.whenInUse)
+        
+        proposeToAccess(location, agreed: {
+            self.locationManager = CLLocationManager()
+            self.locationManager!.delegate = self
+            self.locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager!.startUpdatingLocation()
+            }, rejected: {
+                print("Location denied")
+        })
     }
-    */
-
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            print("updated location")
+            let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.05, 0.05))
+            LocationFetcher.sharedInstance.currentLocation = location
+            mapView.setRegion(region, animated: true)
+            locationManager!.stopUpdatingLocation()
+            locationManager = nil
+        }
+    }
+    
+    func createAnnotations() {
+        
+        if let placesArray = LocationFetcher.sharedInstance.placeArray {
+            print(placesArray)
+            
+            
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+    
+    
+    
+    
 }

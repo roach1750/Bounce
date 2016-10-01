@@ -24,7 +24,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 //API KEY = AIzaSyCuFv4j7KQGLzZZDl-4T6SeT-Vjow2wgyU
 
-class LocationFetcher: NSObject {
+class LocationFetcher: NSObject, URLSessionDelegate {
     
     class var sharedInstance: LocationFetcher {
         struct Singleton {
@@ -55,10 +55,16 @@ class LocationFetcher: NSObject {
                 "&v=20130815" +
                 "&ll=" + latitude + "," + longitude
             
-            let session = URLSession.shared
+            let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
             let url = URL(string: urlString)
             let request = URLRequest(url: url!)
-            _ = session.dataTask(with: request, completionHandler: { (data, response, error)in
+            
+            session.dataTask(with: request, completionHandler: { (data, response, error)in
+                
+                print("In Block: ")
+                print(request)
+                print(response)
+                
                 if let error = error {
                     print(error)
                 }
@@ -87,12 +93,20 @@ class LocationFetcher: NSObject {
                         self.placeArray?.sort(by: {$0.distanceFromUser < $1.distanceFromUser})
                         
                         self.selectedPlace = self.placeArray?[0]
+                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: BOUNCEFOURSQUAREPLACESDONENOTIFICATION), object: nil)
+                        
                         print("Foursquare Done")
                     }
                 }
-            })
+            }).resume()
         }
     }
+    
+    
+
+    
+    
     
     
     

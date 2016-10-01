@@ -323,6 +323,7 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     
     
     @IBAction func acceptPictureButtonPressed(_ sender: UIButton) {
+        
     }
     
     @IBAction func denyPictureButtonPressed(_ sender: UIButton) {
@@ -341,6 +342,14 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
         return true
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "configurePost" {
+            let dV = segue.destination as! ConfigurePostVC
+            dV.postImage = previewView.image
+            
+        }
+    }
     
     
 
