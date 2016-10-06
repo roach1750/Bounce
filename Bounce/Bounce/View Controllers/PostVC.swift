@@ -192,7 +192,7 @@ class PostVC: UIViewController, UITextViewDelegate {
             
             let imageData = UIImagePNGRepresentation(image)
             
-            uploader.createPostThenUpload(postTextView.text, image: imageData!, shareSetting: shareSetting, selectedPlace: selectedPlace)
+            uploader.createPostThenUpload(message: postTextView.text, image: imageData!, shareSetting: shareSetting, selectedPlace: selectedPlace)
         }
         
         appDelegate.tempPostImageData = nil

@@ -61,10 +61,6 @@ class LocationFetcher: NSObject, URLSessionDelegate {
             
             session.dataTask(with: request, completionHandler: { (data, response, error)in
                 
-                print("In Block: ")
-                print(request)
-                print(response)
-                
                 if let error = error {
                     print(error)
                 }
@@ -87,7 +83,7 @@ class LocationFetcher: NSObject, URLSessionDelegate {
                             let currentLocationCoordinate = self.currentLocation?.coordinate
                             let currentLocationPoint = CGPoint(x: (currentLocationCoordinate?.latitude)!, y: (currentLocationCoordinate?.longitude)!)
                             place.distanceFromUser = self.distanceBetweenPoints(point, point2: currentLocationPoint)
-                            // print(currentPlace.description)
+//                            print(place.name!)
                             self.placeArray?.append(place)
                         }
                         self.placeArray?.sort(by: {$0.distanceFromUser < $1.distanceFromUser})

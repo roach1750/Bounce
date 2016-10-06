@@ -21,7 +21,7 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     
     @IBOutlet weak var previewView: PreviewView!
     
-
+    var postImageData: Data?
     
     
     //View Stuff
@@ -136,7 +136,7 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
         
         (previewView.layer as! AVCaptureVideoPreviewLayer).frame = previewView.bounds
         
-        session.sessionPreset = AVCaptureSessionPresetHigh
+        session.sessionPreset = AVCaptureSessionPresetMedium
         previewView.layer.frame = previewView.bounds
         (previewView.layer as! AVCaptureVideoPreviewLayer).videoGravity = AVLayerVideoGravityResize
         (previewView.layer as! AVCaptureVideoPreviewLayer).connection?.videoOrientation = AVCaptureVideoOrientation.portrait
@@ -310,7 +310,8 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
         
             let photoSettings = AVCapturePhotoSettings()
             photoSettings.flashMode = .off
-            photoSettings.isHighResolutionPhotoEnabled = true
+            photoSettings.isHighResolutionPhotoEnabled = false
+            
             if photoSettings.availablePreviewPhotoPixelFormatTypes.count > 0 {
                 photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String : photoSettings.availablePreviewPhotoPixelFormatTypes.first!]
             }
@@ -347,7 +348,7 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
         if segue.identifier == "configurePost" {
             let dV = segue.destination as! ConfigurePostVC
             dV.postImage = previewView.image
-            
+            dV.postImageData = postImageData
         }
     }
     
@@ -364,14 +365,13 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     
     //Step 2 - Right when photo is taken - good place for animations
     func capture(_ captureOutput: AVCapturePhotoOutput, willCapturePhotoForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        
+        print(resolvedSettings.photoDimensions)
     }
     
     //Step 3 - Right after photo taken
     func capture(_ captureOutput: AVCapturePhotoOutput, didCapturePhotoForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings) {
         takePictureButton.isHidden = true
-        denyPictureButton.isHidden = false
-        acceptPictureButton.isHidden = false
+
     }
     
     //Step 4 - Once Photo has been processed
@@ -386,9 +386,12 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
             print("image capture complete")
             DispatchQueue.main.async {
                 self.previewView.image = UIImage(data: dataImage)
+                self.postImageData = dataImage
+                self.denyPictureButton.isHidden = false
+                self.acceptPictureButton.isHidden = false
             }
         } else {
-            print("Error in processing")
+            print("Error in processing: \(error)")
         }
 
     

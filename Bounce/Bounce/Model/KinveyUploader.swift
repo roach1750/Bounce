@@ -20,7 +20,7 @@ class KinveyUploader: NSObject {
     
     let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
     
-    func createPostThenUpload(_ message: String, image: Data, shareSetting: String, selectedPlace: FourSquarePlace ) {
+    func createPostThenUpload(message: String, image: Data, shareSetting: String, selectedPlace: FourSquarePlace ) {
         // Create Entity
         let entity = NSEntityDescription.entity(forEntityName: "Post", in: self.managedObjectContext)
         // Initialize Record
@@ -30,6 +30,8 @@ class KinveyUploader: NSObject {
         coreDataPost.postHasImage = true
         coreDataPost.postPlaceName = selectedPlace.name
         coreDataPost.postLocation = selectedPlace.location
+        
+        
         coreDataPost.postBounceKey = selectedPlace.name! + "," + String(selectedPlace.location!.coordinate.latitude) + "," + String(selectedPlace.location!.coordinate.longitude)
         coreDataPost.postScore = 0
         coreDataPost.postShareSetting = shareSetting
@@ -39,11 +41,11 @@ class KinveyUploader: NSObject {
         coreDataPost.postCreationDate = Date()
         coreDataPost.postReportedCount = 0
         coreDataPost.postExpired = NSNumber(value: false as Bool)
-        uploadPostImageThenObject(coreDataPost)
+        uploadPostImageThenObject(post: coreDataPost)
     }
     
     //This uploads the image first, then calls the method below to upload the object
-    fileprivate func uploadPostImageThenObject(_ post: Post) {
+    fileprivate func uploadPostImageThenObject(post: Post) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         NotificationCenter.default.post(name: Notification.Name(rawValue: BOUNCEIMAGEUPLOADBEGANNOTIFICATION), object: nil, userInfo: nil)
         let metadata = KCSMetadata()
@@ -52,6 +54,7 @@ class KinveyUploader: NSObject {
         if let PID = post.postImageData {
             KCSFileStore.uploadData(PID as Data!, options: [KCSFileACL : metadata], completionBlock: { (uploadInfo, error) in
                 if let receivedUploadInfo = uploadInfo {
+                    
                     self.upLoadPostObject(receivedUploadInfo,post: post)
                     
                 }
@@ -68,25 +71,24 @@ class KinveyUploader: NSObject {
     fileprivate func upLoadPostObject(_ imageInfo: KCSFile, post: Post) {
         
         post.postImageFileInfo = imageInfo.fileId
-        let collection = KCSCollection(from: BOUNCEPOSTCLASSNAME, of: Post.self)
-        let updateStore = KCSLinkedAppdataStore.withOptions([KCSStoreKeyResource: collection])
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        _ = updateStore?.save(post, withCompletionBlock: { (objectsOrNil, error) in
+        let store = KCSAppdataStore.withOptions([
+            KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME,
+            KCSStoreKeyCollectionTemplateClass : Post.self
+            ])
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false        
+        _ = store?.save(post, withCompletionBlock: { (objects, error) in
             if error != nil {
                 //save failed
                 print("Uploading Object: Save failed, with error: %@", error)
             } else {
                 //save was successful
-                
-                print("Successfully saved event (id='%@').", (objectsOrNil?[0] as! NSObject).kinveyObjectId())
+                print("Successfully saved event (id='%@').", (objects?[0] as! NSObject).kinveyObjectId())
             }
             
             }, withProgressBlock: nil)
         
-        
-        
     }
-
+    
     func changeScoreForPost(_ post: Post, place: Place, increment: Int) {
         KCSCustomEndpoints.callEndpoint("incrementScore", params: ["increment":increment,"_id": post.postUniqueId!]) { (results, error) in
             if results != nil {
@@ -113,7 +115,7 @@ class KinveyUploader: NSObject {
             }
         )
     }
-
+    
     
 }
 
