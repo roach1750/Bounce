@@ -93,12 +93,12 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         
         if mapRegionChanged {
         
-            Answers.logCustomEventWithName("mapRegionSearch",
+            Answers.logCustomEvent(withName: "mapRegionSearch",
                                            customAttributes: [
-                                            "latCenter": NSNumber(double: mapRegion!.center.latitude),
-                                            "lonCenter": NSNumber(double: mapRegion!.center.longitude),
-                                            "latDelta": NSNumber(double: mapRegion!.span.latitudeDelta),
-                                            "lonDelta": NSNumber(double: mapRegion!.span.longitudeDelta)
+                                            "latCenter": NSNumber(value: mapRegion!.center.latitude),
+                                            "lonCenter": NSNumber(value: mapRegion!.center.longitude),
+                                            "latDelta": NSNumber(value: mapRegion!.span.latitudeDelta),
+                                            "lonDelta": NSNumber(value: mapRegion!.span.longitudeDelta)
                                         
                 ])
         }
@@ -315,6 +315,13 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             
             let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
             selectedPlace = annoation.place
+            
+            Answers.logContentView(withName: "ViewPlace",
+                                           contentType: "Place",
+                                           contentId: selectedPlace?.entityId,
+                                           customAttributes: [
+                                            "score": String(describing: selectedPlace?.placeScore)])
+            
             performSegue(withIdentifier: "showPosts", sender: self)
         }
     }

@@ -33,7 +33,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "277"
             endingLineNumber = "277"
-            landmarkName = "mapView(_:didSelect:)"
+            landmarkName = "topImageForPlaceDownloaded()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

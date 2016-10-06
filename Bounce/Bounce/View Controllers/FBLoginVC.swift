@@ -65,7 +65,7 @@ class FBLoginVC: UIViewController, FBSDKLoginButtonDelegate {
             let userFetcher = UserFetcher()
             userFetcher.createUser()
             
-            Answers.logLoginWithMethod("Facebook",
+            Answers.logLogin(withMethod: "Facebook",
                                        success: true,
                                        customAttributes: [:])
         }
