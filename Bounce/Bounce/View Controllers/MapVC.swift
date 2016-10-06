@@ -28,6 +28,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     //Variables
     var selectedPlace: Place?
+    var mapRegion: MKCoordinateRegion?
+    var mapRegionChanged = false
     //Constants
     var locationManager: CLLocationManager?
     var colorDict = [NSNumber:UIColor]()
@@ -85,6 +87,23 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         
         fetcher = KinveyFetcher()
         fetcher.queryForAllPlaces()
+        
+        print("mapRegionChanged")
+        print(mapRegionChanged)
+        
+        if mapRegionChanged {
+        
+            Answers.logCustomEventWithName("mapRegionSearch",
+                                           customAttributes: [
+                                            "latCenter": NSNumber(double: mapRegion!.center.latitude),
+                                            "lonCenter": NSNumber(double: mapRegion!.center.longitude),
+                                            "latDelta": NSNumber(double: mapRegion!.span.latitudeDelta),
+                                            "lonDelta": NSNumber(double: mapRegion!.span.longitudeDelta)
+                                        
+                ])
+        }
+        
+        
     }
     
     @IBAction func infoButtonPressed(_ sender: UIBarButtonItem) {
@@ -292,6 +311,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     func mapView(_ MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == annotationView.rightCalloutAccessoryView {
+            
+            
             let annoation = mapView.selectedAnnotations[0] as! BounceAnnotation
             selectedPlace = annoation.place
             performSegue(withIdentifier: "showPosts", sender: self)
