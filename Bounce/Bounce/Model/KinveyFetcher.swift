@@ -57,23 +57,30 @@ class KinveyFetcher: NSObject {
         friendsOnlyPlaceData = [Place]()
         everyonePlaceData = [Place]()
         
-        let store = KCSAppdataStore.withOptions([ KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self
-            ])
-        let query = configurePlaceQuery()
+        let store = KCSAppdataStore.withOptions([KCSStoreKeyCollectionName : BOUNCEPLACECLASSNAME, KCSStoreKeyCollectionTemplateClass : Place.self])
+
+        let query = KCSQuery()//configurePlaceQuery()
+        
         UIApplication.shared.isNetworkActivityIndicatorVisible = true;
-        _ = store?.query(
-            withQuery: query,
-            withCompletionBlock: { (objectsOrNil, errorOrNil) in
+        _ = store?.query(withQuery: query, withCompletionBlock: { (objectsOrNil, errorOrNil) in
+                
                 if let objects = objectsOrNil {
                     print("Fetched \(objects.count) Place objects")
-                    self.sortPlaceData(objects as [AnyObject])
+//                    self.sortPlaceData(objects as [AnyObject])
+                    print(objects)
                 }
 
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false;
                 
             },
             withProgressBlock: { (objects, percentComplete) in
+                print(percentComplete)
         })
+        
+        
+
+        
+        
     }
     
     //

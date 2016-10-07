@@ -88,8 +88,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         fetcher = KinveyFetcher()
         fetcher.queryForAllPlaces()
         
-        print("mapRegionChanged")
-        print(mapRegionChanged)
+
         
         if mapRegionChanged {
         
@@ -190,7 +189,9 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let objects = data {
             for place in objects {
                 let color = colorDict[place.placeScore!]
+                print(place.description)
                 
+
                 let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
                 let annotation = BounceAnnotation(title: place.placeName, subtitle: String(describing: place.placeScore!), coordinate: coordinate, place: place, color: color)
                 mapView.addAnnotation(annotation)

@@ -30,7 +30,7 @@ class Place: NSObject {
             "entityId" : KCSEntityKeyId, //the required _id field
             "placeName": BOUNCELOCATIONNAMEKEY,
             "placeLocation": BOUNCEPOSTGEOLOCATIONKEY,
-            "placeBounceKey": BOUNCEKEY,
+//            "bounceKey": BOUNCEKEY,
             "placeScore" : BOUNCESCOREKEY,
             "friendsOnlyAuthors" : BOUNCEFRIENDSONLYAUTHORSKEY,
             "everyoneAuthors" : BOUNCEEVERYONEAUTHORSKEY,

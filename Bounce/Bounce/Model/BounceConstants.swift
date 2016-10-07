@@ -12,7 +12,7 @@ import UIKit
 //Post object properties
 let BOUNCEPOSTCLASSNAME  =  "BouncePost"
 let BOUNCECOMMENTKEY  =  "comment"
-let BOUNCEPOSTGEOLOCATIONKEY  =  "location"
+let BOUNCEPOSTGEOLOCATIONKEY  =  "placeLocation"
 let BOUNCELOCATIONNAMEKEY  =  "placeName"
 let BOUNCEIMAGEKEY  =  "imageFile"
 let BOUNCEHASIMAGEKEY  =  "hasImage"
@@ -21,7 +21,7 @@ let BOUNCEREPORTEDCOUNTKEY  =  "postReportedCount"
 let BOUNCEEXPIREDKEY  =  "postExpired"
 
 let BOUNCEKEY =  "bounceKey"
-let BOUNCEFRIENDSONLYAUTHORSKEY =  "friendOnlyAuthors"
+let BOUNCEFRIENDSONLYAUTHORSKEY =  "friendsOnlyAuthors"
 let BOUNCEEVERYONEAUTHORSKEY =  "everyoneAuthors"
 
 

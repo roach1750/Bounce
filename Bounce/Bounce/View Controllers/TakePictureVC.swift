@@ -57,7 +57,10 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        denyPictureButton.isHidden = true
+        acceptPictureButton.isHidden = true
+        takePictureButton.isHidden = false
+        switchButton.isHidden = false
         sessionQueue.async {
             switch self.setupResult {
             case .success:
