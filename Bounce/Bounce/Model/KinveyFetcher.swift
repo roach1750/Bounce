@@ -66,15 +66,14 @@ class KinveyFetcher: NSObject {
                 
                 if let objects = objectsOrNil {
                     print("Fetched \(objects.count) Place objects")
-//                    self.sortPlaceData(objects as [AnyObject])
-                    print(objects)
+                    self.sortPlaceData(objects as [AnyObject])
                 }
 
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false;
                 
             },
             withProgressBlock: { (objects, percentComplete) in
-                print(percentComplete)
+
         })
         
         
@@ -330,7 +329,6 @@ class KinveyFetcher: NSObject {
     func saveUpdatedDataToCoreData(_ data:[Post], place:Place) {
         
         let fetchRequest: NSFetchRequest<Post> = NSFetchRequest(entityName: "Post")
-        print(data.count)
         for post in data {
             let predicate = NSPredicate(format: "postUniqueId == %@", post.postUniqueId!)
             fetchRequest.predicate = predicate

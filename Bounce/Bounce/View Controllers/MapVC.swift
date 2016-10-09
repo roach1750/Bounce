@@ -189,7 +189,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let objects = data {
             for place in objects {
                 let color = colorDict[place.placeScore!]
-                print(place.description)
                 
 
                 let coordinate = CLLocationCoordinate2D(latitude: (place.placeLocation?.coordinate.latitude)!, longitude: (place.placeLocation?.coordinate.longitude)!)
@@ -347,12 +346,12 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if let location = locations.last {
             print("updated location")
             let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(1.0, 1.0))//MKCoordinateSpanMake(0.005, 0.005))
+            let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.005, 0.005))
             LocationFetcher.sharedInstance.currentLocation = location
             mapView.setRegion(region, animated: true)
             locationManager!.stopUpdatingLocation()
             locationManager = nil
-//            fetchButtonTapped(UIBarButtonItem())
+            fetchButtonTapped(UIBarButtonItem())
         }
     }
     
