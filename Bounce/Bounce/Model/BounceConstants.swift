@@ -50,6 +50,7 @@ let BOUNCEPOSTCREATIONDATEKEY = "postCreationDate"
 let BOUNCEPLACECLASSNAME  =  "BouncePlace"
 let BOUNCEPLACEFRIENDONLYAUTHORS  =  "friendOnlyAuthors"
 let BOUNCEPLACEEVERYONEAUTHORS  =  "everyoneAuthors"
+let BOUNCEPLACESCOREKEY = "placeScore"
 
 
 //NSNotifications
