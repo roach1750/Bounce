@@ -91,9 +91,7 @@ class KinveyFetcher: NSObject {
     func configurePlaceQuery() -> KCSQuery {
         //Everyone Query
         let everyoneQuery = KCSQuery(onField: BOUNCEPLACEEVERYONEAUTHORS, using: .kcsSize, forValue: 0 as NSObject!)
-        everyoneQuery?.negateQuery()
-        ///////////////////////////////////////////////////this might not work!!!!!
-        
+        everyoneQuery?.negateQuery()        
         
         //Friends Only Query
         if FBSDKAccessToken.current() != nil && KCSUser.active() != nil {
@@ -402,6 +400,7 @@ class KinveyFetcher: NSObject {
     }
     
     fileprivate func downloadTopPostForPlace(_ place: Place) {
+        
         let query = configurePostQueryWithPlace(place, addDate: false)
         let dataSort = KCSQuerySortModifier(field: "score", in: KCSSortDirection.descending)
         query.addSortModifier(dataSort)
@@ -409,10 +408,15 @@ class KinveyFetcher: NSObject {
         
         let store = KCSAppdataStore.withOptions([ KCSStoreKeyCollectionName : BOUNCEPOSTCLASSNAME, KCSStoreKeyCollectionTemplateClass : Post.self])
         _ = store?.query(withQuery: query, withCompletionBlock: { (downloadedData, errorOrNil) in
-            if let error = errorOrNil {
-                print("Error from downloading posts data only: \(error)")
+            
+            print(downloadedData)
+            print(downloadedData?.count)
+            
+            if errorOrNil != nil || downloadedData?.count == 0 {
+                print("Error from downloading posts data only: \(errorOrNil)")
             }
             else {
+                
                 if let topPost = downloadedData?[0] as? Post {
                     print("fetched top place")
                     self.fetchImageForTopPost(topPost, place: place)
@@ -423,11 +427,13 @@ class KinveyFetcher: NSObject {
         })
     }
     
-    fileprivate func fetchImageForTopPost(_ post: Post, place: Place) {
+    func fetchImageForTopPost(_ post: Post, place: Place) {
+        
+        
         KCSFileStore.downloadData(
             post.postImageFileInfo,
             completionBlock: { (downloadedResources, error) in
-                if error == nil {
+                if error == nil || downloadedResources!.count > 0 {
                     print("fetched top place Image")
 
                     let file = downloadedResources?[0] as! KCSFile

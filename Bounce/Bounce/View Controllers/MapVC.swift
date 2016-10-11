@@ -293,6 +293,8 @@ class MapVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     //////////////////////////////////////////////////////////////////////////////////////////when should this data be reloaded?
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+        
         if let selectedAnnotation = mapView.selectedAnnotations[0] as? BounceAnnotation {
             if !selectedAnnotation.isKind(of: MKUserLocation.self)
             {
