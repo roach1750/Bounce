@@ -27,8 +27,7 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     //View Stuff
     override func viewDidLoad() {
         super.viewDidLoad()
-        denyPictureButton.isHidden = true
-        acceptPictureButton.isHidden = true
+        hideAcceptDenyButtons()
         switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
             
         case .authorized:
@@ -55,10 +54,14 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
 //        }
     }
     
+    @IBAction func debugButtonPressed(_ sender: UIButton) {
+        print("Preview View Frame is: \(previewView.frame)")
+        print("View Frame is: \(self.view.frame)")
+        view.layoutSubviews()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        denyPictureButton.isHidden = true
-        acceptPictureButton.isHidden = true
+        hideAcceptDenyButtons()
         takePictureButton.isHidden = false
         switchButton.isHidden = false
         sessionQueue.async {
@@ -139,11 +142,9 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
         
         (previewView.layer as! AVCaptureVideoPreviewLayer).frame = previewView.bounds
         
-        session.sessionPreset = AVCaptureSessionPresetMedium
-        previewView.layer.frame = previewView.bounds
-        (previewView.layer as! AVCaptureVideoPreviewLayer).videoGravity = AVLayerVideoGravityResize
-        (previewView.layer as! AVCaptureVideoPreviewLayer).connection?.videoOrientation = AVCaptureVideoOrientation.portrait
 
+
+        session.sessionPreset = AVCaptureSessionPresetMedium
         
         
         do {
@@ -332,8 +333,7 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     
     @IBAction func denyPictureButtonPressed(_ sender: UIButton) {
         takePictureButton.isHidden = false
-        denyPictureButton.isHidden = true
-        acceptPictureButton.isHidden = true
+        hideAcceptDenyButtons()
         switchButton.isHidden = false
 
         previewView.image = nil
@@ -363,6 +363,7 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     func capture(_ captureOutput: AVCapturePhotoOutput, willBeginCaptureForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings) {
         print("Image capture started")
         self.session.stopRunning()
+        takePictureButton.isHidden = true
 
     }
     
@@ -373,7 +374,6 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
     
     //Step 3 - Right after photo taken
     func capture(_ captureOutput: AVCapturePhotoOutput, didCapturePhotoForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        takePictureButton.isHidden = true
 
     }
     
@@ -390,22 +390,70 @@ class TakePictureVC: UIViewController, AVCapturePhotoCaptureDelegate {
             DispatchQueue.main.async {
                 self.previewView.image = UIImage(data: dataImage)
                 self.postImageData = dataImage
-                self.denyPictureButton.isHidden = false
-                self.acceptPictureButton.isHidden = false
+                self.showAcceptDenyButtons()
             }
         } else {
             print("Error in processing: \(error)")
         }
-
-    
-    
-    
     }
     
     //Step 5 - process done, clean up storage
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishCaptureForResolvedSettings resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
 
     }
+    
+    @IBOutlet weak var previewViewRegularPositionConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var previewViewAtTopOfScreenConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var denyPictureButtonLeadingEdgeConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var denyPictureButtonCenterXConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var acceptPictureButtonCenterXConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var acceptPictureButtonTrailingEdgeConstraint: NSLayoutConstraint!
+    
+    
+    func showAcceptDenyButtons() {
+        denyPictureButton.isHidden = false
+        acceptPictureButton.isHidden = false
+        
+        self.previewViewAtTopOfScreenConstraint.priority = UILayoutPriorityDefaultHigh
+        self.previewViewRegularPositionConstraint.priority = UILayoutPriorityDefaultLow
+
+        
+        self.denyPictureButtonLeadingEdgeConstraint.priority = UILayoutPriorityDefaultHigh
+        self.acceptPictureButtonTrailingEdgeConstraint.priority = UILayoutPriorityDefaultHigh
+        
+        self.denyPictureButtonCenterXConstraint.priority = UILayoutPriorityDefaultLow
+        self.acceptPictureButtonCenterXConstraint.priority = UILayoutPriorityDefaultLow
+        
+        UIView.animate(withDuration: 0.25) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func hideAcceptDenyButtons() {
+        denyPictureButton.isHidden = true
+        acceptPictureButton.isHidden = true
+        
+        self.denyPictureButtonLeadingEdgeConstraint.priority = UILayoutPriorityDefaultLow
+        self.acceptPictureButtonTrailingEdgeConstraint.priority = UILayoutPriorityDefaultLow
+        
+        self.denyPictureButtonCenterXConstraint.priority = UILayoutPriorityDefaultHigh
+        self.acceptPictureButtonCenterXConstraint.priority = UILayoutPriorityDefaultHigh
+        
+        self.previewViewAtTopOfScreenConstraint.priority = UILayoutPriorityDefaultLow
+        self.previewViewRegularPositionConstraint.priority = UILayoutPriorityDefaultHigh
+
+        
+        self.view.layoutIfNeeded()
+    }
+    
+    
+    
+    
     
     
 }

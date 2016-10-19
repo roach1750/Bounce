@@ -27,6 +27,7 @@ class ConfigurePostVC: UIViewController, UITextViewDelegate, MKMapViewDelegate, 
         super.viewDidLoad()
         if postImage != nil {
             postImageView.image = postImage
+            postImageView.contentMode = .scaleAspectFit
         }
         requestLocationData()
         postButton.isEnabled = false
