@@ -145,7 +145,7 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let placesPost = posts {
             let currentPost = placesPost[(indexPath as NSIndexPath).section]
-            let identifier = getIdentifierForCell(currentPost)
+            let identifier = "commentAndPhoto"
             let cell:PlaceTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: identifier) as! PlaceTableViewCell
             
             
@@ -197,12 +197,11 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = UITableViewCellSelectionStyle.none
             
 //            
-//            print(cell.frame.width)
-//            
+//
 //            if cell.frame.width != view.frame.width {
-////                reloadTable()
+//                reloadTable()
 //            }
-//            
+//
 //            
             return cell
         }
@@ -212,24 +211,24 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
 
-    func getIdentifierForCell(_ post: Post) -> String {
-        
-        if post.postHasImage == NSNumber(value: true as Bool) && post.postMessage != nil{
-            tableView.estimatedRowHeight = 515.0
-            return "commentAndPhoto"
-        }
-        else if post.postHasImage == NSNumber(value: true as Bool) {
-            tableView.estimatedRowHeight = 415.0
-            return "photoOnly"
-        }
-        else if post.postMessage != nil {
-            tableView.estimatedRowHeight = 100.0
-            return "commentOnly"
-        }
-        else {
-            return ""
-        }
-    }
+//    func getIdentifierForCell(_ post: Post) -> String {
+//        
+//        if post.postHasImage == NSNumber(value: true as Bool) && post.postMessage != nil{
+//            tableView.estimatedRowHeight = 715.0
+//            return "commentAndPhoto"
+//        }
+//        else if post.postHasImage == NSNumber(value: true as Bool) {
+//            tableView.estimatedRowHeight = 415.0
+//            return "photoOnly"
+//        }
+//        else if post.postMessage != nil {
+//            tableView.estimatedRowHeight = 100.0
+//            return "commentOnly"
+//        }
+//        else {
+//            return ""
+//        }
+//    }
     
     func timeSinceObjectWasCreated(_ timeInSeconds: Double) -> String{
         let timeInMinutes = timeInSeconds / 60
@@ -331,6 +330,22 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return headerView
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let placesPost = posts {
+            let currentPost = placesPost[(indexPath as NSIndexPath).section]
+            let textHeight = currentPost.postMessage?.heightWithConstrainedWidth(width: view.frame.width, font: UIFont.systemFont(ofSize: 15))
+            let imageHeight = view.frame.size.width * (4/3)
+            let additionalHeight: CGFloat = 90
+            
+            let heightToReturn = textHeight! + imageHeight + additionalHeight
+            
+            return heightToReturn
+            
+        }
+        
+        return 0
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "reportPostSegue" {
@@ -340,7 +355,14 @@ class PlaceVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-    
-    
-    
 }
+
+extension String {
+    func heightWithConstrainedWidth(width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        
+        return boundingBox.height
+    }
+}
+
